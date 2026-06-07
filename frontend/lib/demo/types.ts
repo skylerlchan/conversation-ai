@@ -36,7 +36,16 @@ export interface QuestionsFixture {
   thesis: string;
   thesis_memo: string;
   modeled_assumptions: Record<string, string>;
+  /** Investment-thesis pillars, each grouping a few questions underneath. */
+  pillars: Pillar[];
   questions: Question[];
+}
+
+/** A pillar is one leg of the investment thesis; questions hang off it. */
+export interface Pillar {
+  id: string;
+  thesis: string;
+  questions: string[];
 }
 
 export interface Contradiction {
