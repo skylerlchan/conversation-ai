@@ -33,10 +33,10 @@ export interface AppConfig {
 }
 
 export const APP_CONFIG_DEFAULTS: AppConfig = {
-  companyName: 'Moss',
-  pageTitle: 'Moss LiveKit Docs Helper',
+  companyName: 'Diligence Copilot',
+  pageTitle: 'Diligence Copilot',
   pageDescription:
-    'A voice assistant that answers LiveKit questions from a Moss knowledge base and remembers what you tell it',
+    'A real-time copilot for buy-side diligence calls: tracks coverage of your questions, fires grounded follow-ups, and flags inconsistencies live. Try the scripted demo at /demo.',
 
   supportsChatInput: true,
   supportsVideoInput: true,
