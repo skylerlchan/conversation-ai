@@ -139,8 +139,11 @@ analyst's own research notes, filings, and call transcripts — each tagged with
 source in [brackets]. Pull only the load-bearing facts: the specific numbers and
 claims worth holding the researcher to.
 
-Output 2-4 short bullets, most material first, one fact per bullet. Format each as:
-- <specific figure or claim> — <source>
+Output 2-3 terse bullets, most material first, one fact each. Format each as:
+- <fact> — <source>
+Keep each fact a short fragment: aim for 4-8 words, lead with the figure, drop
+articles and filler (e.g. "iPhone +22% YoY, record cycle — Q2 FY26 call", not
+"iPhone revenue grew 22% year over year, the strongest cycle in company history").
 Cite the bracketed source, shortened (e.g. "AAPL 10-Q p.5", "Vantage note",
 "Q2 FY26 call"). No preamble, no headers, no prose paragraphs. Drop any excerpt
 with no concrete figure or claim. Never invent a number or a source."""
@@ -175,11 +178,14 @@ each tagged with its source in [brackets]. Pull only the facts that bear directl
 on THIS question: the specific numbers and claims worth raising or holding the
 researcher to.
 
-Output 2-4 short bullets, most material first, one fact each. Format each as:
-- <specific figure or claim> — <source>
-Cite the bracketed source, shortened (e.g. "AAPL 10-Q p.5", "Vantage note",
-"Q2 FY26 call"). No preamble, no headers, no prose. Drop any excerpt that doesn't
-bear on the question or has no concrete figure. Never invent a number or source."""
+Output 2-3 terse bullets, most material first, one fact each. Format each as:
+- <fact> — <source>
+Keep each fact a short fragment: aim for 4-8 words, lead with the figure, drop
+articles and filler (e.g. "GM 49.3% in March Q — AAPL 10-Q", not "March-quarter
+company gross margin came in at 49.3%"). Cite the bracketed source, shortened
+(e.g. "AAPL 10-Q p.5", "Vantage note", "Q2 FY26 call"). No preamble, no headers,
+no prose. Drop any excerpt that doesn't bear on the question or has no concrete
+figure. Never invent a number or source."""
 
 
 def _parse_bullets(text: str) -> list[str]:
