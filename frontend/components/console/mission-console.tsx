@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowCounterClockwiseIcon,
@@ -165,20 +165,110 @@ function CommandBar({
   );
 }
 
-// ---- Coverage rail (hero) ----
+// ---- Coverage rail: investment-thesis pillars (hero) ----
+
+type Question = (typeof questionsFixture.questions)[number];
+
+function QuestionRow({
+  q,
+  state,
+  followup,
+  flag,
+}: {
+  q: Question;
+  state: CoverageState;
+  followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
+  flag?: ReturnType<typeof useDiligenceDemo>['flags'][number];
+}) {
+  const meta = STATE[state];
+  return (
+    <div className="px-3 py-2">
+      <div className="flex items-start gap-2.5">
+        <motion.span
+          key={`${q.id}-${state}`}
+          initial={{ scale: 0.5 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 480, damping: 20 }}
+          className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot, meta.glow)}
+        />
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[9px] text-zinc-600">{q.id}</span>
+            <span className={cn('font-mono text-[8px] tracking-[0.14em]', meta.text)}>
+              {meta.label}
+            </span>
+            {flag && (
+              <span className="rounded-sm bg-red-500/15 px-1 font-mono text-[8px] tracking-wide text-red-400">
+                INCONSISTENCY
+              </span>
+            )}
+          </div>
+          <p
+            className={cn(
+              'mt-0.5 text-[12px] leading-snug',
+              state === 'answered' ? 'text-zinc-500' : 'text-zinc-300'
+            )}
+          >
+            {q.text}
+          </p>
+
+          <AnimatePresence>
+            {followup && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 8 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="rounded-lg border border-amber-400/30 bg-amber-400/[0.07] p-2.5">
+                  <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-amber-400">
+                    ASK NEXT
+                  </p>
+                  <p className="mt-1 text-[12px] leading-snug text-amber-100/90">{followup.text}</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          <AnimatePresence>
+            {flag && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 8 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="rounded-lg border border-red-500/30 bg-red-500/[0.07] p-2.5">
+                  <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-red-400">
+                    CONTRADICTS THE {flag.vs.toUpperCase()}
+                  </p>
+                  <p className="mt-1 text-[12px] leading-snug text-red-100/90">{flag.detail}</p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function CoverageRail({
-  questions,
+  pillars,
+  questionsById,
   coverage,
   followups,
   flags,
   allCovered,
+  activeQuestionId,
 }: {
-  questions: typeof questionsFixture.questions;
+  pillars: typeof questionsFixture.pillars;
+  questionsById: Record<string, Question>;
   coverage: Record<string, CoverageState>;
   followups: ReturnType<typeof useDiligenceDemo>['activeFollowups'];
   flags: ReturnType<typeof useDiligenceDemo>['flags'];
   allCovered: boolean;
+  activeQuestionId?: string;
 }) {
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
@@ -186,90 +276,65 @@ function CoverageRail({
   return (
     <div className="flex min-h-0 flex-col">
       <div className="mb-2 flex items-center justify-between">
-        <Label>Coverage · your questions</Label>
+        <Label>Investment thesis · coverage</Label>
         {allCovered && (
           <span className="flex items-center gap-1 font-mono text-[10px] tracking-wide text-emerald-400">
             <CheckCircleIcon weight="fill" className="size-3" /> ZERO HOLES
           </span>
         )}
       </div>
-      <div className="min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
-        {questions.map((q, i) => {
-          const s = coverage[q.id] ?? 'unanswered';
-          const meta = STATE[s];
-          const fu = fuByQ.get(q.id);
-          const flag = flagByQ.get(q.id);
+      <div className="min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1">
+        {pillars.map((pillar) => {
+          const qs = pillar.questions.map((id) => questionsById[id]).filter(Boolean);
+          const states = qs.map((q) => coverage[q.id] ?? 'unanswered');
+          const answered = states.filter((s) => s === 'answered').length;
+          const anyThin = states.some((s) => s === 'partial');
+          const allDone = qs.length > 0 && answered === qs.length;
+          const active = activeQuestionId ? pillar.questions.includes(activeQuestionId) : false;
           return (
-            <Panel
-              key={q.id}
+            <div
+              key={pillar.id}
               className={cn(
-                'p-3 transition-colors',
-                s === 'answered' && 'border-emerald-400/20',
-                s === 'partial' && 'border-amber-400/30'
+                'rounded-xl border backdrop-blur-sm transition-colors',
+                allDone
+                  ? 'border-emerald-400/25 bg-emerald-400/[0.04]'
+                  : anyThin
+                    ? 'border-amber-400/30 bg-amber-400/[0.04]'
+                    : 'border-white/[0.06] bg-white/[0.02]',
+                active && 'ring-1 ring-emerald-400/40'
               )}
             >
-              <div className="flex items-start gap-3">
-                <motion.span
-                  key={`${q.id}-${s}`}
-                  initial={{ scale: 0.5 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 480, damping: 20 }}
-                  className={cn('mt-1 size-2.5 shrink-0 rounded-full', meta.dot, meta.glow)}
-                />
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] font-semibold text-zinc-500">
-                      Q{i + 1}
-                    </span>
-                    <span className={cn('font-mono text-[9px] tracking-[0.15em]', meta.text)}>
-                      {meta.label}
-                    </span>
-                    {flag && (
-                      <span className="rounded-sm bg-red-500/15 px-1.5 font-mono text-[9px] tracking-wide text-red-400">
-                        INCONSISTENCY
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-1 text-[13px] leading-snug text-zinc-300">{q.text}</p>
+              <div className="flex items-center gap-2.5 px-3 pt-2.5 pb-2">
+                <span className="font-mono text-[10px] font-semibold text-zinc-600">
+                  {pillar.id}
+                </span>
+                <p className="flex-1 text-[12px] leading-snug font-medium text-zinc-100">
+                  {pillar.thesis}
+                </p>
+                <div className="flex items-center gap-1">
+                  {states.map((s, i) => (
+                    <span
+                      key={i}
+                      className={cn('size-1.5 rounded-full', STATE[s].dot, STATE[s].glow)}
+                    />
+                  ))}
                 </div>
+                <span className="font-mono text-[10px] text-zinc-500 tabular-nums">
+                  {answered}/{qs.length}
+                </span>
               </div>
-
-              <AnimatePresence>
-                {fu && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                    animate={{ opacity: 1, height: 'auto', marginTop: 10 }}
-                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="rounded-lg border border-amber-400/30 bg-amber-400/[0.07] p-2.5">
-                      <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-amber-400">
-                        ASK NEXT
-                      </p>
-                      <p className="mt-1 text-[13px] leading-snug text-amber-100/90">{fu.text}</p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <AnimatePresence>
-                {flag && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0, marginTop: 0 }}
-                    animate={{ opacity: 1, height: 'auto', marginTop: 10 }}
-                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="rounded-lg border border-red-500/30 bg-red-500/[0.07] p-2.5">
-                      <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-red-400">
-                        CONTRADICTS THE {flag.vs.toUpperCase()}
-                      </p>
-                      <p className="mt-1 text-[13px] leading-snug text-red-100/90">{flag.detail}</p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Panel>
+              <div className="border-t border-white/[0.04]">
+                {qs.map((q) => (
+                  <QuestionRow
+                    key={q.id}
+                    q={q}
+                    state={coverage[q.id] ?? 'unanswered'}
+                    followup={fuByQ.get(q.id)}
+                    flag={flagByQ.get(q.id)}
+                  />
+                ))}
+              </div>
+            </div>
           );
         })}
       </div>
@@ -524,6 +589,20 @@ export function MissionConsole() {
   const { tally } = state;
   const allCovered = state.done && tally.answered === tally.total;
 
+  const questionsById = useMemo(
+    () => Object.fromEntries(questionsFixture.questions.map((q) => [q.id, q])),
+    []
+  );
+  // The pillar whose question is being addressed right now (last researcher turn).
+  let activeQuestionId: string | undefined;
+  for (let i = state.transcript.length - 1; i >= 0; i--) {
+    const t = state.transcript[i];
+    if (t.speaker === 'researcher' && t.expected?.addresses?.length) {
+      activeQuestionId = t.expected.addresses[0];
+      break;
+    }
+  }
+
   const { play, restart } = state.controls;
   useEffect(() => {
     play();
@@ -561,11 +640,13 @@ export function MissionConsole() {
 
         <main className="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
           <CoverageRail
-            questions={questionsFixture.questions}
+            pillars={questionsFixture.pillars}
+            questionsById={questionsById}
             coverage={state.coverage}
             followups={state.activeFollowups}
             flags={state.flags}
             allCovered={allCovered}
+            activeQuestionId={activeQuestionId}
           />
           <CallStream transcript={state.transcript} playing={state.playing} />
           <section className="flex min-h-0 flex-col gap-4">

@@ -24,6 +24,20 @@
     "digital_sales_mix": "~35%",
     "long_term_unit_target": "~1,000 CAVA restaurants by 2032"
   },
+  "pillars": [
+    { "id": "P1", "thesis": "A long, derisked runway to ~1,000 units", "questions": ["Q1", "Q8"] },
+    { "id": "P2", "thesis": "New-unit economics hold as they scale", "questions": ["Q2", "Q3"] },
+    {
+      "id": "P3",
+      "thesis": "Same-restaurant sales are high-quality, traffic-led",
+      "questions": ["Q4", "Q5"]
+    },
+    {
+      "id": "P4",
+      "thesis": "A defensible category lead, with optionality",
+      "questions": ["Q6", "Q7"]
+    }
+  ],
   "questions": [
     {
       "id": "Q1",
