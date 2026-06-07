@@ -1,0 +1,62 @@
+[
+  {
+    "quarter": 1,
+    "fiscalYear": 2026,
+    "date": "2026-05-19"
+  },
+  {
+    "quarter": 4,
+    "fiscalYear": 2025,
+    "date": "2026-02-24"
+  },
+  {
+    "quarter": 3,
+    "fiscalYear": 2025,
+    "date": "2025-11-04"
+  },
+  {
+    "quarter": 2,
+    "fiscalYear": 2025,
+    "date": "2025-08-13"
+  },
+  {
+    "quarter": 1,
+    "fiscalYear": 2025,
+    "date": "2025-05-15"
+  },
+  {
+    "quarter": 4,
+    "fiscalYear": 2024,
+    "date": "2025-02-25"
+  },
+  {
+    "quarter": 3,
+    "fiscalYear": 2024,
+    "date": "2024-11-12"
+  },
+  {
+    "quarter": 2,
+    "fiscalYear": 2024,
+    "date": "2024-08-22"
+  },
+  {
+    "quarter": 1,
+    "fiscalYear": 2024,
+    "date": "2024-05-28"
+  },
+  {
+    "quarter": 4,
+    "fiscalYear": 2023,
+    "date": "2024-02-27"
+  },
+  {
+    "quarter": 3,
+    "fiscalYear": 2023,
+    "date": "2023-11-08"
+  },
+  {
+    "quarter": 2,
+    "fiscalYear": 2023,
+    "date": "2023-08-17"
+  }
+]

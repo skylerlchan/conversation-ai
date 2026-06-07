@@ -1,0 +1,722 @@
+[
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-06-05 00:00:00",
+    "acceptedDate": "2026-06-05 16:00:14",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026041187/0001628280-26-041187-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1019438/000162828026041187/xslF345X06/wk-form4_1780689611.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-06-02 00:00:00",
+    "acceptedDate": "2026-06-02 16:10:17",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026039792/0001628280-26-039792-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026039792/xslF345X06/wk-form4_1780431012.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-06-02 00:00:00",
+    "acceptedDate": "2026-06-02 16:10:09",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026039791/0001628280-26-039791-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1019438/000162828026039791/xslF345X06/wk-form4_1780431004.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-29 00:00:00",
+    "acceptedDate": "2026-05-29 16:04:03",
+    "formType": "3",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026039140/0001628280-26-039140-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1019438/000162828026039140/xslF345X06/wk-form3_1780085039.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-28 00:00:00",
+    "acceptedDate": "2026-05-28 16:02:26",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026038785/0001628280-26-038785-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026038785/xslF345X06/wk-form4_1779998544.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-22 00:00:00",
+    "acceptedDate": "2026-05-22 16:28:32",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026037745/0001628280-26-037745-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026037745/xslF345X06/wk-form4_1779481710.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-22 00:00:00",
+    "acceptedDate": "2026-05-22 16:28:26",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026037744/0001628280-26-037744-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026037744/xslF345X06/wk-form4_1779481704.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-21 00:00:00",
+    "acceptedDate": "2026-05-21 20:26:25",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726004900/0001950047-26-004900-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726004900/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-21 00:00:00",
+    "acceptedDate": "2026-05-21 20:17:50",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726004893/0001950047-26-004893-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726004893/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-21 00:00:00",
+    "acceptedDate": "2026-05-21 20:14:04",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026037273/0001628280-26-037273-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026037273/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-20 00:00:00",
+    "acceptedDate": "2026-05-19 18:07:41",
+    "formType": "10-Q",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026036625/0001628280-26-036625-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026036625/cava-20260419.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-19 00:00:00",
+    "acceptedDate": "2026-05-19 16:17:46",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026036461/0001628280-26-036461-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026036461/earningsrelease2026q1.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-18 00:00:00",
+    "acceptedDate": "2026-05-18 13:10:26",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000110944826000144/0001109448-26-000144-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1109448/000110944826000144/xslSCHEDULE_13G_X02/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-14 00:00:00",
+    "acceptedDate": "2026-05-14 10:19:20",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000142284826000073/0001422848-26-000073-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1422848/000142284826000073/xslSCHEDULE_13G_X02/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-12 00:00:00",
+    "acceptedDate": "2026-05-12 16:12:32",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026034110/0001628280-26-034110-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026034110/xslF345X06/wk-form4_1778616749.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-11 00:00:00",
+    "acceptedDate": "2026-05-11 20:10:40",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026033472/0001628280-26-033472-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026033472/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-05-06 00:00:00",
+    "acceptedDate": "2026-05-06 11:06:14",
+    "formType": "SC 13G",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000031506626001145/0000315066-26-001145-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/315066/000031506626001145/xslSCHEDULE_13G_X02/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-04-24 00:00:00",
+    "acceptedDate": "2026-04-24 16:23:01",
+    "formType": "ARS",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026027230/0001628280-26-027230-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026027230/ars2025.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-04-24 00:00:00",
+    "acceptedDate": "2026-04-24 16:22:03",
+    "formType": "DEFA14A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026027229/0001628280-26-027229-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026027229/additionalmaterials.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-04-24 00:00:00",
+    "acceptedDate": "2026-04-24 16:21:24",
+    "formType": "DEF 14A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026027224/0001628280-26-027224-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026027224/cava-20260424.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-04-21 00:00:00",
+    "acceptedDate": "2026-04-21 16:15:26",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026026283/0001628280-26-026283-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026026283/cava-20260416.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-26 00:00:00",
+    "acceptedDate": "2026-03-26 17:13:13",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000010290926000922/0000102909-26-000922-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/102909/000010290926000922/xslSCHEDULE_13G_X02/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-25 00:00:00",
+    "acceptedDate": "2026-03-25 13:54:36",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026020983/0001628280-26-020983-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026020983/exhibit101cava-amendmentno.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-11 00:00:00",
+    "acceptedDate": "2026-03-11 16:12:01",
+    "formType": "3",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026016817/0001628280-26-016817-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026016817/xslF345X02/wk-form3_1773259916.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-06 00:00:00",
+    "acceptedDate": "2026-03-06 16:07:27",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026015612/0001628280-26-015612-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026015612/xslF345X05/wk-form4_1772831244.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-05 00:00:00",
+    "acceptedDate": "2026-03-05 21:33:14",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726002275/0001950047-26-002275-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726002275/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-02 00:00:00",
+    "acceptedDate": "2026-03-02 16:35:35",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013276/0001628280-26-013276-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013276/xslF345X05/wk-form4_1772487332.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-02 00:00:00",
+    "acceptedDate": "2026-03-02 16:35:27",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013274/0001628280-26-013274-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013274/xslF345X05/wk-form4_1772487324.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-02 00:00:00",
+    "acceptedDate": "2026-03-02 16:35:19",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013272/0001628280-26-013272-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013272/xslF345X05/wk-form4_1772487316.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-02 00:00:00",
+    "acceptedDate": "2026-03-02 16:35:11",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013271/0001628280-26-013271-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013271/xslF345X05/wk-form4_1772487308.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-02 00:00:00",
+    "acceptedDate": "2026-03-02 16:35:04",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013270/0001628280-26-013270-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013270/xslF345X05/wk-form4_1772487300.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-03-02 00:00:00",
+    "acceptedDate": "2026-03-02 16:34:54",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026013268/0001628280-26-013268-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1635451/000162828026013268/xslF345X05/wk-form4_1772487292.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-02-26 00:00:00",
+    "acceptedDate": "2026-02-26 21:13:36",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726001832/0001950047-26-001832-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726001832/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-02-26 00:00:00",
+    "acceptedDate": "2026-02-26 21:11:59",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726001827/0001950047-26-001827-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000195004726001827/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-02-25 00:00:00",
+    "acceptedDate": "2026-02-24 18:08:34",
+    "formType": "10-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026011296/0001628280-26-011296-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026011296/cava-20251228.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-02-24 00:00:00",
+    "acceptedDate": "2026-02-24 16:12:01",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026011087/0001628280-26-011087-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026011087/earningsrelease2025q4.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-02-17 00:00:00",
+    "acceptedDate": "2026-02-17 16:10:01",
+    "formType": "SC 13G",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000110944826000041/0001109448-26-000041-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1109448/000110944826000041/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-02-12 00:00:00",
+    "acceptedDate": "2026-02-12 10:25:43",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000142284826000026/0001422848-26-000026-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1422848/000142284826000026/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-29 00:00:00",
+    "acceptedDate": "2026-01-29 16:10:47",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004129/0001628280-26-004129-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1635451/000162828026004129/xslF345X05/wk-form4_1769721045.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-29 00:00:00",
+    "acceptedDate": "2026-01-29 16:10:39",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004128/0001628280-26-004128-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004128/xslF345X05/wk-form4_1769721037.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-29 00:00:00",
+    "acceptedDate": "2026-01-29 16:10:31",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004127/0001628280-26-004127-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004127/xslF345X05/wk-form4_1769721029.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-29 00:00:00",
+    "acceptedDate": "2026-01-29 16:10:23",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004126/0001628280-26-004126-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004126/xslF345X05/wk-form4_1769721021.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-29 00:00:00",
+    "acceptedDate": "2026-01-29 16:10:15",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004124/0001628280-26-004124-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004124/xslF345X05/wk-form4_1769721012.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-29 00:00:00",
+    "acceptedDate": "2026-01-29 16:10:08",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004123/0001628280-26-004123-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026004123/xslF345X05/wk-form4_1769721004.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-27 00:00:00",
+    "acceptedDate": "2026-01-27 21:18:05",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003619/0001628280-26-003619-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003619/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-27 00:00:00",
+    "acceptedDate": "2026-01-27 21:16:06",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003617/0001628280-26-003617-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003617/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-27 00:00:00",
+    "acceptedDate": "2026-01-27 21:14:32",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003614/0001628280-26-003614-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003614/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-27 00:00:00",
+    "acceptedDate": "2026-01-27 21:12:26",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003611/0001628280-26-003611-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003611/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-27 00:00:00",
+    "acceptedDate": "2026-01-27 21:10:49",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003607/0001628280-26-003607-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003607/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-27 00:00:00",
+    "acceptedDate": "2026-01-27 21:07:59",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003604/0001628280-26-003604-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003604/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-23 00:00:00",
+    "acceptedDate": "2026-01-23 16:14:39",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003293/0001628280-26-003293-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003293/xslF345X05/wk-form4_1769202876.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-23 00:00:00",
+    "acceptedDate": "2026-01-23 16:14:31",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003292/0001628280-26-003292-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003292/xslF345X05/wk-form4_1769202866.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-23 00:00:00",
+    "acceptedDate": "2026-01-23 16:14:21",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003291/0001628280-26-003291-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1635451/000162828026003291/xslF345X05/wk-form4_1769202858.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-23 00:00:00",
+    "acceptedDate": "2026-01-23 16:14:14",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003290/0001628280-26-003290-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003290/xslF345X05/wk-form4_1769202850.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-23 00:00:00",
+    "acceptedDate": "2026-01-23 16:14:06",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003289/0001628280-26-003289-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026003289/xslF345X05/wk-form4_1769202842.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-21 00:00:00",
+    "acceptedDate": "2026-01-21 22:26:13",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002931/0001628280-26-002931-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002931/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-21 00:00:00",
+    "acceptedDate": "2026-01-21 22:19:44",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002928/0001628280-26-002928-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002928/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-21 00:00:00",
+    "acceptedDate": "2026-01-21 22:13:25",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002924/0001628280-26-002924-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002924/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-21 00:00:00",
+    "acceptedDate": "2026-01-21 22:06:11",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002912/0001628280-26-002912-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002912/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-21 00:00:00",
+    "acceptedDate": "2026-01-21 21:57:58",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002907/0001628280-26-002907-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026002907/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2026-01-12 00:00:00",
+    "acceptedDate": "2026-01-12 16:10:18",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026001818/0001628280-26-001818-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828026001818/cava-20260112.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-12-17 00:00:00",
+    "acceptedDate": "2025-12-17 16:07:54",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025057629/0001628280-25-057629-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025057629/xslF345X05/wk-form4_1766005671.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-28 00:00:00",
+    "acceptedDate": "2025-11-28 13:03:26",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025054249/0001628280-25-054249-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025054249/xslF345X05/wk-form4_1764353003.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-26 00:00:00",
+    "acceptedDate": "2025-11-26 21:13:51",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000195004725009412/0001950047-25-009412-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000195004725009412/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-13 00:00:00",
+    "acceptedDate": "2025-11-13 10:29:34",
+    "formType": "SC 13G",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000142284825000240/0001422848-25-000240-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1422848/000142284825000240/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-12 00:00:00",
+    "acceptedDate": "2025-11-12 16:30:15",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025051630/0001628280-25-051630-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025051630/xslF345X05/wk-form4_1762983005.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-07 00:00:00",
+    "acceptedDate": "2025-11-07 14:17:54",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000113777425000183/0001137774-25-000183-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1137774/000113777425000183/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-05 00:00:00",
+    "acceptedDate": "2025-11-05 13:26:46",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000005341725000099/0000053417-25-000099-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/53417/000005341725000099/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-05 00:00:00",
+    "acceptedDate": "2025-11-04 18:10:27",
+    "formType": "10-Q",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025049080/0001628280-25-049080-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025049080/cava-20251005.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-11-04 00:00:00",
+    "acceptedDate": "2025-11-04 16:17:13",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025048864/0001628280-25-048864-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025048864/earningsrelease2025q3.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-10-30 00:00:00",
+    "acceptedDate": "2025-10-30 14:57:21",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000010290925000121/0000102909-25-000121-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/102909/000010290925000121/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-10-17 00:00:00",
+    "acceptedDate": "2025-10-17 18:40:58",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000201238325002847/0002012383-25-002847-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000201238325002847/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-10-01 00:00:00",
+    "acceptedDate": "2025-10-01 16:10:26",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025043412/0001628280-25-043412-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025043412/xslF345X05/wk-form4_1759349423.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-09-29 00:00:00",
+    "acceptedDate": "2025-09-29 20:18:31",
+    "formType": "144",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025043092/0001628280-25-043092-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025043092/xsl144X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-09-26 00:00:00",
+    "acceptedDate": "2025-09-26 16:17:01",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025042935/0001628280-25-042935-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025042935/cava-20250923.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-09-22 00:00:00",
+    "acceptedDate": "2025-09-22 15:00:39",
+    "formType": "4",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025042299/0001628280-25-042299-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000162828025042299/xslF345X05/wk-form4_1758567636.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-08-13 00:00:00",
+    "acceptedDate": "2025-08-12 18:16:40",
+    "formType": "10-Q",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000163943825000007/0001639438-25-000007-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000163943825000007/cava-20250713.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-08-12 00:00:00",
+    "acceptedDate": "2025-08-12 16:35:44",
+    "formType": "8-K",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000163943825000006/0001639438-25-000006-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000163943825000006/earningsrelease2025q2.htm"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-08-06 00:00:00",
+    "acceptedDate": "2025-08-06 16:14:33",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000005341725000081/0000053417-25-000081-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/53417/000005341725000081/xslSCHEDULE_13G_X01/primary_doc.xml"
+  },
+  {
+    "symbol": "CAVA",
+    "cik": "0001639438",
+    "filingDate": "2025-08-06 00:00:00",
+    "acceptedDate": "2025-08-06 13:47:09",
+    "formType": "SC 13G/A",
+    "link": "https://www.sec.gov/Archives/edgar/data/1639438/000113777425000121/0001137774-25-000121-index.htm",
+    "finalLink": "https://www.sec.gov/Archives/edgar/data/1639438/000113777425000121/xslSCHEDULE_13G_X01/primary_doc.xml"
+  }
+]

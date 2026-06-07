@@ -1,0 +1,332 @@
+{
+  "company": "CAVA",
+  "voices": {
+    "analyst": "Samantha",
+    "researcher": "Daniel"
+  },
+  "rate_wpm": 178,
+  "gap_seconds": 0.65,
+  "total_seconds": 251.61,
+  "turns": [
+    {
+      "t": 1,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_01_analyst.wav",
+      "start_sec": 0.0,
+      "duration_sec": 10.98,
+      "addresses": [
+        "Q1"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Thanks for making time. Let's start with the build. Your note has CAVA at about seventeen percent unit growth next year. How derisked is that, and how much of the pipeline is actually signed?"
+    },
+    {
+      "t": 2,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_02_researcher.wav",
+      "start_sec": 11.88,
+      "duration_sec": 16.62,
+      "addresses": [
+        "Q1"
+      ],
+      "coverage": {
+        "Q1": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "The FY26 class is effectively derisked. North of ninety percent of next year's openings are signed leases, and they've got line of sight roughly two years out as they push into inland markets. Pipeline depth isn't the constraint here, it's their own build-and-operate cadence."
+    },
+    {
+      "t": 3,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_03_analyst.wav",
+      "start_sec": 29.41,
+      "duration_sec": 7.89,
+      "addresses": [
+        "Q3"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Good. On margins, can the twenty-five percent restaurant-level margin hold with wage inflation, the steak rollout, and new-unit drag?"
+    },
+    {
+      "t": 4,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_04_researcher.wav",
+      "start_sec": 38.2,
+      "duration_sec": 15.05,
+      "addresses": [
+        "Q3"
+      ],
+      "coverage": {
+        "Q3": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "I think so. Steak is accretive to check even if the food cost is a touch higher, pricing has more than covered wage inflation, and the only real drag is the new-unit mix, which is already in the model. Fleet margin holds around twenty-four to twenty-five."
+    },
+    {
+      "t": 5,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_05_analyst.wav",
+      "start_sec": 54.15,
+      "duration_sec": 9.63,
+      "addresses": [
+        "Q2"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Let's go deeper on the new units themselves. Are the recent vintages opening at the AUV you model, and how are the 2023 and 2024 classes maturing?"
+    },
+    {
+      "t": 6,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_06_researcher.wav",
+      "start_sec": 64.68,
+      "duration_sec": 13.84,
+      "addresses": [
+        "Q2"
+      ],
+      "coverage": {
+        "Q2": "partial"
+      },
+      "contradiction": false,
+      "followup": true,
+      "is_followup": false,
+      "text": "Yeah, the new classes are opening strong, we're really encouraged. Returns are healthy, low-teens cash-on-cash early on, and the team feels great about the cohort. It's honestly one of the best new-unit stories in the whole group."
+    },
+    {
+      "t": 7,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_07_analyst.wav",
+      "start_sec": 79.42,
+      "duration_sec": 14.8,
+      "addresses": [
+        "Q2"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": true,
+      "text": "Let me pin that down. Your note models a two-point-six million new-unit AUV and about twenty percent year-one restaurant margin. Is the 2024 class actually opening at two-point-six, and what's the year-one restaurant-level margin on that specific cohort?"
+    },
+    {
+      "t": 8,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_08_researcher.wav",
+      "start_sec": 95.11,
+      "duration_sec": 20.33,
+      "addresses": [
+        "Q2"
+      ],
+      "coverage": {
+        "Q2": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Fair. The 2024 class is opening a touch below the mature fleet, call it around two-point-four million AUV, not two-point-six, and year-one restaurant-level margin is running high-teens, roughly eighteen percent, ramping to the low-twenties by year two. So a hair light versus the model, but the ramp shape is intact."
+    },
+    {
+      "t": 9,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_09_analyst.wav",
+      "start_sec": 116.34,
+      "duration_sec": 7.25,
+      "addresses": [
+        "Q4"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "That's the kind of honesty I want. On the comp, what's the traffic versus price split right now? Is traffic still positive?"
+    },
+    {
+      "t": 10,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_10_researcher.wav",
+      "start_sec": 124.5,
+      "duration_sec": 13.42,
+      "addresses": [
+        "Q4"
+      ],
+      "coverage": {
+        "Q4": "answered"
+      },
+      "contradiction": true,
+      "followup": false,
+      "is_followup": false,
+      "text": "Honestly, most of this year's comp has been price. They took double-digit menu price over the last few quarters, and traffic's been roughly flat, slightly positive in the best quarters, but the heavy lifting is price."
+    },
+    {
+      "t": 11,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_11_analyst.wav",
+      "start_sec": 138.82,
+      "duration_sec": 7.37,
+      "addresses": [
+        "Q5"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Okay, that changes how I read the comp. On frequency, where's the loyalty relaunch, and what's the digital mix doing?"
+    },
+    {
+      "t": 12,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_12_researcher.wav",
+      "start_sec": 147.09,
+      "duration_sec": 14.94,
+      "addresses": [
+        "Q5"
+      ],
+      "coverage": {
+        "Q5": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Loyalty relaunch is live, it's points-based now, more flexible than the old threshold model, and the early frequency data is encouraging. Digital's holding around a third of sales, roughly thirty-five percent, which is a healthy margin mix."
+    },
+    {
+      "t": 13,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_13_analyst.wav",
+      "start_sec": 162.93,
+      "duration_sec": 8.22,
+      "addresses": [
+        "Q6"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "And the moat. How defensible is the Mediterranean lead against Chipotle, Sweetgreen, the new entrants? How much pricing power is left?"
+    },
+    {
+      "t": 14,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_14_researcher.wav",
+      "start_sec": 172.05,
+      "duration_sec": 18.67,
+      "addresses": [
+        "Q6"
+      ],
+      "coverage": {
+        "Q6": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "The category lead is real, they're effectively defining Mediterranean fast-casual the way Chipotle did with burritos, and the new entrants are subscale on real estate and supply chain. On pricing, after the double-digit increases I'd say they're closer to the end of the easy pricing than the start. That's the watch item."
+    },
+    {
+      "t": 15,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_15_analyst.wav",
+      "start_sec": 191.62,
+      "duration_sec": 7.05,
+      "addresses": [
+        "Q8"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Last of my main ones, is all this growth self-funded, or do they need to raise? Any appetite for M&A or buybacks?"
+    },
+    {
+      "t": 16,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_16_researcher.wav",
+      "start_sec": 199.57,
+      "duration_sec": 14.69,
+      "addresses": [
+        "Q8"
+      ],
+      "coverage": {
+        "Q8": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Self-funded. Operating cash flow covers the build, no equity raise needed in the model, and the balance sheet's clean. No real M&A or buyback appetite, they're reinvesting everything into new units, which is the right call at these returns."
+    },
+    {
+      "t": 17,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_17_analyst.wav",
+      "start_sec": 215.16,
+      "duration_sec": 10.99,
+      "addresses": [
+        "Q7"
+      ],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Before we run out of time, one I haven't hit: catering, and any newer formats. What's the read on the catering rollout, and is there anything on smaller-format or new-daypart prototypes?"
+    },
+    {
+      "t": 18,
+      "speaker": "researcher",
+      "voice": "Daniel",
+      "clip": "turns/turn_18_researcher.wav",
+      "start_sec": 227.04,
+      "duration_sec": 16.26,
+      "addresses": [
+        "Q7"
+      ],
+      "coverage": {
+        "Q7": "answered"
+      },
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "Catering's an underrated layer, it's growing nicely as an incremental occasion with attractive economics, and they're testing a smaller-format prototype and a new-daypart, breakfast-style concept. But those are early and not in anyone's numbers yet, so call it free optionality."
+    },
+    {
+      "t": 19,
+      "speaker": "analyst",
+      "voice": "Samantha",
+      "clip": "turns/turn_19_analyst.wav",
+      "start_sec": 244.2,
+      "duration_sec": 7.41,
+      "addresses": [],
+      "coverage": null,
+      "contradiction": false,
+      "followup": false,
+      "is_followup": false,
+      "text": "That's everything on my list. I appreciate you being straight on the new-unit AUV and the price-versus-traffic mix, that was really helpful."
+    }
+  ]
+}

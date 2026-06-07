@@ -27,3 +27,8 @@ Thumbs.db
 
 # gstack (local tooling/session state)
 .gstack/
+
+# Generated demo audio — regenerate via agent-py/demo/generate_call_audio.py.
+# Keep the playable mp3 + manifest tracked; ignore the bulky uncompressed wavs.
+agent-py/demo/audio/*.wav
+agent-py/demo/audio/turns/

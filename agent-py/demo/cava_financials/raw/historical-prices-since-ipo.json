@@ -1,0 +1,4472 @@
+[
+  {
+    "symbol": "CAVA",
+    "date": "2026-06-05",
+    "price": 72.6,
+    "volume": 1918343
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-06-04",
+    "price": 71.75,
+    "volume": 3103700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-06-03",
+    "price": 71.33,
+    "volume": 2891300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-06-02",
+    "price": 72.44,
+    "volume": 2102300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-06-01",
+    "price": 74.67,
+    "volume": 2922624
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-29",
+    "price": 77.66,
+    "volume": 2935251
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-28",
+    "price": 78.2,
+    "volume": 3300102
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-27",
+    "price": 82.2,
+    "volume": 2802196
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-26",
+    "price": 80.32,
+    "volume": 2367625
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-22",
+    "price": 80.42,
+    "volume": 2147077
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-21",
+    "price": 81.27,
+    "volume": 3414525
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-20",
+    "price": 80.53,
+    "volume": 11328500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-19",
+    "price": 78.12,
+    "volume": 7581125
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-18",
+    "price": 79.89,
+    "volume": 4119700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-15",
+    "price": 76.87,
+    "volume": 1940100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-14",
+    "price": 76.09,
+    "volume": 2355800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-13",
+    "price": 72.3,
+    "volume": 3154028
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-12",
+    "price": 77.18,
+    "volume": 3558030
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-11",
+    "price": 79.99,
+    "volume": 3713625
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-08",
+    "price": 79.4,
+    "volume": 4022000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-07",
+    "price": 84.47,
+    "volume": 4948400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-06",
+    "price": 89.48,
+    "volume": 2085511
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-05",
+    "price": 90.34,
+    "volume": 1369749
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-04",
+    "price": 89.19,
+    "volume": 1846700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-05-01",
+    "price": 90.98,
+    "volume": 2653100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-30",
+    "price": 93.41,
+    "volume": 2425105
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-29",
+    "price": 91.11,
+    "volume": 1891507
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-28",
+    "price": 91.04,
+    "volume": 3064228
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-27",
+    "price": 94.23,
+    "volume": 1625900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-24",
+    "price": 95.68,
+    "volume": 2453336
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-23",
+    "price": 93.11,
+    "volume": 3280200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-22",
+    "price": 96.75,
+    "volume": 2966847
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-21",
+    "price": 96.27,
+    "volume": 2485026
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-20",
+    "price": 97.39,
+    "volume": 3090214
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-17",
+    "price": 94.78,
+    "volume": 3520448
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-16",
+    "price": 91.24,
+    "volume": 3178529
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-15",
+    "price": 88.44,
+    "volume": 2011500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-14",
+    "price": 88.18,
+    "volume": 2670631
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-13",
+    "price": 84.21,
+    "volume": 1803800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-10",
+    "price": 84.94,
+    "volume": 2067943
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-09",
+    "price": 86.15,
+    "volume": 1787833
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-08",
+    "price": 86.21,
+    "volume": 2781529
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-07",
+    "price": 83.42,
+    "volume": 1772141
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-06",
+    "price": 82.13,
+    "volume": 1892420
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-02",
+    "price": 79.63,
+    "volume": 2808207
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-04-01",
+    "price": 80.14,
+    "volume": 2382628
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-31",
+    "price": 80.9,
+    "volume": 2762700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-30",
+    "price": 76.94,
+    "volume": 2717525
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-27",
+    "price": 75.42,
+    "volume": 3857100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-26",
+    "price": 78.9,
+    "volume": 2872800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-25",
+    "price": 80.29,
+    "volume": 4988600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-24",
+    "price": 84.43,
+    "volume": 2699113
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-23",
+    "price": 87.07,
+    "volume": 2697820
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-20",
+    "price": 84.27,
+    "volume": 3253711
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-19",
+    "price": 87.64,
+    "volume": 3282148
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-18",
+    "price": 88.93,
+    "volume": 3019616
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-17",
+    "price": 90.52,
+    "volume": 3811342
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-16",
+    "price": 87.25,
+    "volume": 3933412
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-13",
+    "price": 82,
+    "volume": 2319100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-12",
+    "price": 80.35,
+    "volume": 2447500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-11",
+    "price": 80.5,
+    "volume": 2223207
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-10",
+    "price": 80.02,
+    "volume": 3305040
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-09",
+    "price": 81.81,
+    "volume": 2678715
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-06",
+    "price": 78.59,
+    "volume": 3196102
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-05",
+    "price": 79.37,
+    "volume": 3092049
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-04",
+    "price": 79.52,
+    "volume": 2308337
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-03",
+    "price": 77.07,
+    "volume": 3757939
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-03-02",
+    "price": 78.49,
+    "volume": 5061900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-27",
+    "price": 82.47,
+    "volume": 3881426
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-26",
+    "price": 84.74,
+    "volume": 6898300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-25",
+    "price": 85.67,
+    "volume": 17767000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-24",
+    "price": 67.8,
+    "volume": 4816242
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-23",
+    "price": 68.35,
+    "volume": 3903415
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-20",
+    "price": 70.11,
+    "volume": 2755113
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-19",
+    "price": 68.44,
+    "volume": 3231282
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-18",
+    "price": 67.73,
+    "volume": 3338500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-17",
+    "price": 63.31,
+    "volume": 3186100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-13",
+    "price": 63.5,
+    "volume": 2956291
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-12",
+    "price": 63.61,
+    "volume": 2407517
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-11",
+    "price": 67.37,
+    "volume": 2601400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-10",
+    "price": 68.93,
+    "volume": 2519200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-09",
+    "price": 72.48,
+    "volume": 3547200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-06",
+    "price": 69.96,
+    "volume": 4811000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-05",
+    "price": 64.55,
+    "volume": 3114831
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-04",
+    "price": 65.41,
+    "volume": 4298400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-03",
+    "price": 60.89,
+    "volume": 3035014
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-02-02",
+    "price": 59.6,
+    "volume": 3500518
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-30",
+    "price": 60.62,
+    "volume": 2881700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-29",
+    "price": 63.03,
+    "volume": 2830200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-28",
+    "price": 62.7,
+    "volume": 2746805
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-27",
+    "price": 62.33,
+    "volume": 2622000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-26",
+    "price": 62.55,
+    "volume": 4183600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-23",
+    "price": 66.32,
+    "volume": 2764131
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-22",
+    "price": 66.09,
+    "volume": 3507244
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-21",
+    "price": 66.92,
+    "volume": 5001216
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-20",
+    "price": 69.05,
+    "volume": 5398406
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-16",
+    "price": 72.09,
+    "volume": 2130431
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-15",
+    "price": 72,
+    "volume": 2917600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-14",
+    "price": 70.57,
+    "volume": 2531007
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-13",
+    "price": 68.52,
+    "volume": 3206503
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-12",
+    "price": 70.7,
+    "volume": 4281611
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-09",
+    "price": 70.86,
+    "volume": 3309000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-08",
+    "price": 69.6,
+    "volume": 3617024
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-07",
+    "price": 67.9,
+    "volume": 3505546
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-06",
+    "price": 67.11,
+    "volume": 5741100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-05",
+    "price": 63.48,
+    "volume": 6339227
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2026-01-02",
+    "price": 60.55,
+    "volume": 4237707
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-31",
+    "price": 58.69,
+    "volume": 2877310
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-30",
+    "price": 58.34,
+    "volume": 3395224
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-29",
+    "price": 59.96,
+    "volume": 3775410
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-26",
+    "price": 60.15,
+    "volume": 2963534
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-24",
+    "price": 61.72,
+    "volume": 2857900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-23",
+    "price": 59.35,
+    "volume": 2723400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-22",
+    "price": 58.04,
+    "volume": 2937507
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-19",
+    "price": 56.91,
+    "volume": 4725615
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-18",
+    "price": 56.04,
+    "volume": 5118549
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-17",
+    "price": 53.12,
+    "volume": 2930748
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-16",
+    "price": 52.72,
+    "volume": 2336200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-15",
+    "price": 51.92,
+    "volume": 2920508
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-12",
+    "price": 53.15,
+    "volume": 4228400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-11",
+    "price": 52.65,
+    "volume": 2702300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-10",
+    "price": 53.09,
+    "volume": 3344643
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-09",
+    "price": 52.9,
+    "volume": 3042500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-08",
+    "price": 53.85,
+    "volume": 2482139
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-05",
+    "price": 53.37,
+    "volume": 3448034
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-04",
+    "price": 54.48,
+    "volume": 2836100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-03",
+    "price": 54.49,
+    "volume": 5319500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-02",
+    "price": 52.73,
+    "volume": 4573129
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-12-01",
+    "price": 51.01,
+    "volume": 7620117
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-28",
+    "price": 48.89,
+    "volume": 1318600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-26",
+    "price": 49.65,
+    "volume": 4609349
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-25",
+    "price": 48.55,
+    "volume": 3571700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-24",
+    "price": 46.8,
+    "volume": 4668900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-21",
+    "price": 48.92,
+    "volume": 9216121
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-20",
+    "price": 43.59,
+    "volume": 5258744
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-19",
+    "price": 45.47,
+    "volume": 3097500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-18",
+    "price": 45.05,
+    "volume": 4293134
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-17",
+    "price": 45.23,
+    "volume": 4509800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-14",
+    "price": 47.22,
+    "volume": 3623648
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-13",
+    "price": 48.2,
+    "volume": 3273900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-12",
+    "price": 48.75,
+    "volume": 4023800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-11",
+    "price": 49.25,
+    "volume": 3114420
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-10",
+    "price": 49.66,
+    "volume": 4364900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-07",
+    "price": 48.64,
+    "volume": 5612807
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-06",
+    "price": 46.59,
+    "volume": 6045004
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-05",
+    "price": 50.37,
+    "volume": 12518200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-04",
+    "price": 51.7,
+    "volume": 7681500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-11-03",
+    "price": 52.61,
+    "volume": 6010903
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-31",
+    "price": 53.73,
+    "volume": 4876040
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-30",
+    "price": 53.7,
+    "volume": 10667737
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-29",
+    "price": 60.47,
+    "volume": 5538500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-28",
+    "price": 62.14,
+    "volume": 2449532
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-27",
+    "price": 62.94,
+    "volume": 3190600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-24",
+    "price": 63.6,
+    "volume": 1898300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-23",
+    "price": 64.22,
+    "volume": 2142600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-22",
+    "price": 64.35,
+    "volume": 2026633
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-21",
+    "price": 65.47,
+    "volume": 3023300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-20",
+    "price": 62.29,
+    "volume": 2097907
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-17",
+    "price": 62.86,
+    "volume": 3642800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-16",
+    "price": 63.36,
+    "volume": 2446125
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-15",
+    "price": 63.79,
+    "volume": 2151245
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-14",
+    "price": 64.71,
+    "volume": 3579000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-13",
+    "price": 63.33,
+    "volume": 3027300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-10",
+    "price": 62.15,
+    "volume": 2965519
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-09",
+    "price": 65.03,
+    "volume": 7178515
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-08",
+    "price": 63.16,
+    "volume": 3045200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-07",
+    "price": 61.63,
+    "volume": 3395500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-06",
+    "price": 63.8,
+    "volume": 2930723
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-03",
+    "price": 63.53,
+    "volume": 4108000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-02",
+    "price": 63.24,
+    "volume": 4578941
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-10-01",
+    "price": 61.67,
+    "volume": 3745034
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-30",
+    "price": 60.41,
+    "volume": 5537200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-29",
+    "price": 58.76,
+    "volume": 8250527
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-26",
+    "price": 62.61,
+    "volume": 3355200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-25",
+    "price": 62.61,
+    "volume": 3687843
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-24",
+    "price": 63.42,
+    "volume": 5171901
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-23",
+    "price": 65.14,
+    "volume": 3738200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-22",
+    "price": 65.53,
+    "volume": 3187700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-19",
+    "price": 63.53,
+    "volume": 6604300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-18",
+    "price": 63.56,
+    "volume": 3345508
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-17",
+    "price": 62.39,
+    "volume": 3769022
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-16",
+    "price": 63.08,
+    "volume": 4164030
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-15",
+    "price": 62.54,
+    "volume": 5226800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-12",
+    "price": 63.63,
+    "volume": 3307710
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-11",
+    "price": 64.32,
+    "volume": 4549600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-10",
+    "price": 65.16,
+    "volume": 2954200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-09",
+    "price": 65.28,
+    "volume": 4671109
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-08",
+    "price": 65.34,
+    "volume": 4350330
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-05",
+    "price": 66.63,
+    "volume": 2997000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-04",
+    "price": 65.96,
+    "volume": 2602100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-03",
+    "price": 65.91,
+    "volume": 3038245
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-09-02",
+    "price": 65.57,
+    "volume": 3529228
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-29",
+    "price": 67.55,
+    "volume": 2932426
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-28",
+    "price": 68.21,
+    "volume": 2140800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-27",
+    "price": 67.74,
+    "volume": 2793711
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-26",
+    "price": 67.02,
+    "volume": 4799209
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-25",
+    "price": 65.45,
+    "volume": 4901400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-22",
+    "price": 68.53,
+    "volume": 3328333
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-21",
+    "price": 67.33,
+    "volume": 3895024
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-20",
+    "price": 68.55,
+    "volume": 3575200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-19",
+    "price": 68.45,
+    "volume": 3053544
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-18",
+    "price": 69.79,
+    "volume": 4252730
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-15",
+    "price": 69.9,
+    "volume": 4837100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-14",
+    "price": 68.93,
+    "volume": 12335323
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-13",
+    "price": 70.45,
+    "volume": 41571024
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-12",
+    "price": 84.5,
+    "volume": 13479663
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-11",
+    "price": 82.3,
+    "volume": 4298100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-08",
+    "price": 85.05,
+    "volume": 4087600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-07",
+    "price": 88.9,
+    "volume": 3303139
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-06",
+    "price": 86.16,
+    "volume": 2086000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-05",
+    "price": 87.57,
+    "volume": 2334700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-04",
+    "price": 87.79,
+    "volume": 2693900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-08-01",
+    "price": 84.3,
+    "volume": 2109900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-31",
+    "price": 88.01,
+    "volume": 3151825
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-30",
+    "price": 90.32,
+    "volume": 4137208
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-29",
+    "price": 85.56,
+    "volume": 3030508
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-28",
+    "price": 87.97,
+    "volume": 2373200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-25",
+    "price": 88.02,
+    "volume": 2128700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-24",
+    "price": 86.26,
+    "volume": 5331500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-23",
+    "price": 91.69,
+    "volume": 3438421
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-22",
+    "price": 89.93,
+    "volume": 3449700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-21",
+    "price": 87.43,
+    "volume": 2722200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-18",
+    "price": 87.34,
+    "volume": 1977023
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-17",
+    "price": 86.77,
+    "volume": 6613927
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-16",
+    "price": 88.98,
+    "volume": 2213837
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-15",
+    "price": 88.2,
+    "volume": 3912900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-14",
+    "price": 89.86,
+    "volume": 2857100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-11",
+    "price": 92.05,
+    "volume": 2317624
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-10",
+    "price": 91.45,
+    "volume": 4254540
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-09",
+    "price": 89.54,
+    "volume": 4202100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-08",
+    "price": 87.57,
+    "volume": 4074100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-07",
+    "price": 84.28,
+    "volume": 4406026
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-03",
+    "price": 86.52,
+    "volume": 4952500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-02",
+    "price": 82.71,
+    "volume": 5676000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-07-01",
+    "price": 82.32,
+    "volume": 4721000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-30",
+    "price": 84.23,
+    "volume": 7588800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-27",
+    "price": 77.89,
+    "volume": 6880800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-26",
+    "price": 77.67,
+    "volume": 5196700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-25",
+    "price": 73.99,
+    "volume": 3375300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-24",
+    "price": 74.23,
+    "volume": 3728400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-23",
+    "price": 75.25,
+    "volume": 4445132
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-20",
+    "price": 74.62,
+    "volume": 4398000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-18",
+    "price": 74.45,
+    "volume": 2977500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-17",
+    "price": 74.71,
+    "volume": 4748531
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-16",
+    "price": 74.5,
+    "volume": 3241700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-13",
+    "price": 74.57,
+    "volume": 4979500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-12",
+    "price": 78.25,
+    "volume": 3791410
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-11",
+    "price": 76.83,
+    "volume": 3757700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-10",
+    "price": 78.32,
+    "volume": 3260806
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-09",
+    "price": 78.22,
+    "volume": 2627900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-06",
+    "price": 79.03,
+    "volume": 3656109
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-05",
+    "price": 78.33,
+    "volume": 3413106
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-04",
+    "price": 82.04,
+    "volume": 3265400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-03",
+    "price": 81.06,
+    "volume": 3377300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-06-02",
+    "price": 81.25,
+    "volume": 2796936
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-30",
+    "price": 81.27,
+    "volume": 5295904
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-29",
+    "price": 81.88,
+    "volume": 2649000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-28",
+    "price": 81.91,
+    "volume": 2193700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-27",
+    "price": 82.34,
+    "volume": 4393700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-23",
+    "price": 83.43,
+    "volume": 2857300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-22",
+    "price": 84.36,
+    "volume": 4260742
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-21",
+    "price": 83.69,
+    "volume": 4750500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-20",
+    "price": 89.38,
+    "volume": 4155620
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-19",
+    "price": 90.06,
+    "volume": 5475649
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-16",
+    "price": 96.81,
+    "volume": 9838800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-15",
+    "price": 99.06,
+    "volume": 5067839
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-14",
+    "price": 99.54,
+    "volume": 2710606
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-13",
+    "price": 99.7,
+    "volume": 3220500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-12",
+    "price": 98.74,
+    "volume": 2550000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-09",
+    "price": 93.91,
+    "volume": 1933400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-08",
+    "price": 95.94,
+    "volume": 2189108
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-07",
+    "price": 93.8,
+    "volume": 2274748
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-06",
+    "price": 93.32,
+    "volume": 2837800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-05",
+    "price": 95.84,
+    "volume": 1947100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-02",
+    "price": 96.65,
+    "volume": 2407795
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-05-01",
+    "price": 94.53,
+    "volume": 3161900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-30",
+    "price": 92.43,
+    "volume": 2240918
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-29",
+    "price": 91.91,
+    "volume": 2345814
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-28",
+    "price": 93.16,
+    "volume": 2646830
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-25",
+    "price": 90.8,
+    "volume": 1878200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-24",
+    "price": 91.02,
+    "volume": 1970106
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-23",
+    "price": 86.45,
+    "volume": 3073918
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-22",
+    "price": 81.3,
+    "volume": 2406116
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-21",
+    "price": 80.37,
+    "volume": 3563400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-17",
+    "price": 86,
+    "volume": 1917132
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-16",
+    "price": 85.56,
+    "volume": 1924646
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-15",
+    "price": 88.33,
+    "volume": 1945400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-14",
+    "price": 89.04,
+    "volume": 2078940
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-11",
+    "price": 90.07,
+    "volume": 1752137
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-10",
+    "price": 88.77,
+    "volume": 3267816
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-09",
+    "price": 91.95,
+    "volume": 6259207
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-08",
+    "price": 78.46,
+    "volume": 3271300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-07",
+    "price": 79.3,
+    "volume": 5948200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-04",
+    "price": 75.19,
+    "volume": 8164014
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-03",
+    "price": 84.18,
+    "volume": 3827437
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-02",
+    "price": 90.35,
+    "volume": 3034600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-04-01",
+    "price": 87.2,
+    "volume": 2586745
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-31",
+    "price": 86.41,
+    "volume": 4160100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-28",
+    "price": 85.85,
+    "volume": 14361041
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-27",
+    "price": 88.39,
+    "volume": 6143645
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-26",
+    "price": 86.67,
+    "volume": 2907858
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-25",
+    "price": 90.28,
+    "volume": 2926001
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-24",
+    "price": 90.33,
+    "volume": 3713100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-21",
+    "price": 83.85,
+    "volume": 3610300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-20",
+    "price": 84.66,
+    "volume": 5887320
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-19",
+    "price": 81,
+    "volume": 4364800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-18",
+    "price": 76.78,
+    "volume": 2072833
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-17",
+    "price": 78.59,
+    "volume": 3092100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-14",
+    "price": 77.48,
+    "volume": 3285511
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-13",
+    "price": 74.07,
+    "volume": 5008802
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-12",
+    "price": 82.38,
+    "volume": 2432500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-11",
+    "price": 80.01,
+    "volume": 3331145
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-10",
+    "price": 80.44,
+    "volume": 4362102
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-07",
+    "price": 84.12,
+    "volume": 4108643
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-06",
+    "price": 82.65,
+    "volume": 5098506
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-05",
+    "price": 86.76,
+    "volume": 3691500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-04",
+    "price": 86.25,
+    "volume": 5425319
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-03-03",
+    "price": 87.65,
+    "volume": 4299006
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-28",
+    "price": 95.03,
+    "volume": 5523120
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-27",
+    "price": 90.08,
+    "volume": 5333400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-26",
+    "price": 98.96,
+    "volume": 9146946
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-25",
+    "price": 99.3,
+    "volume": 7747200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-24",
+    "price": 104.22,
+    "volume": 4582106
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-21",
+    "price": 107.93,
+    "volume": 4391748
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-20",
+    "price": 118.6,
+    "volume": 2824614
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-19",
+    "price": 119.42,
+    "volume": 4462625
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-18",
+    "price": 133.31,
+    "volume": 1755700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-14",
+    "price": 131.07,
+    "volume": 1595003
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-13",
+    "price": 130.5,
+    "volume": 1927700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-12",
+    "price": 130.3,
+    "volume": 1848900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-11",
+    "price": 130.87,
+    "volume": 2319600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-10",
+    "price": 140.62,
+    "volume": 1247642
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-07",
+    "price": 138.4,
+    "volume": 1522903
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-06",
+    "price": 141.95,
+    "volume": 1187909
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-05",
+    "price": 142.9,
+    "volume": 1549105
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-04",
+    "price": 142.27,
+    "volume": 2187102
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-02-03",
+    "price": 137.32,
+    "volume": 2413000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-31",
+    "price": 135.05,
+    "volume": 1706000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-30",
+    "price": 138.95,
+    "volume": 1808547
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-29",
+    "price": 135.33,
+    "volume": 3869600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-28",
+    "price": 125.96,
+    "volume": 1262200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-27",
+    "price": 122.97,
+    "volume": 1801247
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-24",
+    "price": 124.88,
+    "volume": 1636921
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-23",
+    "price": 124.01,
+    "volume": 2208600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-22",
+    "price": 123.39,
+    "volume": 2665900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-21",
+    "price": 120.5,
+    "volume": 2302921
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-17",
+    "price": 118.23,
+    "volume": 1724247
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-16",
+    "price": 117.51,
+    "volume": 1747600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-15",
+    "price": 115.61,
+    "volume": 1760700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-14",
+    "price": 112.42,
+    "volume": 1333011
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-13",
+    "price": 111.03,
+    "volume": 2182900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-10",
+    "price": 115.12,
+    "volume": 1406300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-08",
+    "price": 114.59,
+    "volume": 1932707
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-07",
+    "price": 112.82,
+    "volume": 3108046
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-06",
+    "price": 118.88,
+    "volume": 3190600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-03",
+    "price": 115.08,
+    "volume": 1879065
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2025-01-02",
+    "price": 115.18,
+    "volume": 2215115
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-31",
+    "price": 112.8,
+    "volume": 2044800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-30",
+    "price": 111.52,
+    "volume": 2050524
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-27",
+    "price": 114.37,
+    "volume": 1854300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-26",
+    "price": 116.49,
+    "volume": 1635100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-24",
+    "price": 118.52,
+    "volume": 687633
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-23",
+    "price": 117.84,
+    "volume": 1635400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-20",
+    "price": 119.05,
+    "volume": 2952530
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-19",
+    "price": 117.05,
+    "volume": 3151200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-18",
+    "price": 117.2,
+    "volume": 3289206
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-17",
+    "price": 123.37,
+    "volume": 1926500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-16",
+    "price": 126.79,
+    "volume": 2630000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-13",
+    "price": 124.05,
+    "volume": 2470400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-12",
+    "price": 125.37,
+    "volume": 1663648
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-11",
+    "price": 127.59,
+    "volume": 2705000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-10",
+    "price": 127.39,
+    "volume": 5425800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-09",
+    "price": 132.57,
+    "volume": 7639300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-06",
+    "price": 150.88,
+    "volume": 2269800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-05",
+    "price": 150.5,
+    "volume": 3344826
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-04",
+    "price": 147.6,
+    "volume": 2389700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-03",
+    "price": 141.84,
+    "volume": 1726323
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-12-02",
+    "price": 140.85,
+    "volume": 2724800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-29",
+    "price": 140.9,
+    "volume": 1054106
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-27",
+    "price": 141.2,
+    "volume": 1709600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-26",
+    "price": 143.52,
+    "volume": 1931135
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-25",
+    "price": 142.54,
+    "volume": 3093201
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-22",
+    "price": 145,
+    "volume": 3637700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-21",
+    "price": 144.8,
+    "volume": 3542600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-20",
+    "price": 139.69,
+    "volume": 2366700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-19",
+    "price": 141.25,
+    "volume": 4379000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-18",
+    "price": 137.24,
+    "volume": 6324300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-15",
+    "price": 141.38,
+    "volume": 3975500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-14",
+    "price": 138.34,
+    "volume": 5909200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-13",
+    "price": 147.3,
+    "volume": 13077015
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-12",
+    "price": 145.03,
+    "volume": 5322500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-11",
+    "price": 147.8,
+    "volume": 2922210
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-08",
+    "price": 147.2,
+    "volume": 2296200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-07",
+    "price": 141.38,
+    "volume": 2189722
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-06",
+    "price": 139,
+    "volume": 2017300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-05",
+    "price": 132.52,
+    "volume": 1514429
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-04",
+    "price": 132.12,
+    "volume": 1166203
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-11-01",
+    "price": 131.53,
+    "volume": 2592300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-31",
+    "price": 133.56,
+    "volume": 1360020
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-30",
+    "price": 133.82,
+    "volume": 2132700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-29",
+    "price": 138,
+    "volume": 1644209
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-28",
+    "price": 138.47,
+    "volume": 1917332
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-25",
+    "price": 136.09,
+    "volume": 1937636
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-24",
+    "price": 138.65,
+    "volume": 2038500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-23",
+    "price": 136.56,
+    "volume": 1512223
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-22",
+    "price": 136.27,
+    "volume": 1164400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-21",
+    "price": 136.32,
+    "volume": 1433000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-18",
+    "price": 135.34,
+    "volume": 1068834
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-17",
+    "price": 134.29,
+    "volume": 1269300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-16",
+    "price": 134.16,
+    "volume": 1057600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-15",
+    "price": 133.91,
+    "volume": 2484406
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-14",
+    "price": 134.75,
+    "volume": 2322500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-11",
+    "price": 133.65,
+    "volume": 1648807
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-10",
+    "price": 130.24,
+    "volume": 1236800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-09",
+    "price": 131.86,
+    "volume": 1670300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-08",
+    "price": 131.99,
+    "volume": 3330217
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-07",
+    "price": 126,
+    "volume": 2111900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-04",
+    "price": 126.6,
+    "volume": 1905220
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-03",
+    "price": 124.93,
+    "volume": 1406234
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-02",
+    "price": 122.92,
+    "volume": 1667434
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-10-01",
+    "price": 122.43,
+    "volume": 2235100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-30",
+    "price": 123.85,
+    "volume": 3230611
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-27",
+    "price": 123.76,
+    "volume": 3181200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-26",
+    "price": 127.12,
+    "volume": 1835600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-25",
+    "price": 126.84,
+    "volume": 1811229
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-24",
+    "price": 127.44,
+    "volume": 1903834
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-23",
+    "price": 128.27,
+    "volume": 2509333
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-20",
+    "price": 128.79,
+    "volume": 8209735
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-19",
+    "price": 125.22,
+    "volume": 2077723
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-18",
+    "price": 124.3,
+    "volume": 1790200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-17",
+    "price": 122.47,
+    "volume": 2151100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-16",
+    "price": 122.85,
+    "volume": 2231200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-13",
+    "price": 122.51,
+    "volume": 2879600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-12",
+    "price": 125.47,
+    "volume": 3111515
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-11",
+    "price": 121.25,
+    "volume": 1917700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-10",
+    "price": 119.73,
+    "volume": 2104000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-09",
+    "price": 120.09,
+    "volume": 3779432
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-06",
+    "price": 116.13,
+    "volume": 2173344
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-05",
+    "price": 116.71,
+    "volume": 2370200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-04",
+    "price": 113.97,
+    "volume": 2036834
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-09-03",
+    "price": 111.92,
+    "volume": 2644300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-30",
+    "price": 114.04,
+    "volume": 2956045
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-29",
+    "price": 110.87,
+    "volume": 5440300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-28",
+    "price": 118.44,
+    "volume": 4561200
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-27",
+    "price": 118.1,
+    "volume": 12333500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-26",
+    "price": 125.8,
+    "volume": 10981806
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-23",
+    "price": 122,
+    "volume": 21800501
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-22",
+    "price": 101.98,
+    "volume": 6508800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-21",
+    "price": 102.87,
+    "volume": 2442346
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-20",
+    "price": 98.21,
+    "volume": 1505301
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-19",
+    "price": 100.2,
+    "volume": 2237723
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-16",
+    "price": 98.96,
+    "volume": 1867241
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-15",
+    "price": 97.24,
+    "volume": 1757500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-14",
+    "price": 95.76,
+    "volume": 1848100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-13",
+    "price": 94.45,
+    "volume": 2349824
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-12",
+    "price": 89.91,
+    "volume": 1731900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-09",
+    "price": 90.29,
+    "volume": 4379400
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-08",
+    "price": 83.98,
+    "volume": 2520600
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-07",
+    "price": 82.65,
+    "volume": 1516037
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-06",
+    "price": 82.67,
+    "volume": 1596800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-05",
+    "price": 79.88,
+    "volume": 2250000
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-02",
+    "price": 81.24,
+    "volume": 2589500
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-08-01",
+    "price": 84.48,
+    "volume": 2900300
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-31",
+    "price": 84.22,
+    "volume": 1659900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-30",
+    "price": 81.44,
+    "volume": 1626502
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-29",
+    "price": 82.47,
+    "volume": 2125443
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-26",
+    "price": 79.84,
+    "volume": 1735104
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-25",
+    "price": 78.23,
+    "volume": 1587800
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-24",
+    "price": 77.92,
+    "volume": 2002100
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-23",
+    "price": 82.59,
+    "volume": 1661900
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-22",
+    "price": 80.31,
+    "volume": 1454426
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-19",
+    "price": 79.99,
+    "volume": 1433529
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-18",
+    "price": 79.99,
+    "volume": 3209265
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-17",
+    "price": 81.48,
+    "volume": 3419396
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-16",
+    "price": 87.5,
+    "volume": 2245398
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-15",
+    "price": 86.63,
+    "volume": 2650827
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-12",
+    "price": 84.25,
+    "volume": 3446399
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-11",
+    "price": 85.19,
+    "volume": 2598238
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-10",
+    "price": 85.3,
+    "volume": 5916385
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-09",
+    "price": 90.24,
+    "volume": 3400206
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-08",
+    "price": 94.74,
+    "volume": 2882068
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-05",
+    "price": 94.99,
+    "volume": 1317986
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-03",
+    "price": 94.92,
+    "volume": 1193452
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-02",
+    "price": 94.59,
+    "volume": 1903398
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-07-01",
+    "price": 95.27,
+    "volume": 2812538
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-28",
+    "price": 92.75,
+    "volume": 5194704
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-27",
+    "price": 91.57,
+    "volume": 1729926
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-26",
+    "price": 91.79,
+    "volume": 2009256
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-25",
+    "price": 93.11,
+    "volume": 1961365
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-24",
+    "price": 90.9,
+    "volume": 2171972
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-21",
+    "price": 92.44,
+    "volume": 2746095
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-20",
+    "price": 92.23,
+    "volume": 3316402
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-18",
+    "price": 95.39,
+    "volume": 2560937
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-17",
+    "price": 93.94,
+    "volume": 3417470
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-14",
+    "price": 89.93,
+    "volume": 2501401
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-13",
+    "price": 92.52,
+    "volume": 2387529
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-12",
+    "price": 91.52,
+    "volume": 2700581
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-11",
+    "price": 89.9,
+    "volume": 2396571
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-10",
+    "price": 88.77,
+    "volume": 3532885
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-07",
+    "price": 85.04,
+    "volume": 3153853
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-06",
+    "price": 85.04,
+    "volume": 7824901
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-05",
+    "price": 92.04,
+    "volume": 2995929
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-04",
+    "price": 88.34,
+    "volume": 4191075
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-06-03",
+    "price": 88,
+    "volume": 4845663
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-31",
+    "price": 92.55,
+    "volume": 6131532
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-30",
+    "price": 93.15,
+    "volume": 10357851
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-29",
+    "price": 88.16,
+    "volume": 13457734
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-28",
+    "price": 82.4,
+    "volume": 8953166
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-24",
+    "price": 82.93,
+    "volume": 3402979
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-23",
+    "price": 77.6,
+    "volume": 1641742
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-22",
+    "price": 78.74,
+    "volume": 1775108
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-21",
+    "price": 78.22,
+    "volume": 2065440
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-20",
+    "price": 80.47,
+    "volume": 2059420
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-17",
+    "price": 77.28,
+    "volume": 1718389
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-16",
+    "price": 77.32,
+    "volume": 1476050
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-15",
+    "price": 78.63,
+    "volume": 1470416
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-14",
+    "price": 78.51,
+    "volume": 1913981
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-13",
+    "price": 76.39,
+    "volume": 2610990
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-10",
+    "price": 79.07,
+    "volume": 2775232
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-09",
+    "price": 75.38,
+    "volume": 1448494
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-08",
+    "price": 74.16,
+    "volume": 1177563
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-07",
+    "price": 74.24,
+    "volume": 2001282
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-06",
+    "price": 74.31,
+    "volume": 3117788
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-03",
+    "price": 72.17,
+    "volume": 2391388
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-02",
+    "price": 68.2,
+    "volume": 1475540
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-05-01",
+    "price": 67.45,
+    "volume": 3817261
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-30",
+    "price": 71.94,
+    "volume": 3569781
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-29",
+    "price": 70.59,
+    "volume": 2850533
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-26",
+    "price": 69.16,
+    "volume": 5833566
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-25",
+    "price": 62.59,
+    "volume": 2666728
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-24",
+    "price": 60.41,
+    "volume": 1061490
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-23",
+    "price": 61.19,
+    "volume": 1132650
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-22",
+    "price": 59.61,
+    "volume": 1434205
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-19",
+    "price": 59.67,
+    "volume": 1666477
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-18",
+    "price": 61.5,
+    "volume": 1063816
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-17",
+    "price": 61.56,
+    "volume": 1652066
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-16",
+    "price": 62.86,
+    "volume": 1408634
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-15",
+    "price": 61.75,
+    "volume": 2169537
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-12",
+    "price": 63.75,
+    "volume": 2029711
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-11",
+    "price": 66.38,
+    "volume": 2247652
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-10",
+    "price": 63.69,
+    "volume": 3645660
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-09",
+    "price": 60.28,
+    "volume": 4516205
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-08",
+    "price": 64.94,
+    "volume": 889041
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-05",
+    "price": 64.65,
+    "volume": 1315665
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-04",
+    "price": 63.33,
+    "volume": 2404295
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-03",
+    "price": 66.77,
+    "volume": 2769056
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-02",
+    "price": 65.75,
+    "volume": 2946124
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-04-01",
+    "price": 68.4,
+    "volume": 1998807
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-28",
+    "price": 70.05,
+    "volume": 1861987
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-27",
+    "price": 69.17,
+    "volume": 2614493
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-26",
+    "price": 68.22,
+    "volume": 1695660
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-25",
+    "price": 68.25,
+    "volume": 1279451
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-22",
+    "price": 67.96,
+    "volume": 1469276
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-21",
+    "price": 67.82,
+    "volume": 2607695
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-20",
+    "price": 68.32,
+    "volume": 3518469
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-19",
+    "price": 65.1,
+    "volume": 2736286
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-18",
+    "price": 62.05,
+    "volume": 3411361
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-15",
+    "price": 64.16,
+    "volume": 4535336
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-14",
+    "price": 63.7,
+    "volume": 2760325
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-13",
+    "price": 65.44,
+    "volume": 2931649
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-12",
+    "price": 65.84,
+    "volume": 2457408
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-11",
+    "price": 62.78,
+    "volume": 2003709
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-08",
+    "price": 63.34,
+    "volume": 3507250
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-07",
+    "price": 61.72,
+    "volume": 2730452
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-06",
+    "price": 59.25,
+    "volume": 3221050
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-05",
+    "price": 57.36,
+    "volume": 2485249
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-04",
+    "price": 57.97,
+    "volume": 3250728
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-03-01",
+    "price": 58.3,
+    "volume": 2517991
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-29",
+    "price": 58.41,
+    "volume": 4773715
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-28",
+    "price": 56.9,
+    "volume": 4659923
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-27",
+    "price": 56.66,
+    "volume": 7878423
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-26",
+    "price": 50.5,
+    "volume": 2744994
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-23",
+    "price": 51,
+    "volume": 1867288
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-22",
+    "price": 50,
+    "volume": 3288610
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-21",
+    "price": 48.51,
+    "volume": 4258345
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-20",
+    "price": 54.18,
+    "volume": 1135310
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-16",
+    "price": 54.63,
+    "volume": 1360356
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-15",
+    "price": 54.7,
+    "volume": 1554518
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-14",
+    "price": 53.97,
+    "volume": 1130124
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-13",
+    "price": 53.22,
+    "volume": 1368447
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-12",
+    "price": 53.68,
+    "volume": 1103371
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-09",
+    "price": 52.88,
+    "volume": 1918125
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-08",
+    "price": 52.77,
+    "volume": 2342918
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-07",
+    "price": 51.35,
+    "volume": 1842766
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-06",
+    "price": 49.8,
+    "volume": 1735321
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-05",
+    "price": 49.1,
+    "volume": 1275071
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-02",
+    "price": 49.93,
+    "volume": 1667356
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-02-01",
+    "price": 49.41,
+    "volume": 2383685
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-31",
+    "price": 46.8,
+    "volume": 1257844
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-30",
+    "price": 47.69,
+    "volume": 853546
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-29",
+    "price": 47.64,
+    "volume": 1392242
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-26",
+    "price": 45.8,
+    "volume": 1380312
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-25",
+    "price": 45.89,
+    "volume": 1836489
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-24",
+    "price": 47.84,
+    "volume": 1652929
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-23",
+    "price": 47.3,
+    "volume": 1323103
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-22",
+    "price": 47.86,
+    "volume": 1422085
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-19",
+    "price": 46.25,
+    "volume": 1577565
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-18",
+    "price": 45.47,
+    "volume": 1741354
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-17",
+    "price": 43.97,
+    "volume": 2521440
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-16",
+    "price": 43.7,
+    "volume": 1360385
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-12",
+    "price": 42.92,
+    "volume": 1047272
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-11",
+    "price": 42.94,
+    "volume": 1191022
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-10",
+    "price": 42.27,
+    "volume": 907901
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-09",
+    "price": 42.52,
+    "volume": 994322
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-08",
+    "price": 42.56,
+    "volume": 1491870
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-05",
+    "price": 41.15,
+    "volume": 1320187
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-04",
+    "price": 40.67,
+    "volume": 1399724
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-03",
+    "price": 39.47,
+    "volume": 2616701
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2024-01-02",
+    "price": 40.87,
+    "volume": 2352679
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-29",
+    "price": 42.98,
+    "volume": 1354561
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-28",
+    "price": 44.63,
+    "volume": 1266349
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-27",
+    "price": 44.44,
+    "volume": 1810989
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-26",
+    "price": 43.8,
+    "volume": 2511063
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-22",
+    "price": 41.92,
+    "volume": 1269551
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-21",
+    "price": 42.76,
+    "volume": 3291560
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-20",
+    "price": 41.1,
+    "volume": 2080567
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-19",
+    "price": 40.96,
+    "volume": 2597297
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-18",
+    "price": 41.49,
+    "volume": 3138647
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-15",
+    "price": 40.04,
+    "volume": 2096373
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-14",
+    "price": 40.62,
+    "volume": 2822278
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-13",
+    "price": 41.25,
+    "volume": 8786943
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-12",
+    "price": 38.87,
+    "volume": 17866515
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-11",
+    "price": 32.49,
+    "volume": 2440137
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-08",
+    "price": 32.24,
+    "volume": 2675745
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-07",
+    "price": 33.34,
+    "volume": 1814815
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-06",
+    "price": 36.37,
+    "volume": 1171328
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-05",
+    "price": 36.06,
+    "volume": 779437
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-04",
+    "price": 36.14,
+    "volume": 1386887
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-12-01",
+    "price": 36.22,
+    "volume": 1480919
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-30",
+    "price": 34.01,
+    "volume": 1593327
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-29",
+    "price": 34,
+    "volume": 1576853
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-28",
+    "price": 33.59,
+    "volume": 1009303
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-27",
+    "price": 33.59,
+    "volume": 1642533
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-24",
+    "price": 34.27,
+    "volume": 832910
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-22",
+    "price": 33.38,
+    "volume": 1598278
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-21",
+    "price": 33.41,
+    "volume": 1184940
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-20",
+    "price": 33.88,
+    "volume": 1261437
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-17",
+    "price": 34.12,
+    "volume": 1244859
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-16",
+    "price": 34.28,
+    "volume": 1172192
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-15",
+    "price": 33.83,
+    "volume": 1543915
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-14",
+    "price": 32.17,
+    "volume": 1478695
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-13",
+    "price": 31.36,
+    "volume": 1279018
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-10",
+    "price": 31.07,
+    "volume": 1739282
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-09",
+    "price": 31.53,
+    "volume": 1836094
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-08",
+    "price": 31.1,
+    "volume": 5171182
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-07",
+    "price": 33.7,
+    "volume": 2368149
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-06",
+    "price": 34.18,
+    "volume": 1389582
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-03",
+    "price": 35.92,
+    "volume": 1423558
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-02",
+    "price": 34.05,
+    "volume": 1097554
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-11-01",
+    "price": 31.95,
+    "volume": 676272
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-31",
+    "price": 31.59,
+    "volume": 593842
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-30",
+    "price": 31.08,
+    "volume": 1123980
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-27",
+    "price": 31.63,
+    "volume": 480734
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-26",
+    "price": 31.14,
+    "volume": 1032118
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-25",
+    "price": 32.19,
+    "volume": 771415
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-24",
+    "price": 33.9,
+    "volume": 1058077
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-23",
+    "price": 33.25,
+    "volume": 618148
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-20",
+    "price": 33,
+    "volume": 953203
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-19",
+    "price": 33.62,
+    "volume": 903152
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-18",
+    "price": 33.78,
+    "volume": 870161
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-17",
+    "price": 35.06,
+    "volume": 1233496
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-16",
+    "price": 33.98,
+    "volume": 1035167
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-13",
+    "price": 33.14,
+    "volume": 1517750
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-12",
+    "price": 31.51,
+    "volume": 1416305
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-11",
+    "price": 32.55,
+    "volume": 2612639
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-10",
+    "price": 32.08,
+    "volume": 1212360
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-09",
+    "price": 31.41,
+    "volume": 1003939
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-06",
+    "price": 31.61,
+    "volume": 1655649
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-05",
+    "price": 30.63,
+    "volume": 1337315
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-04",
+    "price": 31.26,
+    "volume": 1298366
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-03",
+    "price": 29.98,
+    "volume": 1179544
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-10-02",
+    "price": 31,
+    "volume": 1179928
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-29",
+    "price": 30.63,
+    "volume": 1154751
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-28",
+    "price": 31.19,
+    "volume": 1408624
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-27",
+    "price": 31.42,
+    "volume": 1227956
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-26",
+    "price": 32.29,
+    "volume": 1501377
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-25",
+    "price": 32.42,
+    "volume": 1877721
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-22",
+    "price": 30.89,
+    "volume": 1047057
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-21",
+    "price": 30.39,
+    "volume": 2079041
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-20",
+    "price": 31.73,
+    "volume": 1271132
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-19",
+    "price": 33.3,
+    "volume": 2133020
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-18",
+    "price": 34.36,
+    "volume": 1085326
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-15",
+    "price": 35.42,
+    "volume": 4204691
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-14",
+    "price": 36.06,
+    "volume": 1347526
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-13",
+    "price": 35.64,
+    "volume": 2056056
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-12",
+    "price": 35.99,
+    "volume": 4154700
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-11",
+    "price": 37.56,
+    "volume": 1916956
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-08",
+    "price": 39.18,
+    "volume": 1385851
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-07",
+    "price": 41.01,
+    "volume": 1653492
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-06",
+    "price": 42.53,
+    "volume": 800993
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-05",
+    "price": 42.15,
+    "volume": 1457505
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-09-01",
+    "price": 43.82,
+    "volume": 569986
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-31",
+    "price": 44.41,
+    "volume": 945102
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-30",
+    "price": 45.5,
+    "volume": 1273927
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-29",
+    "price": 44.6,
+    "volume": 2244185
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-28",
+    "price": 41.93,
+    "volume": 1016477
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-25",
+    "price": 41.62,
+    "volume": 1044459
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-24",
+    "price": 42.65,
+    "volume": 1345410
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-23",
+    "price": 44.84,
+    "volume": 1848589
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-22",
+    "price": 42.75,
+    "volume": 1159668
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-21",
+    "price": 41.69,
+    "volume": 1215306
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-18",
+    "price": 43.11,
+    "volume": 1939848
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-17",
+    "price": 42.37,
+    "volume": 3611636
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-16",
+    "price": 46.93,
+    "volume": 8425423
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-15",
+    "price": 46.39,
+    "volume": 2356620
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-14",
+    "price": 47.85,
+    "volume": 966801
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-11",
+    "price": 48.48,
+    "volume": 621873
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-10",
+    "price": 48.09,
+    "volume": 872504
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-09",
+    "price": 48.06,
+    "volume": 964349
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-08",
+    "price": 50.51,
+    "volume": 1081843
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-07",
+    "price": 52.96,
+    "volume": 621050
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-04",
+    "price": 53.44,
+    "volume": 925594
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-03",
+    "price": 55.68,
+    "volume": 714208
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-02",
+    "price": 55.32,
+    "volume": 1473197
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-08-01",
+    "price": 56.99,
+    "volume": 957847
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-31",
+    "price": 57.11,
+    "volume": 2370310
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-28",
+    "price": 52.91,
+    "volume": 844921
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-27",
+    "price": 49.88,
+    "volume": 1323682
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-26",
+    "price": 51.63,
+    "volume": 898269
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-25",
+    "price": 51.85,
+    "volume": 1687171
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-24",
+    "price": 53.28,
+    "volume": 2097345
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-21",
+    "price": 48.78,
+    "volume": 865286
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-20",
+    "price": 49.56,
+    "volume": 1191328
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-19",
+    "price": 48.52,
+    "volume": 1813867
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-18",
+    "price": 51.02,
+    "volume": 1908151
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-17",
+    "price": 47.62,
+    "volume": 1261977
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-14",
+    "price": 47.67,
+    "volume": 2043090
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-13",
+    "price": 47.68,
+    "volume": 5134282
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-12",
+    "price": 52.01,
+    "volume": 4431306
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-11",
+    "price": 45.45,
+    "volume": 3043860
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-10",
+    "price": 44,
+    "volume": 2520176
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-07",
+    "price": 39.62,
+    "volume": 916878
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-06",
+    "price": 39.2,
+    "volume": 1305722
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-05",
+    "price": 38.04,
+    "volume": 1650293
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-07-03",
+    "price": 39.48,
+    "volume": 1574747
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-30",
+    "price": 40.95,
+    "volume": 1947364
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-29",
+    "price": 43.53,
+    "volume": 947471
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-28",
+    "price": 42.21,
+    "volume": 1984580
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-27",
+    "price": 45.55,
+    "volume": 1801008
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-26",
+    "price": 42.59,
+    "volume": 1644959
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-23",
+    "price": 40.15,
+    "volume": 1118775
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-22",
+    "price": 39.16,
+    "volume": 2365572
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-21",
+    "price": 38.34,
+    "volume": 738611
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-20",
+    "price": 38.43,
+    "volume": 1607220
+  },
+  {
+    "symbol": "CAVA",
+    "date": "2023-06-16",
+    "price": 38.15,
+    "volume": 8417538
+  }
+]

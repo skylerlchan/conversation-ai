@@ -20,7 +20,37 @@ legible to any judge, clean bull thesis, and one diligence question that obvious
 | [cava_corpus.json](cava_corpus.json) | Grounding corpus: fictional research-note excerpts + 10-K-style facts. Each chunk grounds a question | Future Moss `knowledge` index seed; the source of "what their note says" |
 | [cava_call.json](cava_call.json) | The scripted call. Every researcher turn carries an `expected` coverage verdict (the **golden file**) | The stage script; `tests/test_demo_transcript.py`; future coverage-engine grading |
 | [cava_call.md](cava_call.md) | Human-readable transcript with the copilot's live actions in the margin | Read this on stage / to understand the arc |
+| [generate_call_audio.py](generate_call_audio.py) | Renders `cava_call.json` to a two-voice recording (macOS `say` + `ffmpeg`, no API keys) | `python3 demo/generate_call_audio.py` |
+| [audio/cava_call_full.mp3](audio/cava_call_full.mp3) | The recorded call (~4.2 min): analyst = Samantha, researcher = Daniel | Play on stage / pipe into the LiveKit room |
+| [audio/manifest.json](audio/manifest.json) | Per-turn speaker, **start timestamp**, duration, and coverage event | Sync the cards to the audio; test the engine turn-by-turn |
+| [cava_financials/](cava_financials/) | **Real** CAVA financial data + earnings transcripts (FMP) | Factual corpus behind the demo |
 | [`../tests/test_demo_transcript.py`](../tests/test_demo_transcript.py) | 15 golden/consistency tests over the fixtures | `uv run pytest tests/test_demo_transcript.py` |
+
+## Audio (the recorded call)
+
+`generate_call_audio.py` turns the golden script into an actual recording so you can play a
+realistic call on stage and feed it into the LiveKit room / coverage engine for end-to-end
+testing — no live reader needed. Run it any time you edit `cava_call.json`:
+
+```bash
+python3 agent-py/demo/generate_call_audio.py
+```
+
+Outputs land in `audio/`: the full call (`cava_call_full.mp3`), one clip per turn under
+`turns/` (test the engine turn-by-turn), and `manifest.json` mapping each turn to its start
+time and the coverage event that should fire. The demo beats land at:
+
+| Time | Beat |
+|---|---|
+| ~1:05 | Q2 goes **amber**, the grounded follow-up fires (hero) |
+| ~1:35 | Q2 closes **green** |
+| ~2:05 | Q4 answers green but the **inconsistency flag** fires |
+| ~3:47 | Q7 closes after the **nudge** — all green |
+
+Voices are macOS built-ins (Samantha / Daniel). For a higher-quality demo, install
+Premium/Enhanced voices (System Settings → Accessibility → Spoken Content → Manage Voices) or
+swap in Cartesia/ElevenLabs and update `VOICES` in the generator. Only the mp3 + manifest are
+committed; the bulky wavs are git-ignored and regenerate from the script.
 
 ## The demo arc (what the 8 questions are designed to do)
 

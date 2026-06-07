@@ -1,0 +1,14 @@
+[
+  {
+    "symbol": "CAVA",
+    "lastMonthCount": 12,
+    "lastMonthAvgPriceTarget": 92.75,
+    "lastQuarterCount": 15,
+    "lastQuarterAvgPriceTarget": 94.47,
+    "lastYearCount": 51,
+    "lastYearAvgPriceTarget": 85.86,
+    "allTimeCount": 75,
+    "allTimeAvgPriceTarget": 93.08,
+    "publishers": "[\"StreetInsider\",\"TheFly\",\"Benzinga\"]"
+  }
+]

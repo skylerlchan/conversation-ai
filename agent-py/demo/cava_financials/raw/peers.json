@@ -1,0 +1,62 @@
+[
+  {
+    "symbol": "ATAT",
+    "companyName": "Atour Lifestyle Holdings Limited",
+    "price": 33.42,
+    "mktCap": 4618708589
+  },
+  {
+    "symbol": "BFAM",
+    "companyName": "Bright Horizons Family Solutions Inc.",
+    "price": 62.17,
+    "mktCap": 3270558539
+  },
+  {
+    "symbol": "BOOT",
+    "companyName": "Boot Barn Holdings, Inc.",
+    "price": 167.6,
+    "mktCap": 5086236475
+  },
+  {
+    "symbol": "EAT",
+    "companyName": "Brinker International, Inc.",
+    "price": 140.46,
+    "mktCap": 6024020388
+  },
+  {
+    "symbol": "ETSY",
+    "companyName": "Etsy, Inc.",
+    "price": 66.86,
+    "mktCap": 6344762005
+  },
+  {
+    "symbol": "FND",
+    "companyName": "Floor & Decor Holdings, Inc.",
+    "price": 47.41,
+    "mktCap": 5124736540
+  },
+  {
+    "symbol": "LNW",
+    "companyName": "Light & Wonder, Inc.",
+    "price": 99.75,
+    "mktCap": 8428950710
+  },
+  {
+    "symbol": "MAT",
+    "companyName": "Mattel, Inc.",
+    "price": 14.08,
+    "mktCap": 4091648000
+  },
+  {
+    "symbol": "SGHC",
+    "companyName": "Super Group (SGHC) Limited",
+    "price": 12.94,
+    "mktCap": 6574513637
+  },
+  {
+    "symbol": "WING",
+    "companyName": "Wingstop Inc.",
+    "price": 142.23,
+    "mktCap": 3873292698
+  }
+]

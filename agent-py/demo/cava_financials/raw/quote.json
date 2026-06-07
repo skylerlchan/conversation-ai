@@ -1,0 +1,21 @@
+[
+  {
+    "symbol": "CAVA",
+    "name": "CAVA Group, Inc.",
+    "price": 72.6,
+    "changePercentage": 1.18467,
+    "change": 0.85,
+    "volume": 1392752,
+    "dayLow": 71.1988,
+    "dayHigh": 73.36,
+    "yearHigh": 98.79,
+    "yearLow": 43.41,
+    "marketCap": 8456001800,
+    "priceAvg50": 83.9742,
+    "priceAvg200": 68.79505,
+    "exchange": "NYSE",
+    "open": 71.5,
+    "previousClose": 71.75,
+    "timestamp": 1780689602
+  }
+]
