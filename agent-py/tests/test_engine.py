@@ -152,6 +152,25 @@ async def test_grade_turn_rules_err_toward_answered() -> None:
     assert 'choose "partial"' not in sys_text
 
 
+async def test_grade_turn_rules_question_is_not_an_answer() -> None:
+    """Coverage must advance on the ANSWER, not when a question is merely asked.
+
+    The grader scores every turn (analyst questions included), so the rules have to
+    tell it that posing/repeating a question does not address it — otherwise a
+    question flips green the moment it's raised, before anyone answers. Pinned at
+    the prompt level (the stubbed LLM can't judge); the live behavior is guarded by
+    test_apple_call_grading.test_posing_a_question_does_not_cover_it."""
+    fake = _FakeLLM({"updates": []})
+    await grade_turn(fake, _call(), "What is Connect's contribution margin at scale?")
+
+    items = fake.calls[0]["chat_ctx"].items
+    system = next(i for i in items if getattr(i, "role", None) == "system")
+    # Normalize whitespace so line-wrapping in the rule string can't break the match.
+    sys_text = " ".join((system.text_content or "").lower().split())
+    assert "merely asking" in sys_text
+    assert "never on the question being raised" in sys_text
+
+
 async def test_summarize_grounding_briefs_the_analyst() -> None:
     """The digest LLM is fed the snippets and returns plain-text prose (no schema)."""
 
@@ -271,3 +290,40 @@ async def test_listener_score_turn_updates_state(stub_moss) -> None:
     assert q1.state == "partial"
     assert q1.facts == ["blended mid-teens"]
     assert q1.followup == "Ask ex-capitalized-software margin specifically."
+
+
+async def test_listener_skips_grading_analyst_turns(stub_moss) -> None:
+    """Coverage advances on the researcher's ANSWER, never when the analyst asks.
+
+    The grader over-credits a posed question (verified live in
+    test_apple_call_grading), so the fix gates on the diarized speaker, not the
+    model: an analyst turn is never scored — the LLM isn't even consulted — while
+    the researcher answering the same question does advance it.
+    """
+    fake = _FakeLLM(
+        {
+            "updates": [
+                {
+                    "question_id": "q1",
+                    "coverage": "answered",
+                    "extracted_facts": ["~14% blended"],
+                    "contradiction": "",
+                    "followup": "",
+                }
+            ]
+        }
+    )
+    listener = DiligenceListener(user_id="fund_1", call_state=_call(), verdict_llm=fake)
+
+    # The analyst raising the question (its own text) must not touch coverage,
+    # and must short-circuit before any LLM call.
+    await listener._score_turn(
+        1, "What is Connect's contribution margin at scale?", speaker="analyst"
+    )
+    assert listener._call.by_id("q1").state == "unanswered"
+    assert fake.calls == []
+
+    # The researcher answering the same question DOES advance it.
+    await listener._score_turn(2, "It's about 14% blended.", speaker="researcher")
+    assert listener._call.by_id("q1").state == "answered"
+    assert fake.calls  # the grader ran this time

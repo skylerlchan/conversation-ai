@@ -235,3 +235,24 @@ def apply_verdict(call: CallState, verdict: TurnVerdict) -> list[str]:
         if touched:
             changed.append(question.id)
     return changed
+
+
+def answer_line(verdict: TurnVerdict, max_facts: int = 3) -> str:
+    """A one-line gist of what the researcher just said: the turn's extracted facts,
+    de-duplicated and joined.
+
+    Empty when the turn extracted no facts — operator hand-offs ("From Eric Woodring
+    with Morgan Stanley."), filler ("Please go ahead."), and questions merely posed
+    all grade to zero facts, so this skips them by construction. Drives the console's
+    "THEY SAID" line (carried on the grounding packet), so the analyst sees a distilled
+    answer rather than a raw, possibly-misdiarized transcript turn.
+    """
+    seen: set[str] = set()
+    facts: list[str] = []
+    for update in verdict.updates:
+        for raw in update.extracted_facts:
+            fact = raw.strip().rstrip(" .")
+            if fact and fact not in seen:
+                seen.add(fact)
+                facts.append(fact)
+    return "; ".join(facts[:max_facts])

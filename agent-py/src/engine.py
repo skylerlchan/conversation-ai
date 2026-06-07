@@ -43,12 +43,20 @@ For each question the turn actually touches, return an update:
   `expected` view (cite the number the note models when relevant). Otherwise "".
 
 Rules:
+- A turn changes a question's coverage only by ANSWERING it. Merely asking,
+  posing, repeating, or rephrasing one of the analyst's questions — or naming its
+  topic without giving any information — does NOT address it: omit that question
+  entirely (no facts, no "partial", no "answered", no followup). Coverage advances
+  only on the substantive answer that follows a question, never on the question
+  being raised. On a diligence call the analyst asks; the researcher answers.
 - A turn may address multiple questions, or none. Only include questions this
-  turn actually addresses.
+  turn actually answers.
 - Stay anchored to the analyst's question list. Never invent new questions.
-- When genuinely unsure between "partial" and "answered", choose "answered": give
-  a fair answer the benefit of the doubt rather than holding it open. Still flag a
-  real dodge or contradiction — but don't keep a substantive answer from going green.
+- For a real answer that is hard to call, when unsure between "partial" and
+  "answered", choose "answered": give it the benefit of the doubt rather than
+  holding it open. Still flag a real dodge or contradiction — but don't keep a
+  substantive answer from going green. (This tie-break is only for genuine
+  answers — never use it to green a question that was merely asked.)
 - Never output a generic followup like "can you elaborate?" — name the specific
   missing piece.
 - When RESEARCH CONTEXT (the analyst's own notes / filings) is provided, check

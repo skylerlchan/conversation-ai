@@ -1,0 +1,41 @@
+{
+  "_note": "Management ANSWER turns from the real Apple Q2 FY26 earnings-call Q&A (the content the analyst hears in public/apple-earnings-questions.mp4). Lightly trimmed of pure filler; figures and substance verbatim from youtube_transcript_ZX0HuHkJ74U.md. Each turn tags the diligence question(s) it should drive toward `answered` (keyed to questions.json). Used by tests/test_apple_call_grading.py to prove the coverage engine marks a question answered when the real answer is spoken. Source: agent-py/demo/apple_call_question_map.md.",
+  "company": "AAPL",
+  "answers": [
+    {
+      "analyst": "Eric Woodring — Morgan Stanley",
+      "covers": ["q2", "q3"],
+      "answer": "We were constrained during the March quarter. This was primarily on iPhone and to a lesser extent on the Mac. The constraints were primarily driven by the availability of the advanced nodes our SOCs are produced on. If you look forward to the June quarter, the majority of our supply constraints will be on several Mac models given the continued high levels of demand. For Mac in the June quarter there are two factors: on the Mac mini and Mac Studio, both are amazing platforms for AI and agentic tools and customer recognition is happening faster than we predicted, so we saw higher than expected demand; and the customer response to Mac Neo has been off the charts. We set a March quarter record for customers new to the Mac, partly due to the Neo. We think the Mac mini and Mac Studio may take several months to reach supply demand balance."
+    },
+    {
+      "analyst": "Ben Reitzes — Melius",
+      "covers": ["q1"],
+      "answer": "We don't get into our future roadmap, so I don't want to give too much info there, but I would just say that we're thrilled with how the iPhone is doing, growing 22% in the quarter and followed up from an incredible Q1, having the strongest cycle that we've ever had in our history from the launch through the March quarter. We could not be happier with it."
+    },
+    {
+      "analyst": "Amit Daryanani — Evercore",
+      "covers": ["q1"],
+      "answer": "If you look at it, it's the iPhone 17 family that's driving it, and that is despite the supply constraints that we're experiencing. The things that are driving people to the 17 are people love the design, the performance, the durability, the camera, center stage, and that Apple intelligence is integrated across the platform. From where we're seeing the growth, it's amazing — we're seeing double-digit growth in the majority of the markets we track, from the US to Latin America to Greater China to Western Europe to India to Japan to Southeast Asia. We set a new March quarter record for upgraders as well. And the customer satisfaction for the 17 family in the US is 99%. These numbers are just unheard of."
+    },
+    {
+      "analyst": "David Vogt — UBS",
+      "covers": ["q2"],
+      "answer": "The constraint in the March quarter and the June quarter, the primary constraint is the availability of the advanced nodes our SOCs are produced on — not memory. I think on the Mac mini and the Mac Studio it'll take several months to reach supply demand balance. The primary constraint from a product point of view for the June quarter will be on the Mac — Mac mini, Mac Studio, and the MacBook Neo. It's all of those."
+    },
+    {
+      "analyst": "Michael Ng — Goldman Sachs",
+      "covers": ["q3"],
+      "answer": "Right now we're supply-constrained on the MacBook Neo. We were very bullish on the product before announcing it, but we undercalled the level of enthusiasm. It's very much focused on getting the Mac to even more people than we were reaching before — customers new to the Mac and customers that have been holding on to their Mac a very long time. We're seeing school systems like the Kansas City public schools switching from Chromebooks and Windows PCs to the MacBook Neo, and I'm hearing more and more of those stories at the school-system and individual-consumer level."
+    },
+    {
+      "analyst": "Aaron Rakers — Wells Fargo",
+      "covers": ["q3"],
+      "answer": "We are thrilled with the performance in Greater China. The first half of the year grew at 33%, and in the March quarter revenue was up 28% — a quarterly revenue record for us. The performance is really driven by iPhone, which was also a March quarter record. iPhone was the top-selling model in urban China, the Mac mini was the top-selling desktop in China, and the MacBook Air was the top-selling laptop model. The traffic in our stores grew double digits."
+    },
+    {
+      "analyst": "Aaron Rakers — Wells Fargo",
+      "covers": ["q3"],
+      "answer": "India is a huge opportunity for us. It's the second largest smartphone market in the world and the third largest PC market, and despite doing extremely well there for quite some time we still have a modest share, which speaks to the opportunity. There are a lot of people moving into the middle class there. The majority of customers across all of our categories are new to that product in India, which speaks well to growing the installed base. Net net, I'm over the moon excited about India."
+    }
+  ]
+}

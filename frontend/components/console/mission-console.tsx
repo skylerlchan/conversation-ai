@@ -9,6 +9,7 @@ import {
   CaretRightIcon,
   CheckCircleIcon,
   CheckIcon,
+  FileTextIcon,
   PauseIcon,
   PlayIcon,
   QuotesIcon,
@@ -328,26 +329,11 @@ function QuestionRow({
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                 className="overflow-hidden"
               >
-                <div className="border-l-2 border-cyan-400/60 bg-cyan-400/[0.06] px-2 py-1.5">
-                  <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-cyan-300/90">
+                <div className="border-l-2 border-cyan-400/40 pl-2">
+                  <p className="mb-1.5 font-mono text-[9px] font-bold tracking-[0.15em] text-cyan-300/90">
                     NOTES · MOSS
                   </p>
-                  <ul className="mt-1 space-y-1">
-                    {notes.map((n, i) => {
-                      const dash = n.lastIndexOf(' — ');
-                      const fact = dash > 0 ? n.slice(0, dash) : n;
-                      const src = dash > 0 ? n.slice(dash + 3) : '';
-                      return (
-                        <li key={i} className="flex gap-1.5 text-[12px] leading-snug text-zinc-300">
-                          <span className="mt-1.5 size-1 shrink-0 rounded-full bg-cyan-400/70" />
-                          <span className="min-w-0">
-                            {fact}
-                            {src && <span className="text-zinc-500"> — {src}</span>}
-                          </span>
-                        </li>
-                      );
-                    })}
-                  </ul>
+                  <DocumentBlocks lines={notes} accent="cyan" />
                 </div>
               </motion.div>
             )}
@@ -455,15 +441,12 @@ function CoverageBoard({
   coverage,
   followups,
   flags,
-  model,
 }: {
   groups: PillarGroup[];
   activePillarId?: string;
   coverage: Record<string, CoverageState>;
   followups: ConsoleFollowup[];
   flags: ConsoleFlag[];
-  /** Passed straight to the embedded chat so it can ground answers in the call. */
-  model: ConsoleModel;
 }) {
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
@@ -482,6 +465,7 @@ function CoverageBoard({
     <Panel
       title="Thesis coverage"
       sub={`${groups.length} pillars`}
+      className="min-h-0 flex-1"
       bodyClassName="flex min-h-0 flex-col"
     >
       <div className="flex min-h-0 flex-1">
@@ -540,7 +524,6 @@ function CoverageBoard({
           </AnimatePresence>
         </div>
       </div>
-      <DiligenceChat model={model} />
     </Panel>
   );
 }
@@ -669,25 +652,90 @@ function firstPillarSeed(groups: PillarGroup[]): PillarSeed | undefined {
   return { id: p.id, label: p.label, claim: p.claim, notes: notes.slice(0, 8) };
 }
 
-/** Render "fact — source" lines as a tight bulleted digest, source dimmed inline. */
-function NoteBullets({ lines }: { lines: string[] }) {
+/** Group "fact — source" lines under their source document, first-seen order. */
+function groupBySource(lines: string[]): { source: string; facts: string[] }[] {
+  const order: string[] = [];
+  const bySource = new Map<string, string[]>();
+  for (const line of lines) {
+    const dash = line.lastIndexOf(' — ');
+    const fact = (dash > 0 ? line.slice(0, dash) : line).trim();
+    const source = (dash > 0 ? line.slice(dash + 3) : 'Note').trim() || 'Note';
+    if (!fact) continue;
+    const bucket = bySource.get(source);
+    if (bucket) {
+      bucket.push(fact);
+    } else {
+      bySource.set(source, [fact]);
+      order.push(source);
+    }
+  }
+  return order.map((source) => ({ source, facts: bySource.get(source)! }));
+}
+
+const NOTE_ACCENT = {
+  emerald: { head: 'text-emerald-300/90', icon: 'text-emerald-400/70', dot: 'bg-emerald-400/70' },
+  cyan: { head: 'text-cyan-300/90', icon: 'text-cyan-400/70', dot: 'bg-cyan-400/70' },
+} as const;
+
+/** Render "fact — source" notes as one card per source document: a header bar
+ * naming the document, its facts bulleted beneath. `large` is for the roomy
+ * Context panel; the default fits the tighter coverage-board rows. */
+function DocumentBlocks({
+  lines,
+  accent = 'emerald',
+  large = false,
+  max = 3,
+}: {
+  lines: string[];
+  accent?: keyof typeof NOTE_ACCENT;
+  large?: boolean;
+  /** Cap on how many source documents to surface — the top-N most relevant. */
+  max?: number;
+}) {
+  // Keep the top-N most relevant source documents for what's on screen. groupBySource
+  // preserves first-seen order, which mirrors the engine's relevance ranking (Moss
+  // returns the most-relevant snippets first), so slicing the head keeps the top docs.
+  const docs = groupBySource(lines).slice(0, max);
+  const c = NOTE_ACCENT[accent];
   return (
-    <ul className="mt-1.5 space-y-1">
-      {lines.map((line, i) => {
-        const dash = line.lastIndexOf(' — ');
-        const fact = dash > 0 ? line.slice(0, dash) : line;
-        const src = dash > 0 ? line.slice(dash + 3) : '';
-        return (
-          <li key={i} className="flex gap-1.5 text-[12px] leading-snug text-zinc-300">
-            <span className="mt-1.5 size-1 shrink-0 rounded-full bg-emerald-400/70" />
-            <span className="min-w-0">
-              {fact}
-              {src && <span className="text-zinc-500"> — {src}</span>}
+    <div className={cn(large ? 'space-y-2.5' : 'space-y-1.5')}>
+      {docs.map((doc) => (
+        <div
+          key={doc.source}
+          className="overflow-hidden rounded-md border border-white/[0.08] bg-white/[0.02]"
+        >
+          <div className="flex items-center gap-1.5 border-b border-white/[0.06] bg-white/[0.025] px-2.5 py-1.5">
+            <FileTextIcon weight="fill" className={cn('shrink-0', c.icon, large ? 'size-3.5' : 'size-3')} />
+            <span
+              className={cn(
+                'min-w-0 truncate font-mono font-semibold tracking-wide',
+                c.head,
+                large ? 'text-[11px]' : 'text-[10px]'
+              )}
+            >
+              {doc.source}
             </span>
-          </li>
-        );
-      })}
-    </ul>
+            <span className="ml-auto shrink-0 font-mono text-[9px] text-zinc-600 tabular-nums">
+              {doc.facts.length}
+            </span>
+          </div>
+          <ul className={cn('px-2.5 py-2', large ? 'space-y-2' : 'space-y-1.5')}>
+            {doc.facts.map((fact, i) => (
+              <li
+                key={i}
+                className={cn(
+                  'flex gap-2 leading-snug text-zinc-200',
+                  large ? 'text-[13.5px]' : 'text-[12px]'
+                )}
+              >
+                <span className={cn('mt-[0.5em] size-1 shrink-0 rounded-full', c.dot)} />
+                <span className="min-w-0">{fact}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -730,7 +778,7 @@ function ContextPanel({ evidence, seed }: { evidence?: ConsoleEvidence; seed?: P
                     THEY SAID
                   </span>
                 </div>
-                <p className="mt-1 text-[12px] leading-snug text-zinc-300">{evidence.claim}</p>
+                <p className="mt-1 text-[13.5px] leading-snug text-zinc-200">{evidence.claim}</p>
               </div>
             )}
 
@@ -749,34 +797,23 @@ function ContextPanel({ evidence, seed }: { evidence?: ConsoleEvidence; seed?: P
               </div>
             )}
 
-            {/* Grounded note / corpus snippets — a tight bulleted digest with the
-                source dimmed inline (the live feed is a multi-line Moss summary). */}
+            {/* Grounded note / corpus snippets, grouped into one block per source
+                document (the live feed is a multi-line Moss summary). */}
             {evidence.sources.length > 0 && (
               <div>
-                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-zinc-500">
                   YOUR NOTE / FILINGS
                 </span>
-                <ul className="mt-1.5 space-y-1">
-                  {evidence.sources.flatMap((s, si) =>
-                    toBullets(s.text).map((line, li) => {
-                      const dash = line.lastIndexOf(' — ');
-                      const fact = dash > 0 ? line.slice(0, dash) : line;
-                      const src = dash > 0 ? line.slice(dash + 3) : s.label;
-                      return (
-                        <li
-                          key={`${si}-${li}`}
-                          className="flex gap-1.5 text-[12px] leading-snug text-zinc-300"
-                        >
-                          <span className="mt-1.5 size-1 shrink-0 rounded-full bg-emerald-400/70" />
-                          <span className="min-w-0">
-                            {fact}
-                            {src && <span className="text-zinc-500"> — {src}</span>}
-                          </span>
-                        </li>
-                      );
-                    })
-                  )}
-                </ul>
+                <div className="mt-2">
+                  <DocumentBlocks
+                    lines={evidence.sources.flatMap((s) =>
+                      toBullets(s.text).map((line) =>
+                        line.includes(' — ') ? line : `${line} — ${s.label}`
+                      )
+                    )}
+                    large
+                  />
+                </div>
               </div>
             )}
 
@@ -815,16 +852,18 @@ function ContextPanel({ evidence, seed }: { evidence?: ConsoleEvidence; seed?: P
                 </span>
               </div>
               {seed.claim && (
-                <p className="mt-1 text-[12px] leading-snug text-zinc-200">{seed.claim}</p>
+                <p className="mt-1 text-[13.5px] leading-snug text-zinc-100">{seed.claim}</p>
               )}
             </div>
 
             {seed.notes.length > 0 && (
               <div>
-                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                <span className="font-mono text-[10px] font-bold tracking-[0.15em] text-zinc-500">
                   YOUR NOTE / FILINGS
                 </span>
-                <NoteBullets lines={seed.notes} />
+                <div className="mt-2">
+                  <DocumentBlocks lines={seed.notes} large />
+                </div>
               </div>
             )}
 
@@ -889,6 +928,9 @@ function LiveCall({
               <div className="max-h-[8rem] overflow-y-auto border-l-2 border-emerald-400/50 bg-white/[0.02] px-3 py-2">
                 <p className="text-[14px] leading-relaxed text-zinc-100">
                   {latest ? latest.text : 'Waiting for the call to start.'}
+                  {latest?.interim && (
+                    <span className="ml-0.5 inline-block h-[1.1em] w-[2px] animate-pulse bg-emerald-400 align-text-bottom" />
+                  )}
                 </p>
               </div>
               <div className="max-h-[9rem] space-y-2 overflow-y-auto pr-1">
@@ -909,7 +951,7 @@ function LiveCall({
                           </span>
                           {prompted && (
                             <span className="font-mono text-[9px] tracking-wide text-amber-400">
-                              ◂ COPILOT
+                              ◂ BROX
                             </span>
                           )}
                         </div>
@@ -1037,14 +1079,22 @@ export function MissionConsoleView({
         />
 
         <main className="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
-          <CoverageBoard
-            groups={groups}
-            activePillarId={activePillar}
-            coverage={model.coverage}
-            followups={model.activeFollowups}
-            flags={model.flags}
-            model={model}
-          />
+          <section className="flex min-h-0 flex-col gap-4">
+            <CoverageBoard
+              groups={groups}
+              activePillarId={activePillar}
+              coverage={model.coverage}
+              followups={model.activeFollowups}
+              flags={model.flags}
+            />
+            <LiveCall
+              transcript={model.transcript}
+              playing={model.playing}
+              open={callOpen}
+              onToggle={() => setCallOpen((o) => !o)}
+            />
+            <DiligenceChat model={model} />
+          </section>
 
           <section className="flex min-h-0 flex-col gap-4">
             <NextStep
@@ -1052,12 +1102,6 @@ export function MissionConsoleView({
               nextMissed={next}
               pillar={next ? pillar[next.id] : undefined}
               allCovered={allCovered}
-            />
-            <LiveCall
-              transcript={model.transcript}
-              playing={model.playing}
-              open={callOpen}
-              onToggle={() => setCallOpen((o) => !o)}
             />
             <ContextPanel evidence={latestEvidence} seed={contextSeed} />
           </section>

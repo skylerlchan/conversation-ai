@@ -78,7 +78,7 @@ export function Launcher() {
         <div className="mb-6 flex items-center gap-2">
           <span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
           <span className="font-mono text-[11px] font-medium tracking-[0.28em] text-zinc-400 uppercase">
-            Diligence Copilot
+            Brox
           </span>
         </div>
 

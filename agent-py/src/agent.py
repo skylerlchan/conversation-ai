@@ -21,7 +21,7 @@ from livekit.plugins import ai_coustics, silero
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from moss import MossClient, QueryOptions
 
-from coverage import CallState, apply_verdict
+from coverage import CallState, answer_line, apply_verdict
 from engine import grade_turn, summarize_grounding, summarize_question_notes
 
 logger = logging.getLogger("agent")
@@ -174,6 +174,11 @@ class DiligenceListener(Agent):
         # every turn by `_ground`; drained every SUMMARY_EVERY turns into a
         # summarized `grounding` packet for the console (see `_summarize_grounding`).
         self._grounding_buffer: list[str] = []
+        # One-line gist of the most recent substantive researcher answer (the turn's
+        # distilled facts). Published on the `grounding` packet as `answer` so the
+        # console's "THEY SAID" shows a summary, not a raw — possibly misdiarized —
+        # transcript turn. Empty until the first real answer lands.
+        self._last_answer: str = ""
         # Speaker diarization: map opaque STT speaker ids to call roles, and hold
         # the speaker id of the in-progress turn (set from user_input_transcribed,
         # consumed when the turn finalizes). See SpeakerRoles + on_enter.
@@ -280,11 +285,10 @@ class DiligenceListener(Agent):
 
         Speaker labeling: the STT runs with diarization on, so each turn carries a
         speaker id we map to a role via `SpeakerRoles` (first speaker = analyst,
-        the rest = researcher; unknown = researcher). The label drives the
-        transcript display only — coverage is still scored on every turn, so a
-        mislabel never drops a real researcher answer. The grading engine only
-        advances a question on a satisfying answer, so an analyst re-asking can't
-        false-advance it either.
+        the rest = researcher; unknown = researcher). Coverage advances ONLY on
+        researcher turns — a question is covered by the ANSWER that follows it, not
+        by the analyst raising it. So the speaker label gates scoring (analyst
+        questions are shown in the transcript but never scored); see `_score_turn`.
         """
         text = (new_message.text_content or "").strip()
         if text:
@@ -295,9 +299,10 @@ class DiligenceListener(Agent):
             # Surface the turn to the console immediately, before scoring.
             await self.publish_transcript(len(self._turns), speaker, text)
             # Score coverage in the background so the turn pipeline stays fast
-            # (no one waits on the AI — it never speaks).
+            # (no one waits on the AI — it never speaks). Only the researcher's
+            # answers advance coverage; the speaker gate lives in `_score_turn`.
             if self._verdict_llm is not None:
-                self._spawn(self._score_turn(len(self._turns), text))
+                self._spawn(self._score_turn(len(self._turns), text, speaker))
         # The finalized turn now stands on its own in the transcript; clear the
         # live-caption accumulators so the next turn streams from empty. The
         # console drops the partial line when this turn's transcript packet lands.
@@ -310,13 +315,22 @@ class DiligenceListener(Agent):
         self._tasks.add(task)
         task.add_done_callback(self._tasks.discard)
 
-    async def _score_turn(self, turn_no: int, text: str) -> None:
-        """Score one researcher turn and fold the verdict into the call state.
+    async def _score_turn(
+        self, turn_no: int, text: str, speaker: str = "researcher"
+    ) -> None:
+        """Score one researcher answer and fold the verdict into the call state.
 
-        Runs out-of-band (the copilot never speaks). Degrades gracefully on
-        error so a bad turn never crashes the call. ``turn_no`` is the 1-based
-        index of this turn, used to pace the periodic analyst digest.
+        Only RESEARCHER turns advance coverage: a question is covered by the
+        ANSWER that follows it, never by the analyst raising it. Analyst turns are
+        skipped here entirely — gating on the diarized speaker (not the model) is
+        what keeps coverage honest, because the grader will over-credit a posed
+        question, especially one that embeds a figure (verified in
+        test_apple_call_grading). ``turn_no`` is the 1-based turn index, used to
+        pace the periodic analyst digest. Runs out-of-band (the copilot never
+        speaks) and degrades gracefully on error so a bad turn never crashes the call.
         """
+        if speaker != "researcher":
+            return
         # Retrieve the analyst's own research context for what was just said, so
         # the engine can ground contradictions + follow-ups in the note's real
         # figures. This runs every turn (contradictions surface live); the
@@ -330,6 +344,12 @@ class DiligenceListener(Agent):
             logger.exception("coverage engine failed to score a turn")
             return
         changed = apply_verdict(self._call, verdict)
+        # Keep the latest one-line answer gist for the analyst digest's "THEY SAID".
+        # Non-answers (operator hand-offs, filler) extract no facts, so they leave the
+        # last real answer standing instead of overwriting it with a transcript line.
+        gist = answer_line(verdict)
+        if gist:
+            self._last_answer = gist
         if changed:
             logger.info("coverage updated %s -> %s", changed, self._call.counts())
             await self.publish_coverage()
@@ -390,7 +410,12 @@ class DiligenceListener(Agent):
             return
         if summary:
             await self._publish(
-                "grounding", {"summary": summary, "through_turn": through_turn}
+                "grounding",
+                {
+                    "summary": summary,
+                    "through_turn": through_turn,
+                    "answer": self._last_answer,
+                },
             )
 
     async def _precompute_notes(self) -> None:

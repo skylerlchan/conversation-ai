@@ -3,7 +3,13 @@
 // (useLiveDiligence) — so the console UI is written once against ConsoleModel and
 // driven by either. See components/console/mission-console.tsx (MissionConsoleView).
 import type { CoverageState, QuestionsFixture } from '@/lib/demo/types';
-import type { CoveragePacket, GroundingPacket, Speaker, TranscriptPacket } from '@/lib/live/types';
+import type {
+  CoveragePacket,
+  GroundingPacket,
+  Speaker,
+  TranscriptPacket,
+  TranscriptPartialPacket,
+} from '@/lib/live/types';
 
 export interface ConsoleQuestion {
   id: string;
@@ -59,6 +65,8 @@ export interface ConsoleTurn {
   speaker: Speaker;
   text: string;
   prompted_by_copilot?: boolean | string;
+  /** In-progress live caption (not yet a finalized turn). Rendered with a live cursor. */
+  interim?: boolean;
 }
 
 export interface ConsoleModel {
@@ -169,12 +177,14 @@ export function nextMissed(model: ConsoleModel): ConsoleQuestion | undefined {
 export function liveModel(args: {
   coverage: CoveragePacket | null;
   transcript: TranscriptPacket[];
+  /** The in-progress caption for the turn being spoken now (word-by-word), if any. */
+  partial?: TranscriptPartialPacket | null;
   /** Moss retrieval feed (one per scored researcher turn), oldest first. */
   groundings?: GroundingPacket[];
   live: boolean;
   callKind?: string;
 }): ConsoleModel {
-  const { coverage, transcript, live } = args;
+  const { coverage, transcript, partial, live } = args;
   const cards = coverage?.questions ?? [];
 
   const coverageMap: Record<string, CoverageState> = {};
@@ -200,13 +210,19 @@ export function liveModel(args: {
   // coverage cards (the board flags them). "THEY SAID" is the latest researcher
   // turn at/before `through_turn` — the live transcript carries the quote, the
   // grounding only the digest.
+  // "THEY SAID" is a one-line gist of the researcher's last real answer, carried on
+  // the grounding packet (`answer`) — the agent distills it from the turn's extracted
+  // facts, so operator hand-offs / filler never surface. Fall back, for older packets
+  // with no `answer`, to the newest substantive (>= 6 word) researcher turn.
+  const isSubstantive = (text: string) => text.trim().split(/\s+/).filter(Boolean).length >= 6;
   const evidence: ConsoleEvidence[] = (args.groundings ?? []).map((g, i) => {
-    const said = transcript
-      .filter((tp) => tp.speaker === 'researcher' && (g.through_turn == null || tp.t <= g.through_turn))
-      .at(-1);
+    const candidates = transcript.filter(
+      (tp) => tp.speaker === 'researcher' && (g.through_turn == null || tp.t <= g.through_turn)
+    );
+    const fallback = candidates.filter((tp) => isSubstantive(tp.text)).at(-1) ?? candidates.at(-1);
     return {
       turn: g.through_turn ?? `g${i}`,
-      claim: said?.text ?? '',
+      claim: g.answer?.trim() || fallback?.text || '',
       facts: [],
       sources: [{ label: 'Your research · Moss (summary)', text: g.summary }],
     };
@@ -228,12 +244,20 @@ export function liveModel(args: {
     coverage: coverageMap,
     activeFollowups,
     flags,
-    transcript: transcript.map((t) => ({
-      t: t.t,
-      speaker: t.speaker,
-      text: t.text,
-      prompted_by_copilot: t.prompted_by_copilot,
-    })),
+    // Finalized turns, plus the in-progress caption appended last so it reads as the
+    // current (live) line — this is what fills the transcript in word-by-word and
+    // keeps the console off "Waiting for the call to start" once speech is heard.
+    transcript: [
+      ...transcript.map((t) => ({
+        t: t.t,
+        speaker: t.speaker,
+        text: t.text,
+        prompted_by_copilot: t.prompted_by_copilot,
+      })),
+      ...(partial && partial.text
+        ? [{ t: 'live' as const, speaker: partial.speaker, text: partial.text, interim: true }]
+        : []),
+    ],
     evidence,
     tally: {
       answered: counts.answered,

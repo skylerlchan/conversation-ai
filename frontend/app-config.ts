@@ -33,8 +33,8 @@ export interface AppConfig {
 }
 
 export const APP_CONFIG_DEFAULTS: AppConfig = {
-  companyName: 'Diligence Copilot',
-  pageTitle: 'Diligence Copilot',
+  companyName: 'Brox',
+  pageTitle: 'Brox',
   pageDescription:
     'A real-time copilot for buy-side diligence calls: tracks coverage of your questions, fires grounded follow-ups, and flags inconsistencies live. Try the scripted demo at /demo.',
 

@@ -20,52 +20,55 @@ function partialTagSuffix(s: string, tag: string): number {
 }
 
 /**
- * Strips reasoning models' chain-of-thought from a token stream. MiniMax-M2 (and
- * other reasoning models) emit their thinking inline as `<think>…</think>` inside
- * delta.content, and the tags split across chunk boundaries — so this is a stateful
- * filter: feed each delta, get back only the user-facing text. `flush` emits any
- * text held back as a maybe-partial open tag once the stream ends. Providers that
- * never emit think tags (e.g. Qwen) pass straight through.
+ * Splits a reasoning model's token stream into two channels: chain-of-thought (the
+ * text inside `<think>…</think>`) and the user-facing answer. MiniMax-M2/M3 emit
+ * their thinking inline in delta.content and the tags straddle chunk boundaries, so
+ * this is stateful: feed each delta, get back `{ think, answer }` for that delta.
+ * `flush` releases whatever is held back once the stream ends. Providers that never
+ * emit think tags (e.g. Qwen) return everything as `answer`.
  */
-function makeThinkStripper() {
+function makeThinkSplitter() {
   const OPEN = '<think>';
   const CLOSE = '</think>';
   let inThink = false;
   let carry = '';
 
   return {
-    feed(text: string): string {
+    feed(text: string): { think: string; answer: string } {
       carry += text;
-      let out = '';
+      let think = '';
+      let answer = '';
       for (;;) {
         if (!inThink) {
           const i = carry.indexOf(OPEN);
           if (i !== -1) {
-            out += carry.slice(0, i);
+            answer += carry.slice(0, i);
             carry = carry.slice(i + OPEN.length);
             inThink = true;
             continue;
           }
           const hold = partialTagSuffix(carry, OPEN);
-          out += carry.slice(0, carry.length - hold);
+          answer += carry.slice(0, carry.length - hold);
           carry = carry.slice(carry.length - hold);
-          return out;
+          return { think, answer };
         }
         const i = carry.indexOf(CLOSE);
         if (i !== -1) {
+          think += carry.slice(0, i);
           carry = carry.slice(i + CLOSE.length);
           inThink = false;
           continue;
         }
-        // Still thinking: drop everything but a possible partial close tag.
-        carry = carry.slice(carry.length - partialTagSuffix(carry, CLOSE));
-        return out;
+        const hold = partialTagSuffix(carry, CLOSE);
+        think += carry.slice(0, carry.length - hold);
+        carry = carry.slice(carry.length - hold);
+        return { think, answer };
       }
     },
-    flush(): string {
-      const rest = inThink ? '' : carry;
+    flush(): { think: string; answer: string } {
+      const out = inThink ? { think: carry, answer: '' } : { think: '', answer: carry };
       carry = '';
-      return rest;
+      return out;
     },
   };
 }
@@ -146,16 +149,21 @@ export async function POST(req: Request) {
     );
   }
 
-  // Re-stream the OpenAI-compatible SSE as bare text deltas (the client appends
-  // each chunk to the in-flight assistant bubble).
+  // Re-stream the upstream SSE as NDJSON — one JSON object per line, tagged either
+  // {"type":"think",…} (chain-of-thought) or {"type":"text",…} (the answer). The
+  // client renders think tokens into a collapsible trace and text into the bubble.
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       const reader = upstream.body!.getReader();
       const decoder = new TextDecoder();
       const encoder = new TextEncoder();
-      const strip = makeThinkStripper();
-      const emit = (text: string) => {
-        if (text) controller.enqueue(encoder.encode(text));
+      const split = makeThinkSplitter();
+      const emit = (type: 'think' | 'text', text: string) => {
+        if (text) controller.enqueue(encoder.encode(`${JSON.stringify({ type, text })}\n`));
+      };
+      const emitSplit = (s: { think: string; answer: string }) => {
+        emit('think', s.think);
+        emit('text', s.answer);
       };
       let buffer = '';
       try {
@@ -170,20 +178,25 @@ export async function POST(req: Request) {
             if (!trimmed.startsWith('data:')) continue;
             const data = trimmed.slice(5).trim();
             if (data === '[DONE]') {
-              emit(strip.flush());
+              emitSplit(split.flush());
               controller.close();
               return;
             }
             try {
               const json = JSON.parse(data);
-              const delta = json.choices?.[0]?.delta?.content;
-              if (typeof delta === 'string' && delta) emit(strip.feed(delta));
+              const delta = json.choices?.[0]?.delta;
+              // Some OpenAI-compatible reasoning models surface thinking on a separate
+              // `reasoning_content` field instead of inline <think> tags — route it too.
+              const reasoning = delta?.reasoning_content;
+              if (typeof reasoning === 'string' && reasoning) emit('think', reasoning);
+              const content = delta?.content;
+              if (typeof content === 'string' && content) emitSplit(split.feed(content));
             } catch {
               // keep-alive line or a partial JSON frame — ignore.
             }
           }
         }
-        emit(strip.flush());
+        emitSplit(split.flush());
         controller.close();
       } catch (e) {
         controller.error(e);
@@ -193,7 +206,7 @@ export async function POST(req: Request) {
 
   return new Response(stream, {
     headers: {
-      'Content-Type': 'text/plain; charset=utf-8',
+      'Content-Type': 'application/x-ndjson; charset=utf-8',
       'Cache-Control': 'no-cache, no-transform',
       'X-Accel-Buffering': 'no',
     },

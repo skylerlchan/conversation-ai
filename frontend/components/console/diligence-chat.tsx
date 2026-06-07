@@ -16,6 +16,8 @@ type ProviderId = 'minimax' | 'qwen';
 interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
+  /** Streamed chain-of-thought for reasoning models (MiniMax), shown collapsed. */
+  reasoning?: string;
 }
 
 const PROVIDERS: { id: ProviderId; label: string }[] = [
@@ -196,8 +198,81 @@ function Markdown({ text }: { text: string }) {
 }
 
 /**
- * "Ask about this call" chat — a Granola-style box embedded at the bottom of the
- * Thesis coverage panel, below the questions. Grounded in the running transcript,
+ * Collapsible chain-of-thought trace for reasoning models (MiniMax). Streams the
+ * model's thinking live in a dimmed panel, then auto-collapses to a "thought
+ * process" toggle the moment the real answer starts — re-expandable by click.
+ */
+function ThinkingTrace({
+  text,
+  answering,
+  streaming,
+}: {
+  text: string;
+  answering: boolean;
+  streaming: boolean;
+}) {
+  // Open live while the model is still only thinking; collapse once the answer
+  // begins. A manual toggle takes over from then on.
+  const [open, setOpen] = useState(true);
+  const touched = useRef(false);
+  useEffect(() => {
+    if (!touched.current && answering) setOpen(false);
+  }, [answering]);
+
+  const thinking = streaming && !answering;
+  return (
+    <div className="mb-1.5 w-full max-w-[90%]">
+      <button
+        type="button"
+        onClick={() => {
+          touched.current = true;
+          setOpen((o) => !o);
+        }}
+        className="flex items-center gap-1 font-mono text-[9px] tracking-[0.12em] text-zinc-600 transition-colors hover:text-zinc-400"
+      >
+        <CaretRightIcon
+          weight="bold"
+          className={cn('size-2.5 transition-transform', open && 'rotate-90')}
+        />
+        {thinking ? (
+          <span className="flex items-center gap-1.5 text-zinc-500">
+            THINKING
+            <span className="inline-flex gap-0.5">
+              {[0, 1, 2].map((d) => (
+                <motion.span
+                  key={d}
+                  className="size-1 rounded-full bg-zinc-500"
+                  animate={{ opacity: [0.3, 1, 0.3] }}
+                  transition={{ duration: 1, repeat: Infinity, delay: d * 0.18 }}
+                />
+              ))}
+            </span>
+          </span>
+        ) : (
+          'THOUGHT PROCESS'
+        )}
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <p className="mt-1 border-l-2 border-white/10 pl-2 text-[11px] leading-relaxed whitespace-pre-wrap text-zinc-500">
+              {text.trimStart()}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+/**
+ * "Ask about this call" chat — a Granola-style box that sits below the live-call
+ * panel in the left console column. Grounded in the running transcript,
  * coverage state, and the Moss-retrieved notes/filings. Answers stream from a
  * sponsor model the analyst picks (MiniMax or Qwen) via /api/chat. Collapsible.
  */
@@ -222,7 +297,7 @@ export function DiligenceChat({ model }: { model: ConsoleModel }) {
     setError(null);
     setInput('');
     const history = [...messages, { role: 'user' as const, content }];
-    setMessages([...history, { role: 'assistant', content: '' }]);
+    setMessages([...history, { role: 'assistant', content: '', reasoning: '' }]);
     setStreaming(true);
     try {
       const res = await fetch('/api/chat', {
@@ -234,19 +309,48 @@ export function DiligenceChat({ model }: { model: ConsoleModel }) {
         const j = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(j.error || `Chat failed (${res.status})`);
       }
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        if (!chunk) continue;
+
+      // NDJSON: one {type, text} per line. `think` deltas grow the collapsible
+      // reasoning trace; `text` deltas grow the visible answer bubble.
+      const apply = (evt: { type?: string; text?: string }) => {
+        if (!evt.text) return;
         setMessages((prev) => {
           const next = [...prev];
           const last = next[next.length - 1];
-          next[next.length - 1] = { ...last, content: last.content + chunk };
+          next[next.length - 1] =
+            evt.type === 'think'
+              ? { ...last, reasoning: (last.reasoning ?? '') + evt.text }
+              : { ...last, content: last.content + evt.text };
           return next;
         });
+      };
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split('\n');
+        buf = lines.pop() ?? '';
+        for (const line of lines) {
+          const t = line.trim();
+          if (!t) continue;
+          try {
+            apply(JSON.parse(t));
+          } catch {
+            // partial frame — newline framing makes this rare; skip it.
+          }
+        }
+      }
+      const tail = buf.trim();
+      if (tail) {
+        try {
+          apply(JSON.parse(tail));
+        } catch {
+          // ignore a trailing partial
+        }
       }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Chat failed');
@@ -264,7 +368,7 @@ export function DiligenceChat({ model }: { model: ConsoleModel }) {
   const empty = messages.length === 0;
 
   return (
-    <section className="flex shrink-0 flex-col overflow-hidden border-t border-white/10 bg-[#0c0d12]">
+    <section className="flex shrink-0 flex-col overflow-hidden rounded-lg border border-white/10 bg-[#0c0d12]">
       {/* Header: title toggle + model picker */}
       <div className="flex items-center gap-2 border-b border-white/[0.08] px-3 py-2">
         <button
@@ -353,7 +457,9 @@ export function DiligenceChat({ model }: { model: ConsoleModel }) {
                 <div className="space-y-3">
                   {messages.map((m, i) => {
                     const self = m.role === 'user';
-                    const pending = streaming && i === messages.length - 1 && !m.content;
+                    const isLast = i === messages.length - 1;
+                    const reasoning = !self ? (m.reasoning ?? '').trim() : '';
+                    const pending = streaming && isLast && !m.content && !reasoning;
                     return (
                       <div
                         key={i}
@@ -362,35 +468,46 @@ export function DiligenceChat({ model }: { model: ConsoleModel }) {
                         <span className="mb-0.5 px-1 font-mono text-[9px] tracking-[0.12em] text-zinc-600">
                           {self ? 'YOU' : provider === 'minimax' ? 'MINIMAX' : 'QWEN'}
                         </span>
-                        <div
-                          className={cn(
-                            'max-w-[90%] px-3 py-2 text-[12px] leading-relaxed',
-                            self
-                              ? 'rounded-l-lg rounded-tr-lg border-r-2 border-emerald-400/50 bg-emerald-400/10 whitespace-pre-wrap text-emerald-50/90'
-                              : 'rounded-tl-lg rounded-r-lg border-l-2 border-white/15 bg-white/[0.04] text-zinc-300'
-                          )}
-                        >
-                          {pending ? (
-                            <span className="inline-flex gap-1">
-                              {[0, 1, 2].map((d) => (
-                                <motion.span
-                                  key={d}
-                                  className="size-1.5 rounded-full bg-zinc-500"
-                                  animate={{ opacity: [0.3, 1, 0.3] }}
-                                  transition={{
-                                    duration: 1,
-                                    repeat: Infinity,
-                                    delay: d * 0.18,
-                                  }}
-                                />
-                              ))}
-                            </span>
-                          ) : self ? (
-                            m.content
-                          ) : (
-                            <Markdown text={m.content} />
-                          )}
-                        </div>
+
+                        {reasoning && (
+                          <ThinkingTrace
+                            text={m.reasoning ?? ''}
+                            answering={Boolean(m.content)}
+                            streaming={streaming && isLast}
+                          />
+                        )}
+
+                        {(self || m.content || pending) && (
+                          <div
+                            className={cn(
+                              'max-w-[90%] px-3 py-2 text-[12px] leading-relaxed',
+                              self
+                                ? 'rounded-l-lg rounded-tr-lg border-r-2 border-emerald-400/50 bg-emerald-400/10 whitespace-pre-wrap text-emerald-50/90'
+                                : 'rounded-tl-lg rounded-r-lg border-l-2 border-white/15 bg-white/[0.04] text-zinc-300'
+                            )}
+                          >
+                            {pending ? (
+                              <span className="inline-flex gap-1">
+                                {[0, 1, 2].map((d) => (
+                                  <motion.span
+                                    key={d}
+                                    className="size-1.5 rounded-full bg-zinc-500"
+                                    animate={{ opacity: [0.3, 1, 0.3] }}
+                                    transition={{
+                                      duration: 1,
+                                      repeat: Infinity,
+                                      delay: d * 0.18,
+                                    }}
+                                  />
+                                ))}
+                              </span>
+                            ) : self ? (
+                              m.content
+                            ) : (
+                              <Markdown text={m.content} />
+                            )}
+                          </div>
+                        )}
                       </div>
                     );
                   })}

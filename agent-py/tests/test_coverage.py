@@ -11,8 +11,58 @@ from coverage import (
     CallState,
     QuestionUpdate,
     TurnVerdict,
+    answer_line,
     apply_verdict,
 )
+
+
+def _al_verdict(updates: list[dict]) -> TurnVerdict:
+    return TurnVerdict(updates=[QuestionUpdate(**u) for u in updates])
+
+
+def _al_update(qid: str, facts: list[str], coverage: str = "answered") -> dict:
+    return {
+        "question_id": qid,
+        "coverage": coverage,
+        "extracted_facts": facts,
+        "contradiction": "",
+        "followup": "",
+    }
+
+
+def test_answer_line_joins_extracted_facts() -> None:
+    v = _al_verdict(
+        [_al_update("q1", ["iPhone +22% YoY", "strongest cycle in company history"])]
+    )
+    assert answer_line(v) == "iPhone +22% YoY; strongest cycle in company history"
+
+
+def test_answer_line_empty_when_no_facts() -> None:
+    # Operator hand-off / filler grades to zero facts -> no THEY SAID line.
+    assert answer_line(_al_verdict([])) == ""
+    partial_no_facts = _al_verdict(
+        [
+            {
+                "question_id": "q5",
+                "coverage": "partial",
+                "extracted_facts": [],
+                "contradiction": "",
+                "followup": "name the memory headwind in bps",
+            }
+        ]
+    )
+    assert answer_line(partial_no_facts) == ""
+
+
+def test_answer_line_dedupes_and_caps() -> None:
+    v = _al_verdict(
+        [
+            _al_update("q1", ["fact a", "fact a.", "fact b"]),
+            _al_update("q2", ["fact c", "fact d"]),
+        ]
+    )
+    # Trailing-period dup collapses; capped to the first 3 distinct facts.
+    assert answer_line(v) == "fact a; fact b; fact c"
 
 
 def _data(n: int = 3) -> dict:

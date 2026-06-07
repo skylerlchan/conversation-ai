@@ -3,13 +3,15 @@
 // as `{ type, data }` where `data` always carries a `timestamp` in epoch SECONDS
 // (multiply by 1000 for JS Date). See agent-py/src/agent.py `_publish`.
 //
-// Three packet types drive the live console:
-//   - coverage_update : the full question state machine (CallState.snapshot())
-//   - grounding       : the Moss retrieval for one researcher turn
-//   - transcript      : one finalized turn of the live call (labeled by speaker)
+// Four packet types drive the live console:
+//   - coverage_update    : the full question state machine (CallState.snapshot())
+//   - grounding          : the Moss retrieval for one researcher turn
+//   - transcript         : one finalized turn of the live call (labeled by speaker)
+//   - transcript_partial : the in-progress caption for the turn being spoken now
 //
 // coverage_update is a FULL snapshot (last-wins replace) so a dropped packet
-// self-heals on the next one. grounding/transcript are per-turn appends.
+// self-heals on the next one. grounding/transcript are per-turn appends, and
+// transcript_partial is a superseding (cumulative) caption for the live turn.
 import type { CoverageState } from '@/lib/demo/types';
 
 /** One question card inside a coverage snapshot. Mirrors QuestionState.to_card(). */
@@ -46,6 +48,9 @@ export interface CoveragePacket {
 export interface GroundingPacket {
   summary: string;
   through_turn?: number;
+  /** One-line gist of the most recent substantive researcher answer (the turn's
+   * distilled facts), for the console's "THEY SAID". Absent on older packets. */
+  answer?: string;
   timestamp: number;
 }
 
@@ -62,12 +67,26 @@ export interface TranscriptPacket {
   timestamp: number;
 }
 
-export type PacketType = 'coverage_update' | 'grounding' | 'transcript';
+/**
+ * `transcript_partial.data` — the in-progress (interim) caption for the turn being
+ * spoken right now. `text` is the FULL cumulative caption so far (a superseding
+ * update, not a delta), so words appear live as they're recognized. Superseded by
+ * the finalized `transcript` packet for the same speech, after which the agent
+ * resets and the next turn streams from empty. See agent-py `publish_partial`.
+ */
+export interface TranscriptPartialPacket {
+  speaker: Speaker;
+  text: string;
+  timestamp: number;
+}
+
+export type PacketType = 'coverage_update' | 'grounding' | 'transcript' | 'transcript_partial';
 
 export type LivePacket =
   | { type: 'coverage_update'; data: CoveragePacket }
   | { type: 'grounding'; data: GroundingPacket }
-  | { type: 'transcript'; data: TranscriptPacket };
+  | { type: 'transcript'; data: TranscriptPacket }
+  | { type: 'transcript_partial'; data: TranscriptPartialPacket };
 
 const decoder = new TextDecoder();
 
@@ -85,6 +104,12 @@ export function parseLivePacket(payload: Uint8Array): LivePacket | null {
   if (!msg || typeof msg !== 'object') return null;
   const { type, data } = msg as { type?: unknown; data?: unknown };
   if (typeof type !== 'string' || !data || typeof data !== 'object') return null;
-  if (type !== 'coverage_update' && type !== 'grounding' && type !== 'transcript') return null;
+  if (
+    type !== 'coverage_update' &&
+    type !== 'grounding' &&
+    type !== 'transcript' &&
+    type !== 'transcript_partial'
+  )
+    return null;
   return { type, data } as LivePacket;
 }

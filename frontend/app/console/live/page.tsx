@@ -4,7 +4,7 @@ import { LiveConsoleApp } from '@/components/console/live-mission-console';
 import { getAppConfig } from '@/lib/utils';
 
 export const metadata: Metadata = {
-  title: 'Diligence Copilot — Live',
+  title: 'Brox — Live',
   description:
     'The live diligence-call console: coverage, grounded follow-ups, and inconsistency flags streamed from the agent in real time.',
 };

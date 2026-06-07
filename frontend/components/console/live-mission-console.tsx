@@ -94,12 +94,12 @@ async function routeTrackToMic(
  * tab's audio, or both mixed.
  */
 function StartCallGate({
-  onStartVideo,
+  onConnect,
   onStart,
   starting,
   error,
 }: {
-  onStartVideo: () => void;
+  onConnect: () => void;
   onStart: (source: AudioSource) => void;
   starting: boolean;
   error: string | null;
@@ -109,21 +109,21 @@ function StartCallGate({
       <div className="flex items-center gap-2">
         <span className="size-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.7)]" />
         <span className="font-mono text-[11px] font-medium tracking-[0.28em] text-zinc-400 uppercase">
-          Diligence Copilot — Live
+          Brox — Live
         </span>
       </div>
       <p className="max-w-md text-center text-[15px] leading-relaxed text-zinc-400">
-        The copilot listens to the call and tracks coverage live. Hit play and the in-app earnings
-        video streams into the call — its audio is transcribed live and coverage fills in as the
-        questions land.
+        Brox listens to the call and tracks coverage live. Connect first — then press Space to
+        start the in-app earnings video. Its audio streams into the call, transcribed live, and
+        coverage fills in as the questions land.
       </p>
       <button
-        onClick={onStartVideo}
+        onClick={onConnect}
         disabled={starting}
         className="flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3 text-[15px] font-semibold text-black transition-transform hover:scale-[1.01] hover:bg-zinc-100 disabled:opacity-60"
       >
         <MonitorPlayIcon weight="fill" className="size-4" />
-        {starting ? 'Connecting…' : 'Play earnings video → live'}
+        {starting ? 'Connecting…' : 'Connect to call'}
         {!starting && <ArrowRightIcon weight="bold" className="size-4" />}
       </button>
       <div className="flex items-center gap-4 font-mono text-[11px] text-zinc-500">
@@ -140,7 +140,8 @@ function StartCallGate({
         </button>
       </div>
       <p className="max-w-sm text-center font-mono text-[11px] leading-relaxed text-zinc-600">
-        Chrome only. The video plays bottom-right; press Space to pause or resume.
+        Chrome only. Once connected, press Space to start the earnings video (bottom-right);
+        Space again to pause or resume.
       </p>
       {error && <p className="max-w-md text-center font-mono text-[12px] text-red-400">{error}</p>}
     </div>
@@ -158,9 +159,6 @@ function LiveConsoleInner() {
   const [starting, setStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const capture = useRef<CaptureResources>({ tracks: [] });
-  // Imperative play() handle the side player registers, so the gate's one-click
-  // "Play earnings video" can start it within the click gesture (audio needs one).
-  const playVideo = useRef<(() => void) | null>(null);
   // In-app earnings-video routing state (see routeVideoAudio / onVideoPlay).
   const routed = useRef(false);
   const pendingVideo = useRef<HTMLVideoElement | null>(null);
@@ -209,14 +207,15 @@ function LiveConsoleInner() {
     [session, localParticipant]
   );
 
-  // One-click: play the baked earnings video (inside this click gesture, so the
-  // audio is allowed), then connect. Routing happens once connected (effect below),
-  // so the agent's STT transcribes it straight into the live call.
-  const onStartVideo = useCallback(async () => {
+  // Connect only — do NOT auto-play the video. The agent needs to be connected and
+  // subscribed before audio flows, otherwise the opening gets swallowed into one
+  // giant turn that grades every question at once. Once connected, the analyst
+  // presses Space to start the earnings video (that keystroke is the user gesture
+  // the audio needs); onVideoPlay then routes its audio into the live call.
+  const onConnect = useCallback(async () => {
     setError(null);
     setStarting(true);
     try {
-      playVideo.current?.();
       await session.start(); // connect + publish the mic track we route onto
       capture.current = { tracks: [] };
     } catch (e) {
@@ -302,17 +301,13 @@ function LiveConsoleInner() {
         </div>
       ) : (
         <StartCallGate
-          onStartVideo={onStartVideo}
+          onConnect={onConnect}
           onStart={onStart}
           starting={starting}
           error={error}
         />
       )}
-      <EarningsVideoHotkey
-        playRef={playVideo}
-        onPlayStart={onVideoPlay}
-        routedHint="→ agent live"
-      />
+      <EarningsVideoHotkey onPlayStart={onVideoPlay} routedHint="→ agent live" />
     </>
   );
 }
