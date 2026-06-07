@@ -6,6 +6,19 @@ Goal: take the three systems — **live transcript → coverage tracking → con
 
 ---
 
+## Build status (2026-06-06)
+
+**Shipped (Phases 0-2 spine + the demo-name convergence):**
+- Live data path wired end to end — the console renders off the agent's LiveKit packets, not just the fixture. `lib/live/types.ts` (packet contract), `lib/console-model.ts` (one view-model, two sources), `hooks/useLiveDiligence.ts`, `MissionConsoleView` split, `/console/live` route under the room provider, launcher routes there.
+- Backend publishes a per-turn `transcript` packet (the transcript-source decision, implemented as a backend packet rather than LiveKit-native given same-room). Same-room handling: all turns labeled researcher; `complete_when` gating keeps coverage correct. +1 test.
+- Fake-live driver (`agent-py/src/fake_live.py`) replays a scripted call into a room as real packets — integration harness + stage fallback. Its `build_packets()` folds the scripted verdicts through the real `apply_verdict` (Phase 2.1 arc-from-machinery check). +4 tests.
+- Demo converged on **Chipotle (CMG)** across backend `questions.json`, demo fixtures, and frontend.
+- Verified: 49 backend tests pass; `next build` green; frontend typecheck + eslint clean.
+
+**Not yet built (later phases):** real piped-in audio (Phase 3), thesis-delta packet (Phase 4), metric-aware Live Context card (Phase 5.1), launcher→`/api/analyze` real-ticker path (Phase 5.2), sponsors (Phase 6). The CMG Moss corpus is hand-authored pending an Unsiloed parse run.
+
+---
+
 ## Where we are (the honest baseline)
 
 The deterministic core is built and unit-tested (44 tests pass offline). What's *not* connected is everything at the live boundary, plus one product-blocking mismatch.
