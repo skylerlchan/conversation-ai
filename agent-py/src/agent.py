@@ -254,7 +254,7 @@ async def my_agent(ctx: JobContext):
     # speaks on the call. STT transcripts still flow to `on_user_turn_completed`.
     session = AgentSession(
         # STT is the copilot's ears: the live transcript the coverage engine reads.
-        stt=inference.STT(model="deepgram/nova-3", language="multi"),
+        stt=inference.STT(model="deepgram/nova-3", language="en"),
         # Turn detection marks the end of each researcher turn — the trigger the
         # whole copilot rides on. See https://docs.livekit.io/agents/build/turns
         turn_detection=MultilingualModel(),
