@@ -1,0 +1,47 @@
+{
+  "_note": "SYNTHETIC DEMO FIXTURE — not investment advice, not real CAVA disclosures. The 'Meridian Securities' note is fictional; 10-K-style facts are approximate and illustrative. This is the grounding corpus the copilot retrieves from Moss mid-call: the fund's own research note + the company's filing. The follow-up grounding (Q2) and the contradiction flag (Q4) both point back to chunks in here. In production this is Unsiloed-parsed into the Moss `knowledge` index; here it is the source of truth for what 'their published model says.'",
+  "chunks": [
+    {
+      "id": "note-new-unit-econ",
+      "source": "research_note",
+      "source_label": "Meridian Securities — Initiating Coverage (Overweight)",
+      "grounds_question": "Q2",
+      "text": "New-unit economics. We model FY26E new-unit AUV of $2.6M, with year-one new-unit restaurant-level margin of ~20%, ramping toward the fleet ~25% by year two. Cash-on-cash returns of >35% on a ~$1.2M net build cost anchor our long-term unit-growth algorithm. The premium to fast-casual peers is the crux of the bull case; we need recent vintages to keep opening at or near this AUV."
+    },
+    {
+      "id": "note-comp-quality",
+      "source": "research_note",
+      "source_label": "Meridian Securities — Initiating Coverage (Overweight)",
+      "grounds_question": "Q4",
+      "text": "Comp build. Our +8% FY26E same-restaurant-sales estimate is TRAFFIC-LED: approximately +5% traffic and +3% effective price/mix. We view CAVA's comp quality as traffic-driven, which distinguishes it from price-reliant fast-casual peers and supports a premium multiple. A shift toward price-led comp would, in our view, lower comp quality and the durability of the runway."
+    },
+    {
+      "id": "note-unit-pipeline",
+      "source": "research_note",
+      "source_label": "Meridian Securities — Initiating Coverage (Overweight)",
+      "grounds_question": "Q1",
+      "text": "Unit growth. We model ~17% FY26E unit growth (~65 net new restaurants), which management has indicated is fully covered by the signed-lease pipeline, with site selection extending into new inland markets beyond the coastal core."
+    },
+    {
+      "id": "filing-fleet-metrics",
+      "source": "10-K",
+      "source_label": "CAVA Group 10-K (FY2024, illustrative)",
+      "grounds_question": "Q3",
+      "text": "Fleet metrics. As of fiscal year-end the company operated approximately 367 CAVA restaurants, with average unit volume (AUV) of approximately $2.9M and restaurant-level profit margin of approximately 25%. The company targets approximately 1,000 CAVA restaurants by 2032. New proteins, including grilled steak, were introduced to broaden the menu and lift average check."
+    },
+    {
+      "id": "filing-loyalty-digital",
+      "source": "10-K",
+      "source_label": "CAVA Group 10-K (FY2024, illustrative)",
+      "grounds_question": "Q5",
+      "text": "Digital and loyalty. Digital channels represent approximately 35% of revenue. The company relaunched its loyalty program with a more flexible, points-based structure intended to increase visit frequency and personalize offers, replacing the prior visit-threshold rewards model."
+    },
+    {
+      "id": "filing-category-position",
+      "source": "10-K",
+      "source_label": "CAVA Group 10-K (FY2024, illustrative)",
+      "grounds_question": "Q6",
+      "text": "Category and competition. The company positions Mediterranean as the next major fast-casual category, citing health-forward, customizable, broadly appealing cuisine. It competes with other fast-casual concepts for guests and real estate, and historically converted a number of acquired Zoes Kitchen locations into CAVA restaurants."
+    }
+  ]
+}

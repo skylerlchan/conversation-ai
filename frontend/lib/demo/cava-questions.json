@@ -1,0 +1,99 @@
+{
+  "_note": "SYNTHETIC DEMO FIXTURE — not investment advice, not real CAVA disclosures. Numbers are illustrative and the 'Meridian Securities' note is fictional. This is the pre-call structured input for the Diligence-Call Copilot demo: the fund's question list + thesis + the modeled assumptions the copilot grounds follow-ups and contradiction flags against.",
+  "company": {
+    "name": "CAVA Group, Inc.",
+    "ticker": "CAVA",
+    "exchange": "NYSE",
+    "sector": "Restaurants / fast-casual (Mediterranean)"
+  },
+  "counterpart": {
+    "side": "sell-side",
+    "firm": "Meridian Securities (fictional)",
+    "analyst": "covering analyst, Restaurants & Consumer",
+    "note": "Initiating Coverage — Overweight, PT $X (fictional)"
+  },
+  "thesis": "CAVA is an early-innings unit-growth compounder: a defensible Mediterranean category lead with best-in-class AUVs (~$2.9M) and ~25% restaurant-level margins, a long runway to ~1,000 units, and traffic-led same-restaurant sales. The bet is that new-unit economics and comp quality hold as the footprint moves beyond the coastal core.",
+  "thesis_memo": "We are long CAVA on the unit-growth runway (367 units today -> ~1,000 by 2032) at industry-leading new-unit returns. The thesis rests on two load-bearing assumptions we need the sell-side analyst to defend on this call: (1) new-vintage units keep opening near the modeled ~$2.6M AUV at ~20% year-one restaurant-level margin, and (2) same-restaurant sales stay TRAFFIC-led, not price-led — price-reliant comp is lower quality and signals less runway. If either cracks, the multiple is not supportable.",
+  "modeled_assumptions": {
+    "fy26_new_unit_auv": "$2.6M",
+    "fy26_new_unit_year1_restaurant_margin": "~20% (ramping to fleet ~25% by year two)",
+    "fy26_same_restaurant_sales": "+8% (modeled as ~+5% traffic, ~+3% price/mix) — TRAFFIC-LED",
+    "fy26_unit_growth": "~17% (~65 net new), fully covered by signed pipeline",
+    "fleet_auv": "~$2.9M",
+    "fleet_restaurant_level_margin": "~25%",
+    "digital_sales_mix": "~35%",
+    "long_term_unit_target": "~1,000 CAVA restaurants by 2032"
+  },
+  "pillars": [
+    { "id": "P1", "thesis": "A long, derisked runway to ~1,000 units", "questions": ["Q1", "Q8"] },
+    { "id": "P2", "thesis": "New-unit economics hold as they scale", "questions": ["Q2", "Q3"] },
+    {
+      "id": "P3",
+      "thesis": "Same-restaurant sales are high-quality, traffic-led",
+      "questions": ["Q4", "Q5"]
+    },
+    {
+      "id": "P4",
+      "thesis": "A defensible category lead, with optionality",
+      "questions": ["Q6", "Q7"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "text": "How derisked is the FY26 ~17% new-unit guide? What's signed-lease coverage and how deep is the development pipeline beyond the next twelve months?",
+      "why": "Unit growth is the whole thesis. If the pipeline is thin or leases aren't signed, the compounding story slips.",
+      "demo_role": "clean tick — answered early and cleanly",
+      "expected_outcome": "answered"
+    },
+    {
+      "id": "Q2",
+      "text": "Are recent-vintage new units opening at the modeled ~$2.6M AUV, and how are the 2023-24 cohorts maturing on restaurant-level margin specifically?",
+      "why": "New-unit economics are the second load-bearing assumption. A vague 'they're tracking well' is not enough — we need the AUV and the year-one restaurant-level margin on the actual recent class, because that is what underwrites the ~1,000-unit math.",
+      "demo_role": "HERO — researcher answers vaguely -> stays partial/amber -> copilot fires the grounded follow-up -> closes to green",
+      "expected_outcome": "answered (via follow-up)"
+    },
+    {
+      "id": "Q3",
+      "text": "Can the ~25% fleet restaurant-level margin hold through wage inflation, the steak/protein mix shift, and new-unit drag?",
+      "why": "Margin durability underpins the cash generation that self-funds growth.",
+      "demo_role": "clean tick",
+      "expected_outcome": "answered"
+    },
+    {
+      "id": "Q4",
+      "text": "What's the traffic vs price/mix split in current same-restaurant sales, and is traffic still positive?",
+      "why": "Comp QUALITY is the differentiator. The note frames CAVA's comp as traffic-led; if it's actually price-led, the runway and the premium multiple are weaker than underwritten.",
+      "demo_role": "INCONSISTENCY — answer contradicts the note's traffic-led model; flag fires vs 'note'. Question still reaches answered.",
+      "expected_outcome": "answered (with contradiction flag)"
+    },
+    {
+      "id": "Q5",
+      "text": "Where does the loyalty relaunch stand, what's the digital sales mix, and what frequency lift are you seeing?",
+      "why": "Loyalty + digital drive frequency, which is the cleaner (traffic) lever for comp.",
+      "demo_role": "clean tick",
+      "expected_outcome": "answered"
+    },
+    {
+      "id": "Q6",
+      "text": "How defensible is the Mediterranean category lead versus Chipotle, Sweetgreen, and new entrants — and how much pricing power is left?",
+      "why": "Moat and pricing power determine whether the AUV/margin premium persists as the category attracts capital.",
+      "demo_role": "clean tick",
+      "expected_outcome": "answered"
+    },
+    {
+      "id": "Q7",
+      "text": "What's the read on the catering rollout and any smaller-format or new-daypart prototype economics?",
+      "why": "Optionality on the growth algorithm — incremental sales layers beyond the core box.",
+      "demo_role": "late grey -> green — stays unanswered until the copilot nudges near the end of the call, then the analyst raises it and it closes",
+      "expected_outcome": "answered (after copilot end-of-call nudge)"
+    },
+    {
+      "id": "Q8",
+      "text": "Is the unit growth self-funded from operating cash flow, or is a raise needed — and is there any M&A or buyback appetite?",
+      "why": "Funding risk. Dilution or a stretched balance sheet changes the return profile.",
+      "demo_role": "clean tick — brief",
+      "expected_outcome": "answered"
+    }
+  ]
+}
