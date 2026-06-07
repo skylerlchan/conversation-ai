@@ -19,8 +19,11 @@ import {
   type ConsoleModel,
   type ConsoleQuestion,
   type ConsoleTurn,
+  type PillarGroup,
+  activePillarId as activePillarIdOf,
   fixtureModel,
   nextMissed as nextMissedOf,
+  pillarGroups,
   pillarOf as pillarOfModel,
 } from '@/lib/console-model';
 import { callFixture, questionsFixture } from '@/lib/demo';
@@ -142,14 +145,12 @@ function CommandBar({
 function QuestionRow({
   q,
   state,
-  pillar,
   followup,
   flag,
   compact = false,
 }: {
   q: ConsoleQuestion;
   state: CoverageState;
-  pillar?: string;
   followup?: ConsoleFollowup;
   flag?: ConsoleFlag;
   compact?: boolean;
@@ -175,9 +176,6 @@ function QuestionRow({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[9px] text-zinc-600">{q.id}</span>
-            {pillar && (
-              <span className="truncate font-mono text-[9px] text-zinc-600">· {pillar}</span>
-            )}
             {flag && (
               <span className="rounded-sm bg-red-500/15 px-1 font-mono text-[8px] tracking-wide text-red-400">
                 INCONSISTENCY
@@ -234,17 +232,90 @@ function QuestionRow({
   );
 }
 
-// ---- Coverage board: missed (top) + completed (bottom) ----
+// ---- A single thesis-pillar card: questions nested under the leg they probe ----
+
+function PillarCard({
+  group,
+  active,
+  coverage,
+  fuByQ,
+  flagByQ,
+}: {
+  group: PillarGroup;
+  active: boolean;
+  coverage: Record<string, CoverageState>;
+  fuByQ: Map<string, ConsoleFollowup>;
+  flagByQ: Map<string, ConsoleFlag>;
+}) {
+  return (
+    <div
+      className={cn(
+        'rounded-xl border transition-colors',
+        group.allDone
+          ? 'border-emerald-400/25 bg-emerald-400/[0.04]'
+          : group.anyThin
+            ? 'border-amber-400/30 bg-amber-400/[0.04]'
+            : 'border-white/[0.06] bg-white/[0.02]',
+        active && 'ring-1 ring-emerald-400/40'
+      )}
+    >
+      <div className="flex items-center gap-2.5 px-3 pt-2.5 pb-1.5">
+        <span className="font-mono text-[10px] font-semibold text-zinc-600">{group.id}</span>
+        <p className="min-w-0 flex-1 text-[12px] leading-snug font-medium text-zinc-100">
+          {group.label}
+        </p>
+        <div className="flex items-center gap-1">
+          {group.questions.map((q) => {
+            const s = coverage[q.id] ?? 'unanswered';
+            return (
+              <span
+                key={q.id}
+                className={cn('size-1.5 rounded-full', STATE[s].dot, STATE[s].glow)}
+              />
+            );
+          })}
+        </div>
+        <span
+          className={cn(
+            'font-mono text-[10px] tabular-nums',
+            group.allDone ? 'text-emerald-400' : 'text-zinc-500'
+          )}
+        >
+          {group.counts.answered}/{group.total}
+        </span>
+      </div>
+
+      {group.claim && (
+        <p className="px-3 pb-2 text-[11px] leading-snug text-zinc-500">{group.claim}</p>
+      )}
+
+      <div className="space-y-1.5 px-2 pb-2">
+        {group.questions.map((q) => (
+          <QuestionRow
+            key={q.id}
+            q={q}
+            state={coverage[q.id] ?? 'unanswered'}
+            followup={fuByQ.get(q.id)}
+            flag={flagByQ.get(q.id)}
+            compact={coverage[q.id] === 'answered'}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ---- Coverage board: the thesis, one card per pillar ----
 
 function CoverageBoard({
-  questions,
-  pillarOf,
+  groups,
+  activePillarId,
   coverage,
   followups,
   flags,
 }: {
-  questions: ConsoleQuestion[];
-  pillarOf: Record<string, string>;
+  groups: PillarGroup[];
+  activePillarId?: string;
   coverage: Record<string, CoverageState>;
   followups: ConsoleFollowup[];
   flags: ConsoleFlag[];
@@ -252,61 +323,24 @@ function CoverageBoard({
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
 
-  const missed = questions
-    .filter((q) => (coverage[q.id] ?? 'unanswered') !== 'answered')
-    // thin (needs a follow-up) above not-yet-asked
-    .sort((a, b) => Number(coverage[b.id] === 'partial') - Number(coverage[a.id] === 'partial'));
-  const completed = questions.filter((q) => coverage[q.id] === 'answered');
-
   return (
-    <div className="flex min-h-0 flex-col gap-3">
-      <section className="flex min-h-0 flex-1 flex-col">
-        <div className="mb-2 flex items-center gap-2">
-          <Label>Missed</Label>
-          <span className="font-mono text-[10px] text-zinc-600">{missed.length}</span>
-        </div>
-        <div className="min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
-          {missed.length === 0 ? (
-            <div className="flex items-center gap-2 rounded-lg border border-emerald-400/30 bg-emerald-400/[0.06] p-2.5 text-[12px] font-medium text-emerald-300">
-              <CheckCircleIcon weight="fill" className="size-4" /> Nothing missed — zero holes.
-            </div>
-          ) : (
-            missed.map((q) => (
-              <QuestionRow
-                key={q.id}
-                q={q}
-                state={coverage[q.id] ?? 'unanswered'}
-                pillar={pillarOf[q.id]}
-                followup={fuByQ.get(q.id)}
-                flag={flagByQ.get(q.id)}
-              />
-            ))
-          )}
-        </div>
-      </section>
-
-      <section className="flex min-h-0 flex-1 flex-col">
-        <div className="mb-2 flex items-center gap-2">
-          <Label>Completed</Label>
-          <span className="font-mono text-[10px] text-emerald-400">{completed.length}</span>
-        </div>
-        <div className="min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
-          {completed.length === 0 ? (
-            <p className="text-[12px] text-zinc-600">Answered questions land here.</p>
-          ) : (
-            completed.map((q) => (
-              <QuestionRow
-                key={q.id}
-                q={q}
-                state="answered"
-                pillar={pillarOf[q.id]}
-                flag={flagByQ.get(q.id)}
-                compact
-              />
-            ))
-          )}
-        </div>
-      </section>
+    <div className="flex min-h-0 flex-col">
+      <div className="mb-2 flex items-center gap-2">
+        <Label>Thesis coverage</Label>
+        <span className="font-mono text-[10px] text-zinc-600">{groups.length} pillars</span>
+      </div>
+      <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
+        {groups.map((g) => (
+          <PillarCard
+            key={g.id}
+            group={g}
+            active={g.id === activePillarId}
+            coverage={coverage}
+            fuByQ={fuByQ}
+            flagByQ={flagByQ}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -557,6 +591,8 @@ export function MissionConsoleView({
   const allCovered =
     model.done && model.tally.answered === model.tally.total && model.tally.total > 0;
   const pillar = pillarOfModel(model);
+  const groups = pillarGroups(model);
+  const activePillar = activePillarIdOf(model, groups);
   const followup = model.activeFollowups[0];
   const next = nextMissedOf(model);
 
@@ -585,8 +621,8 @@ export function MissionConsoleView({
 
         <main className="grid min-h-0 flex-1 grid-cols-1 gap-5 p-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <CoverageBoard
-            questions={model.questions}
-            pillarOf={pillar}
+            groups={groups}
+            activePillarId={activePillar}
             coverage={model.coverage}
             followups={model.activeFollowups}
             flags={model.flags}

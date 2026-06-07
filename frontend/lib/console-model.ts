@@ -53,6 +53,73 @@ export function pillarOf(model: ConsoleModel): Record<string, string> {
   return map;
 }
 
+/** One thesis pillar (a leg of the investment case) with its questions + coverage. */
+export interface PillarGroup {
+  /** Sequential display id (P1, P2 …), assigned in first-seen order. */
+  id: string;
+  /** Short pillar name — the text before the first ":" in the pillar string. */
+  label: string;
+  /** The fuller thesis claim — the text after the ":", when the source provides one. */
+  claim?: string;
+  questions: ConsoleQuestion[];
+  counts: { answered: number; partial: number; unanswered: number };
+  total: number;
+  allDone: boolean;
+  anyThin: boolean;
+}
+
+/** Split a pillar string into a short label + (optional) longer claim on the first colon. */
+function splitPillar(pillar: string): { label: string; claim?: string } {
+  const i = pillar.indexOf(':');
+  if (i > 0 && i < pillar.length - 1) {
+    return { label: pillar.slice(0, i).trim(), claim: pillar.slice(i + 1).trim() };
+  }
+  return { label: pillar.trim() || 'Ungrouped' };
+}
+
+/**
+ * Group a model's questions under their thesis pillar, preserving first-seen order,
+ * and roll up per-pillar coverage. Works for both the live and fixture paths because
+ * each carries the pillar string on every ConsoleQuestion.
+ */
+export function pillarGroups(model: ConsoleModel): PillarGroup[] {
+  const order: string[] = [];
+  const byPillar = new Map<string, ConsoleQuestion[]>();
+  for (const q of model.questions) {
+    const key = q.pillar ?? '';
+    const bucket = byPillar.get(key);
+    if (bucket) {
+      bucket.push(q);
+    } else {
+      byPillar.set(key, [q]);
+      order.push(key);
+    }
+  }
+
+  return order.map((key, index) => {
+    const questions = byPillar.get(key)!;
+    const counts = { answered: 0, partial: 0, unanswered: 0 };
+    for (const q of questions) counts[model.coverage[q.id] ?? 'unanswered'] += 1;
+    const total = questions.length;
+    return {
+      id: `P${index + 1}`,
+      ...splitPillar(key),
+      questions,
+      counts,
+      total,
+      allDone: total > 0 && counts.answered === total,
+      anyThin: counts.partial > 0,
+    };
+  });
+}
+
+/** The pillar that holds the next actionable question (active follow-up, else next missed). */
+export function activePillarId(model: ConsoleModel, groups: PillarGroup[]): string | undefined {
+  const activeQid = model.activeFollowups[0]?.questionId ?? nextMissed(model)?.id;
+  if (!activeQid) return undefined;
+  return groups.find((g) => g.questions.some((q) => q.id === activeQid))?.id;
+}
+
 /** First not-yet-answered question, for the "cover next" step. */
 export function nextMissed(model: ConsoleModel): ConsoleQuestion | undefined {
   return model.questions.find((q) => (model.coverage[q.id] ?? 'unanswered') === 'unanswered');
