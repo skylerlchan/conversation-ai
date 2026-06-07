@@ -114,6 +114,20 @@ class SpeakerRoles:
             self._roles[speaker_id] = role
         return role
 
+    def peek_role(self, speaker_id: str | None) -> str:
+        """Best-guess role for the live caption, WITHOUT advancing the state machine.
+
+        Mirrors ``role_for`` but never mutates, so streaming interim partials can
+        never corrupt the authoritative first-turn binding that happens when a turn
+        finalizes. The in-progress first turn reads as the analyst; an already-seen
+        speaker keeps its role; unknowns default to the safe "researcher".
+        """
+        if not self._seen_turn:
+            return "analyst"
+        if speaker_id is None:
+            return "researcher"
+        return self._roles.get(speaker_id, "researcher")
+
 
 class DiligenceListener(Agent):
     """A silent listener on a diligence call — it transcribes, it never speaks.
@@ -165,6 +179,12 @@ class DiligenceListener(Agent):
         # consumed when the turn finalizes). See SpeakerRoles + on_enter.
         self._speaker_roles = SpeakerRoles()
         self._current_turn_speaker_id: str | None = None
+        # Live-caption accumulators for the in-progress turn: the committed STT
+        # segments plus the current interim hypothesis. Streamed to the console as
+        # words land (see _advance_caption / publish_partial), then reset when the
+        # turn completes so the next turn's caption starts clean.
+        self._live_committed = ""
+        self._live_interim = ""
         # The coverage engine's dedicated LLM (out-of-band; never speaks). When
         # None — e.g. unit tests that only check silence — per-turn scoring is
         # skipped. `_tasks` retains in-flight scoring tasks so they aren't GC'd.
@@ -201,16 +221,53 @@ class DiligenceListener(Agent):
         self._spawn(self._precompute_notes())
 
     def _on_user_input_transcribed(self, ev) -> None:
-        """Remember the diarized speaker of the in-progress turn.
+        """Remember the diarized speaker and stream a live caption.
 
-        The final transcript's speaker id wins (a turn is usually one speaker);
-        it is consumed and cleared when the turn finalizes in
-        ``on_user_turn_completed``. No-op when diarization is off (speaker_id is
-        None), leaving the safe "researcher" default in place.
+        Two jobs, both off the reply path (the copilot never speaks):
+
+        1. **Speaker.** The final transcript's speaker id wins (a turn is usually
+           one speaker); it is consumed and cleared when the turn finalizes in
+           ``on_user_turn_completed``. No-op when diarization is off (speaker_id is
+           None), leaving the safe "researcher" default in place.
+        2. **Live caption.** Stream the in-progress transcript to the console as a
+           ``transcript_partial`` packet so words appear as they're recognized, not
+           only when the whole turn finalizes. Interim (``is_final=False``) events
+           carry the growing hypothesis; finalized segments are committed. The
+           caption accumulates across the turn (``_advance_caption``) and is reset
+           when the turn completes.
         """
         speaker_id = getattr(ev, "speaker_id", None)
-        if getattr(ev, "is_final", False) and speaker_id is not None:
+        is_final = bool(getattr(ev, "is_final", False))
+        text = (getattr(ev, "transcript", "") or "").strip()
+        if is_final and speaker_id is not None:
             self._current_turn_speaker_id = speaker_id
+        live = self._advance_caption(text, is_final)
+        if live:
+            # peek_role (not role_for) — labeling the live caption must never
+            # advance the first-turn binding the finalized turn relies on.
+            speaker = self._speaker_roles.peek_role(speaker_id)
+            self._spawn(self.publish_partial(speaker, live))
+
+    def _advance_caption(self, text: str, is_final: bool) -> str:
+        """Fold one STT transcript into the in-progress turn's live caption.
+
+        Interim events replace the current (growing) segment; a finalized segment
+        is appended to the committed prefix. Returns the full cumulative caption for
+        the turn so far (committed + interim), used to stream a live line to the
+        console. Reset by ``_reset_caption`` when the turn completes.
+        """
+        if is_final:
+            if text:
+                self._live_committed = f"{self._live_committed} {text}".strip()
+            self._live_interim = ""
+        else:
+            self._live_interim = text
+        return f"{self._live_committed} {self._live_interim}".strip()
+
+    def _reset_caption(self) -> None:
+        """Clear the live-caption accumulators at the end of a turn."""
+        self._live_committed = ""
+        self._live_interim = ""
 
     async def on_user_turn_completed(self, turn_ctx, new_message) -> None:
         """Consume each finalized turn — and never reply.
@@ -241,6 +298,10 @@ class DiligenceListener(Agent):
             # (no one waits on the AI — it never speaks).
             if self._verdict_llm is not None:
                 self._spawn(self._score_turn(len(self._turns), text))
+        # The finalized turn now stands on its own in the transcript; clear the
+        # live-caption accumulators so the next turn streams from empty. The
+        # console drops the partial line when this turn's transcript packet lands.
+        self._reset_caption()
         raise StopResponse()
 
     def _spawn(self, coro) -> None:
@@ -411,6 +472,17 @@ class DiligenceListener(Agent):
         docs/diligence-copilot-build-plan.md (transcript-source decision).
         """
         await self._publish("transcript", {"t": t, "speaker": speaker, "text": text})
+
+    async def publish_partial(self, speaker: str, text: str) -> None:
+        """Stream the in-progress (interim) transcript to the console live caption.
+
+        Each ``transcript_partial`` packet carries the full cumulative caption for
+        the current turn (a superseding update), so the console can show words
+        landing live as the call is spoken. Sent reliably so the growing line never
+        flickers backwards; the console drops it when the finalized ``transcript``
+        turn for the same speech arrives. See lib/live/types.ts.
+        """
+        await self._publish("transcript_partial", {"speaker": speaker, "text": text})
 
 
 server = AgentServer()

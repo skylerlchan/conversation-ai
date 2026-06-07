@@ -197,13 +197,20 @@ export function liveModel(args: {
   // Context-panel evidence: each grounding packet is a summarized digest of the
   // analyst's own notes/filings over a window of turns (surfaced periodically, not
   // per turn). Newest digest -> newest context. Contradictions live on the
-  // coverage cards (the board flags them).
-  const evidence: ConsoleEvidence[] = (args.groundings ?? []).map((g, i) => ({
-    turn: g.through_turn ?? `g${i}`,
-    claim: 'Notes & filings — digest',
-    facts: [],
-    sources: [{ label: 'Your research · Moss (summary)', text: g.summary }],
-  }));
+  // coverage cards (the board flags them). "THEY SAID" is the latest researcher
+  // turn at/before `through_turn` — the live transcript carries the quote, the
+  // grounding only the digest.
+  const evidence: ConsoleEvidence[] = (args.groundings ?? []).map((g, i) => {
+    const said = transcript
+      .filter((tp) => tp.speaker === 'researcher' && (g.through_turn == null || tp.t <= g.through_turn))
+      .at(-1);
+    return {
+      turn: g.through_turn ?? `g${i}`,
+      claim: said?.text ?? '',
+      facts: [],
+      sources: [{ label: 'Your research · Moss (summary)', text: g.summary }],
+    };
+  });
 
   return {
     company: {

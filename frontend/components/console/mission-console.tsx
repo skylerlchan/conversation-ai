@@ -12,6 +12,7 @@ import {
   PauseIcon,
   PlayIcon,
   QuotesIcon,
+  SparkleIcon,
   WarningIcon,
 } from '@phosphor-icons/react/dist/ssr';
 import { DiligenceChat } from '@/components/console/diligence-chat';
@@ -640,15 +641,70 @@ function toBullets(text: string): string[] {
     .filter(Boolean);
 }
 
-function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
+/** The first thesis pillar, surfaced in the Context panel before any turn lands. */
+interface PillarSeed {
+  id: string;
+  label: string;
+  claim?: string;
+  /** "fact — source" lines pulled from the pillar's questions (Moss notes). */
+  notes: string[];
+}
+
+/** Seed the Context panel from the first thesis pillar — what the analyst is
+ * listening for before anyone speaks. Replaced by live turn evidence once the
+ * first grounded researcher turn lands. */
+function firstPillarSeed(groups: PillarGroup[]): PillarSeed | undefined {
+  const p = groups[0];
+  if (!p) return undefined;
+  const seen = new Set<string>();
+  const notes: string[] = [];
+  for (const q of p.questions) {
+    for (const n of q.notes ?? []) {
+      const k = n.trim();
+      if (!k || seen.has(k)) continue;
+      seen.add(k);
+      notes.push(n);
+    }
+  }
+  return { id: p.id, label: p.label, claim: p.claim, notes: notes.slice(0, 8) };
+}
+
+/** Render "fact — source" lines as a tight bulleted digest, source dimmed inline. */
+function NoteBullets({ lines }: { lines: string[] }) {
+  return (
+    <ul className="mt-1.5 space-y-1">
+      {lines.map((line, i) => {
+        const dash = line.lastIndexOf(' — ');
+        const fact = dash > 0 ? line.slice(0, dash) : line;
+        const src = dash > 0 ? line.slice(dash + 3) : '';
+        return (
+          <li key={i} className="flex gap-1.5 text-[12px] leading-snug text-zinc-300">
+            <span className="mt-1.5 size-1 shrink-0 rounded-full bg-emerald-400/70" />
+            <span className="min-w-0">
+              {fact}
+              {src && <span className="text-zinc-500"> — {src}</span>}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+function ContextPanel({ evidence, seed }: { evidence?: ConsoleEvidence; seed?: PillarSeed }) {
+  const showSeed = !evidence && !!seed;
   return (
     <Panel
       title="Context"
-      sub="on what they just said"
+      sub={showSeed ? 'starting from your thesis' : 'on what they just said'}
       right={
         evidence?.questionId ? (
           <span className="rounded-[3px] bg-white/[0.07] px-1.5 py-0.5 font-mono text-[9px] text-zinc-400">
             {evidence.questionId}
+          </span>
+        ) : showSeed && seed ? (
+          <span className="rounded-[3px] bg-emerald-400/10 px-1.5 py-0.5 font-mono text-[9px] text-emerald-300/90">
+            {seed.id}
           </span>
         ) : undefined
       }
@@ -666,15 +722,17 @@ function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
             className="space-y-3 p-3"
           >
             {/* What the researcher actually said */}
-            <div className="border-l-2 border-white/15 bg-white/[0.02] px-2.5 py-2">
-              <div className="flex items-center gap-1.5">
-                <QuotesIcon weight="fill" className="size-3 text-zinc-500" />
-                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
-                  THEY SAID
-                </span>
+            {evidence.claim && (
+              <div className="border-l-2 border-white/15 bg-white/[0.02] px-2.5 py-2">
+                <div className="flex items-center gap-1.5">
+                  <QuotesIcon weight="fill" className="size-3 text-zinc-500" />
+                  <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                    THEY SAID
+                  </span>
+                </div>
+                <p className="mt-1 text-[12px] leading-snug text-zinc-300">{evidence.claim}</p>
               </div>
-              <p className="mt-1 text-[12px] leading-snug text-zinc-300">{evidence.claim}</p>
-            </div>
+            )}
 
             {/* Contradiction with the analyst's model, when present */}
             {evidence.contradiction && (
@@ -738,6 +796,41 @@ function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
                 </ul>
               </div>
             )}
+          </motion.div>
+        ) : showSeed && seed ? (
+          <motion.div
+            key="seed"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-3 p-3"
+          >
+            {/* The first thesis pillar — what you're listening for before anyone speaks. */}
+            <div className="border-l-2 border-emerald-400/50 bg-emerald-400/[0.05] px-2.5 py-2">
+              <div className="flex items-center gap-1.5">
+                <SparkleIcon weight="fill" className="size-3 text-emerald-400/80" />
+                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-emerald-400/90">
+                  FIRST PILLAR · {seed.label.toUpperCase()}
+                </span>
+              </div>
+              {seed.claim && (
+                <p className="mt-1 text-[12px] leading-snug text-zinc-200">{seed.claim}</p>
+              )}
+            </div>
+
+            {seed.notes.length > 0 && (
+              <div>
+                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                  YOUR NOTE / FILINGS
+                </span>
+                <NoteBullets lines={seed.notes} />
+              </div>
+            )}
+
+            <p className="font-mono text-[10px] leading-relaxed text-zinc-600">
+              Updates live as the expert answers.
+            </p>
           </motion.div>
         ) : (
           <div className="flex h-full items-center justify-center p-6 text-center">
@@ -918,6 +1011,7 @@ export function MissionConsoleView({
   const followup = model.activeFollowups[0];
   const next = nextMissedOf(model);
   const latestEvidence = model.evidence[model.evidence.length - 1];
+  const contextSeed = firstPillarSeed(groups);
 
   return (
     <div className="relative flex h-svh flex-col overflow-hidden bg-[#0a0b0f] text-zinc-200">
@@ -965,7 +1059,7 @@ export function MissionConsoleView({
               open={callOpen}
               onToggle={() => setCallOpen((o) => !o)}
             />
-            <ContextPanel evidence={latestEvidence} />
+            <ContextPanel evidence={latestEvidence} seed={contextSeed} />
           </section>
         </main>
 
