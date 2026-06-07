@@ -114,6 +114,28 @@ class _FakeRoom:
         self.local_participant = _FakePublisher()
 
 
+async def test_turn_publishes_transcript_packet(stub_moss) -> None:
+    """A finalized turn is pushed to the console as a labeled transcript packet."""
+    room = _FakeRoom()
+    listener = DiligenceListener(room=room, user_id="fund_1", call_state=_sample_call())
+    turn_ctx, message = _user_turn("Connect take-rate held at 18% this quarter.")
+
+    with pytest.raises(StopResponse):
+        await listener.on_user_turn_completed(turn_ctx, message)
+
+    # Turn recorded, and exactly one transcript packet published (no verdict_llm,
+    # so no coverage scoring fires).
+    assert listener._turns == ["Connect take-rate held at 18% this quarter."]
+    assert len(room.local_participant.published) == 1
+    payload = json.loads(room.local_participant.published[0][0].decode("utf-8"))
+    assert payload["type"] == "transcript"
+    data = payload["data"]
+    assert data["t"] == 1
+    assert data["speaker"] == "researcher"
+    assert data["text"] == "Connect take-rate held at 18% this quarter."
+    assert isinstance(data["timestamp"], (int, float))
+
+
 async def test_publish_coverage_emits_snapshot_packet(stub_moss) -> None:
     """publish_coverage sends a reliable coverage_update packet with the snapshot."""
     room = _FakeRoom()

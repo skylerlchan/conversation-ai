@@ -111,17 +111,28 @@ class DiligenceListener(Agent):
                 logger.exception("Failed to preload Moss indexes; will retry on use")
 
     async def on_user_turn_completed(self, turn_ctx, new_message) -> None:
-        """Consume each finalized researcher turn — and never reply.
+        """Consume each finalized turn — and never reply.
 
-        Records the turn for downstream analysis, then raises `StopResponse` so
-        the agent produces no spoken reply. This node runs before reply
-        generation, so raising here keeps the copilot silent even if an LLM is
-        ever attached to the session.
+        Records the turn, publishes it to the console transcript, scores coverage
+        in the background, then raises `StopResponse` so the agent produces no
+        spoken reply. This node runs before reply generation, so raising here
+        keeps the copilot silent even if an LLM is ever attached to the session.
+
+        Same-room note: the analyst and researcher share one room, and the STT
+        pipeline does not do per-turn speaker diarization, so every finalized turn
+        is treated as a researcher answer. This is safe for coverage because the
+        grading engine only advances a question when the turn satisfies its
+        `complete_when` criteria — an analyst *re-asking* a question never
+        false-advances it. Turns are labeled "researcher" on the transcript;
+        precise speaker labels arrive via the scripted driver (or, later,
+        diarization — see docs/diligence-copilot-build-plan.md Phase 6).
         """
         text = (new_message.text_content or "").strip()
         if text:
             self._turns.append(text)
-            logger.info("researcher turn (%d): %s", len(self._turns), text)
+            logger.info("turn (%d): %s", len(self._turns), text)
+            # Surface the turn to the console immediately, before scoring.
+            await self.publish_transcript(len(self._turns), "researcher", text)
             # Score coverage in the background so the turn pipeline stays fast
             # (no one waits on the AI — it never speaks).
             if self._verdict_llm is not None:
@@ -217,6 +228,15 @@ class DiligenceListener(Agent):
     async def publish_coverage(self) -> None:
         """Push the full coverage snapshot (the question state machine) to the UI."""
         await self._publish("coverage_update", self._call.snapshot())
+
+    async def publish_transcript(self, t: int, speaker: str, text: str) -> None:
+        """Push one finalized turn of the live call to the console transcript.
+
+        The console renders the labeled transcript from these packets (the live
+        coverage/grounding feeds carry no transcript text). See
+        docs/diligence-copilot-build-plan.md (transcript-source decision).
+        """
+        await self._publish("transcript", {"t": t, "speaker": speaker, "text": text})
 
 
 server = AgentServer()
