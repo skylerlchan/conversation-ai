@@ -38,8 +38,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'iPhone +22% YoY, strongest cycle ever — Q2 FY26 call',
-        'Base case: iPhone +~22%, ASP/mix-led off the 17 Pro/Air — Vantage note',
+        'iPhone +22% YoY, record cycle — Q2 FY26 call',
+        'Models iPhone +~22%, ASP-led — Vantage note',
       ],
     },
     {
@@ -51,8 +51,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'Binding constraint is advanced-node SOC availability, not memory — Q2 FY26 call',
-        'iPhone-led in March, shifts to Mac into June — Q2 FY26 call',
+        'Constraint: advanced-node SOC, not memory — Q2 FY26 call',
+        'iPhone-led in March → Mac in June — Q2 FY26 call',
       ],
     },
     {
@@ -64,8 +64,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'MacBook Neo off the charts; record new-to-Mac — Q2 FY26 call',
-        'Greater China 1H +33%; India modest share, long runway — Q2 FY26 call',
+        'Neo off the charts; record new-to-Mac — Q2 FY26 call',
+        'China 1H +33%; India long runway — Q2 FY26 call',
       ],
     },
     {
@@ -77,8 +77,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'Company gross margin 49.3% in March Q — AAPL 10-Q',
-        'Products GM −200bps QoQ on deleverage + memory; mix/tariffs offset — Q2 FY26 call',
+        'GM 49.3% in March Q — AAPL 10-Q',
+        'Products GM −200bps QoQ on memory — Q2 FY26 call',
       ],
     },
     {
@@ -90,8 +90,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'Memory significantly higher in June guide, rising beyond — Q2 FY26 call',
-        'We model ~150-200bps GM headwind, <half passed through — Vantage note',
+        'Memory rising into June and beyond — Q2 FY26 call',
+        'Models ~150-200bps GM headwind — Vantage note',
       ],
     },
     {
@@ -104,8 +104,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'Net-cash-neutral retired; +$100B buyback authorization — Q2 FY26 call',
-        'Over $1T returned to date, >$850B via buybacks — Q2 FY26 call',
+        'Net-cash-neutral dropped; +$100B buyback — Q2 FY26 call',
+        '>$1T returned, >$850B buybacks — Q2 FY26 call',
       ],
     },
     {
@@ -117,8 +117,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'Services GM +20bps QoQ; advertising up YoY — Q2 FY26 call',
-        'Apple Maps ads launching in US/Canada this summer — Q2 FY26 call',
+        'Services GM +20bps; ads up YoY — Q2 FY26 call',
+        'Maps ads launch US/Canada this summer — Q2 FY26 call',
       ],
     },
     {
@@ -130,8 +130,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        "Two-pronged: Google collaboration + in-house models; 'investing more' — Q2 FY26 call",
-        'Google search-default payment at antitrust risk — DOJ/Google (NPR)',
+        "Google + in-house models; 'investing more' — Q2 FY26 call",
+        'Search-default payment at antitrust risk — DOJ/Google (NPR)',
       ],
     },
     {
@@ -143,8 +143,8 @@ export const SEED_COVERAGE: CoveragePacket = {
       contradictions: [],
       followup: null,
       notes: [
-        'John Ternus becomes CEO in September; Cook ~one more call — Q2 FY26 call',
-        'Messaging stresses continuity of strategy and discipline — Q2 FY26 call',
+        'Ternus CEO in September — Q2 FY26 call',
+        'Continuity of strategy + discipline — Q2 FY26 call',
       ],
     },
   ],

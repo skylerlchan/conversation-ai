@@ -46,9 +46,9 @@
       "demo_role": "clean tick — answered early and cleanly",
       "expected_outcome": "answered",
       "notes": [
-        "iPhone +22% YoY, strongest cycle ever; constraint is advanced-node SOC, not memory — Q2 FY26 call",
-        "March-Q iPhone-led, shifts to Mac into June; Greater China 1H +33% — Q2 FY26 call",
-        "Base case: iPhone +~22%, supply-gated not a pull-forward — Vantage note"
+        "iPhone +22% YoY; constraint is SOC, not memory — Q2 FY26 call",
+        "iPhone-led → Mac in June; China 1H +33% — Q2 FY26 call",
+        "Supply-gated, not a pull-forward — Vantage note"
       ]
     },
     {
@@ -58,9 +58,9 @@
       "demo_role": "HERO — researcher over-claims 'margins are great, nothing to flag' -> partial/amber + contradiction vs note -> copilot fires grounded follow-up -> closes green with the real bridge + capital shift",
       "expected_outcome": "answered (via follow-up)",
       "notes": [
-        "Company gross margin 49.3% in March Q — AAPL 10-Q",
-        "Memory significantly higher in June guide, rising beyond — Q2 FY26 call",
-        "We model ~150-200bps memory headwind, <half passed through — Vantage note"
+        "GM 49.3% in March Q — AAPL 10-Q",
+        "Memory rising into June and beyond — Q2 FY26 call",
+        "Models ~150-200bps memory headwind — Vantage note"
       ]
     },
     {
@@ -70,9 +70,9 @@
       "demo_role": "clean tick",
       "expected_outcome": "answered",
       "notes": [
-        "Services GM +20bps QoQ; advertising up YoY — Q2 FY26 call",
-        "Apple Maps ads launching in US/Canada this summer — Q2 FY26 call",
-        "AI two-pronged: Google + in-house models; R&D accelerating — Q2 FY26 call"
+        "Services GM +20bps; ads up YoY — Q2 FY26 call",
+        "Maps ads launch US/Canada this summer — Q2 FY26 call",
+        "Google + in-house models; R&D rising — Q2 FY26 call"
       ]
     }
   ]
