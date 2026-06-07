@@ -5,7 +5,7 @@ import { spawn } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import 'server-only';
 import { type Estimate, getEstimates, getLatestTranscript, getProfile } from '@/lib/fmp';
-import type { Session, SessionMeta } from '@/lib/session';
+import type { CoverageState, Pillar, Session, SessionMeta, SessionTurn } from '@/lib/session';
 
 function fmtUSD(n: number): string {
   if (!n) return 'n/a';
@@ -20,18 +20,12 @@ function consensusBlock(estimates: Estimate[]): string {
     .slice(0, 3)
     .map((e) => {
       const yr = e.date?.slice(0, 4) ?? '?';
-      return `FY${yr}: revenue avg ${fmtUSD(e.revenueAvg)} (range ${fmtUSD(e.revenueLow)}–${fmtUSD(
-        e.revenueHigh
-      )}), EPS avg ${e.epsAvg?.toFixed(2)} (range ${e.epsLow?.toFixed(2)}–${e.epsHigh?.toFixed(
-        2
-      )}), EBITDA avg ${fmtUSD(e.ebitdaAvg)} — ${e.numAnalystsRevenue ?? '?'} analysts`;
+      return `FY${yr}: revenue avg ${fmtUSD(e.revenueAvg)}, EPS avg ${e.epsAvg?.toFixed(2)}, EBITDA avg ${fmtUSD(e.ebitdaAvg)} (${e.numAnalystsRevenue ?? '?'} analysts)`;
     })
     .join('\n');
 }
 
-const SYSTEM = `You are a real-time diligence copilot for a BUY-SIDE hedge fund analyst who is listening to a company's earnings call. Your job is to make sure the analyst leaves the call with every diligence question covered: you track which questions the call has answered, ground management's claims against the company's real consensus estimates and prior guidance, flag where what is said diverges from consensus, and note what the analyst should update in their thesis. You never trade and never speak on the call — you surface; the human decides.
-
-You output ONLY a single JSON object, no prose, no markdown fences.`;
+const SYSTEM = `You are a real-time diligence copilot for a BUY-SIDE hedge fund analyst listening to a company's earnings call. You track which diligence questions the call answers, ground management's claims against the real consensus, flag divergences, and note thesis updates. You never trade and never speak on the call. Output ONLY a single JSON object, no prose, no markdown fences.`;
 
 function userPrompt(args: {
   name: string;
@@ -45,7 +39,7 @@ function userPrompt(args: {
   return `COMPANY: ${args.name} (${args.symbol}) — ${args.sector} / ${args.industry}
 CALL: ${args.period} earnings call
 
-REAL ANALYST CONSENSUS (from FMP, ground your divergence flags against this):
+REAL ANALYST CONSENSUS (ground divergence flags against this):
 ${args.consensus}
 
 EARNINGS CALL TRANSCRIPT (real):
@@ -53,49 +47,49 @@ EARNINGS CALL TRANSCRIPT (real):
 ${args.transcript}
 """
 
-TASK — produce the diligence session as JSON with this exact shape:
+Produce the diligence session as JSON with EXACTLY this shape:
 {
-  "thesis": "<one sentence: the buy-side thesis a fund would hold on this name>",
-  "questions": [ { "id": "Q1", "text": "<a sharp buy-side diligence question for THIS company/sector>", "topic": "<2-4 word topic>" } ],   // 6-8 questions: unit/revenue growth, margins, guidance vs consensus, demand/end-markets, competitive position, capital allocation, and the single biggest risk for this name
+  "thesis": "<one plain-English sentence: the buy-side thesis on this name>",
+  "pillars": [ { "id": "P1", "thesis": "<short thesis leg>", "questions": ["Q1","Q2"] } ],
+  "questions": [ { "id": "Q1", "text": "<sharp buy-side diligence question>", "topic": "<2-4 words>" } ],
   "turns": [
     {
       "t": 1,
-      "speaker": "<who is talking, e.g. 'CEO — <name>' or 'Analyst — <bank>'>",
+      "speaker": "<who, e.g. 'CEO — Brett Schulman' or 'Analyst — Morgan Stanley'>",
       "role": "subject",
-      "text": "<a tight quote or close paraphrase of what they said, <= 280 chars>",
+      "text": "<tight quote or paraphrase, <= 240 chars>",
       "expected": {
-        "addresses": ["Q2"],                         // which question(s) this turn speaks to (may be [])
-        "coverage": { "Q2": "partial" },              // unanswered | partial | answered — states only move FORWARD
-        "extracted_facts": ["<real fact/number stated>"],
-        "contradiction": null,                        // or { "vs": "consensus" | "guidance", "detail": "<what was said vs the real consensus/prior guidance — be specific with numbers>" }
-        "followup": null,                             // or "<the gap to probe with IR / the sharper question — grounded in a specific number>" when coverage is 'partial'
-        "thesis_delta": null                          // or "<what the analyst should update>" when an answer moves an assumption
-      },
-      "copilot_surfaced": "<one short line describing what the copilot put on screen for this turn>"
+        "addresses": ["Q2"],
+        "coverage": { "Q2": "partial" },
+        "extracted_facts": ["<real number/fact stated>"],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      }
     }
   ],
-  "final_coverage": { "Q1": "answered", "...": "..." },   // every question's end state; questions the call never addressed stay "unanswered"
-  "thesis_delta": {
-    "summary": "<2 sentences: net read after the call>",
-    "changes": [ { "field": "<assumption>", "from": "<prior>", "to": "<new>" } ],   // 2-5 concrete assumption moves
-    "net": "<one line: what to do — add, trim, hold, re-underwrite>"
-  }
+  "final_coverage": { "Q1": "answered" },
+  "thesis_delta": { "summary": "<2 plain sentences>", "changes": [ { "field": "<assumption>", "from": "<prior>", "to": "<new>" } ], "net": "<one plain sentence: add / trim / hold / re-underwrite>" }
 }
 
-RULES:
-- 12 to 18 turns, in chronological call order. Cover the prepared-remarks highlights AND the key Q&A exchanges.
-- Be specific and numeric. Ground every contradiction flag against the real consensus above or against prior guidance stated on the call. Do not invent numbers not supported by the transcript or consensus.
-- At least one 'partial' with a real grounded follow-up, and flag any genuine divergence from consensus. If there is genuinely none, do not fabricate one.
-- coverage states only move forward (unanswered -> partial -> answered).
+HARD RULES:
+- EXACTLY 6 questions covering: growth, margins, guidance vs consensus, demand/end-markets, competitive position, and the single biggest risk.
+- 3 or 4 pillars; every question belongs to exactly one pillar.
+- 10 to 12 turns, chronological. Cover prepared remarks AND key Q&A.
+- Every "coverage" value and every "final_coverage" value MUST be EXACTLY one of: "unanswered", "partial", "answered". Never any other word.
+- "contradiction" is null OR { "vs": "consensus"|"guidance"|"note", "detail": "<specific, with numbers>" }.
+- Provide a "followup" string whenever coverage is "partial". At least one partial+followup. Flag a real divergence vs consensus if one exists; do not invent one.
+- All free text (thesis, details, net, summary) must be normal English sentences with spaces — never snake_case or underscores.
 - Output ONLY the JSON object.`;
 }
 
 interface ModelSession {
-  thesis: string;
-  questions: Session['questions'];
-  turns: Session['turns'];
-  final_coverage: Session['final_coverage'];
-  thesis_delta: Session['thesis_delta'];
+  thesis?: string;
+  pillars?: Pillar[];
+  questions?: Session['questions'];
+  turns?: SessionTurn[];
+  final_coverage?: Record<string, string>;
+  thesis_delta?: Session['thesis_delta'];
 }
 
 function extractJson(text: string): ModelSession {
@@ -105,15 +99,33 @@ function extractJson(text: string): ModelSession {
   return JSON.parse(text.slice(start, end + 1)) as ModelSession;
 }
 
-// Runs the analysis through the Claude Agent SDK CLI (`claude -p`), which
-// carries the harness's working auth — no raw API key plumbing. The prompt is
-// piped via stdin to avoid arg-size limits. To move to a hosted endpoint later
-// (e.g. a sponsor MiniMax / Bedrock key), swap this one function.
+// ---- Normalization (the model, esp. haiku, drifts on enums/formatting) ----
+
+function clean(s: unknown): string {
+  if (typeof s !== 'string') return '';
+  // Undo snake_case run-ons, collapse whitespace.
+  return s.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function normState(v: unknown): CoverageState {
+  const s = String(v ?? '').toLowerCase();
+  if (s.startsWith('answer') || s === 'covered' || s === 'complete' || s === 'completed')
+    return 'answered';
+  if (s === 'partial' || s === 'thin' || s.startsWith('partly')) return 'partial';
+  return 'unanswered';
+}
+
+function normCoverage(c: unknown): Record<string, CoverageState> {
+  const out: Record<string, CoverageState> = {};
+  if (c && typeof c === 'object') {
+    for (const [k, v] of Object.entries(c as Record<string, unknown>)) out[k] = normState(v);
+  }
+  return out;
+}
+
 function callClaude(system: string, user: string): Promise<string> {
-  const model = process.env.ANALYSIS_MODEL_ALIAS || 'sonnet';
+  const model = process.env.ANALYSIS_MODEL_ALIAS || 'haiku';
   return new Promise((resolve, reject) => {
-    // Disable project MCP servers (they hang headless startup) and run in a
-    // neutral cwd so no project config/tools load — this is a pure completion.
     const child = spawn(
       'claude',
       ['-p', '--model', model, '--strict-mcp-config', '--mcp-config', '{"mcpServers":{}}'],
@@ -124,7 +136,7 @@ function callClaude(system: string, user: string): Promise<string> {
     const timer = setTimeout(() => {
       child.kill('SIGKILL');
       reject(new Error('claude analysis timed out'));
-    }, 175_000);
+    }, 110_000);
     child.stdout.on('data', (d) => (out += d));
     child.stderr.on('data', (d) => (err += d));
     child.on('error', (e) => {
@@ -134,15 +146,21 @@ function callClaude(system: string, user: string): Promise<string> {
     child.on('close', (code) => {
       clearTimeout(timer);
       if (code === 0) resolve(out);
-      else reject(new Error(`claude exited ${code}: ${err.slice(0, 300)}`));
+      else reject(new Error(`claude exited ${code}: ${err.slice(0, 200)}`));
     });
     child.stdin.write(`${system}\n\n${user}`);
     child.stdin.end();
   });
 }
 
+// Simple per-process cache so re-opening a ticker is instant.
+const cache = new Map<string, Session>();
+
 export async function analyzeSymbol(symbolRaw: string): Promise<Session> {
   const symbol = symbolRaw.trim().toUpperCase();
+  const cached = cache.get(symbol);
+  if (cached) return cached;
+
   const [profile, estimates, latest] = await Promise.all([
     getProfile(symbol),
     getEstimates(symbol).catch(() => [] as Estimate[]),
@@ -152,7 +170,7 @@ export async function analyzeSymbol(symbolRaw: string): Promise<Session> {
   if (!latest) throw new Error(`No earnings transcript available for ${symbol}`);
 
   const period = `Q${latest.date.quarter} FY${latest.date.fiscalYear}`;
-  const transcript = latest.transcript.content.slice(0, 52000);
+  const transcript = latest.transcript.content.slice(0, 24000);
 
   const raw = await callClaude(
     SYSTEM,
@@ -166,7 +184,7 @@ export async function analyzeSymbol(symbolRaw: string): Promise<Session> {
       transcript,
     })
   );
-  const model = extractJson(raw);
+  const m = extractJson(raw);
 
   const meta: SessionMeta = {
     symbol,
@@ -178,23 +196,60 @@ export async function analyzeSymbol(symbolRaw: string): Promise<Session> {
     marketCap: profile.marketCap,
     period,
     date: latest.date.date,
-    thesis: model.thesis,
+    thesis: clean(m.thesis),
     source: 'real-earnings',
     callKind: 'Earnings call',
   };
 
-  // Normalize roles (the model is told everything is 'subject' on an earnings call).
-  const turns = (model.turns ?? []).map((t, i) => ({
-    ...t,
-    t: t.t ?? i + 1,
-    role: 'subject' as const,
-  }));
+  const turns: SessionTurn[] = (m.turns ?? []).map((t, i) => {
+    const exp = t.expected;
+    return {
+      t: t.t ?? i + 1,
+      speaker: t.speaker || 'Management',
+      role: 'subject',
+      text: clean(t.text),
+      expected: exp
+        ? {
+            addresses: Array.isArray(exp.addresses) ? exp.addresses : [],
+            coverage: normCoverage(exp.coverage),
+            extracted_facts: Array.isArray(exp.extracted_facts)
+              ? exp.extracted_facts.map(clean)
+              : [],
+            contradiction: exp.contradiction
+              ? {
+                  vs: clean(exp.contradiction.vs) || 'consensus',
+                  detail: clean(exp.contradiction.detail),
+                }
+              : null,
+            followup: exp.followup ? clean(exp.followup) : null,
+            thesis_delta: exp.thesis_delta ? clean(exp.thesis_delta) : null,
+          }
+        : undefined,
+    };
+  });
 
-  return {
+  const session: Session = {
     meta,
-    questions: model.questions ?? [],
+    pillars: Array.isArray(m.pillars) ? m.pillars : undefined,
+    questions: (m.questions ?? []).map((q) => ({
+      id: q.id,
+      text: clean(q.text),
+      topic: q.topic,
+    })),
     turns,
-    final_coverage: model.final_coverage ?? {},
-    thesis_delta: model.thesis_delta ?? { summary: '', changes: [], net: '' },
+    final_coverage: normCoverage(m.final_coverage),
+    thesis_delta: {
+      summary: clean(m.thesis_delta?.summary),
+      changes: (m.thesis_delta?.changes ?? []).map((c) => ({
+        field: clean(c.field),
+        from: clean(c.from),
+        to: clean(c.to),
+        source_turn: 0,
+      })),
+      net: clean(m.thesis_delta?.net),
+    },
   };
+
+  cache.set(symbol, session);
+  return session;
 }

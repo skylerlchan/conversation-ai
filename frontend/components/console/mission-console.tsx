@@ -12,9 +12,9 @@ import {
   PauseIcon,
   PlayIcon,
 } from '@phosphor-icons/react/dist/ssr';
-import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
-import { callFixture, questionsFixture } from '@/lib/demo';
+import { useSessionReplay } from '@/hooks/useSessionReplay';
 import type { CoverageState } from '@/lib/demo/types';
+import type { Session, SessionQuestion } from '@/lib/session';
 import { cn } from '@/lib/shadcn/utils';
 
 const STATE: Record<CoverageState, { label: string; dot: string; glow: string; text: string }> = {
@@ -33,7 +33,7 @@ const STATE: Record<CoverageState, { label: string; dot: string; glow: string; t
   unanswered: { label: 'OPEN', dot: 'bg-zinc-600', glow: '', text: 'text-zinc-500' },
 };
 
-type Question = (typeof questionsFixture.questions)[number];
+type Question = SessionQuestion;
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
@@ -142,8 +142,8 @@ function QuestionRow({
   q: Question;
   state: CoverageState;
   pillar?: string;
-  followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
-  flag?: ReturnType<typeof useDiligenceDemo>['flags'][number];
+  followup?: ReturnType<typeof useSessionReplay>['activeFollowups'][number];
+  flag?: ReturnType<typeof useSessionReplay>['flags'][number];
   compact?: boolean;
 }) {
   const meta = STATE[state];
@@ -238,8 +238,8 @@ function CoverageBoard({
   questions: Question[];
   pillarOf: Record<string, string>;
   coverage: Record<string, CoverageState>;
-  followups: ReturnType<typeof useDiligenceDemo>['activeFollowups'];
-  flags: ReturnType<typeof useDiligenceDemo>['flags'];
+  followups: ReturnType<typeof useSessionReplay>['activeFollowups'];
+  flags: ReturnType<typeof useSessionReplay>['flags'];
 }) {
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
@@ -311,7 +311,7 @@ function NextStep({
   pillar,
   allCovered,
 }: {
-  followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
+  followup?: ReturnType<typeof useSessionReplay>['activeFollowups'][number];
   nextMissed?: Question;
   pillar?: string;
   allCovered: boolean;
@@ -393,13 +393,13 @@ function LiveCall({
   open,
   onToggle,
 }: {
-  transcript: ReturnType<typeof useDiligenceDemo>['transcript'];
+  transcript: ReturnType<typeof useSessionReplay>['transcript'];
   playing: boolean;
   open: boolean;
   onToggle: () => void;
 }) {
   const latest = transcript[transcript.length - 1];
-  const isSubject = latest && latest.speaker === 'researcher';
+  const isSubject = latest && latest.role === 'subject';
   return (
     <div className="flex min-h-0 flex-col">
       <button
@@ -439,7 +439,7 @@ function LiveCall({
                   .slice(0, -1)
                   .reverse()
                   .map((t) => {
-                    const self = t.speaker === 'analyst';
+                    const self = t.role === 'self';
                     const prompted = Boolean(t.prompted_by_copilot);
                     return (
                       <div
@@ -447,8 +447,8 @@ function LiveCall({
                         className={cn('flex flex-col', self ? 'items-end' : 'items-start')}
                       >
                         <div className="mb-0.5 flex items-center gap-1.5 px-1">
-                          <span className="font-mono text-[9px] tracking-[0.12em] text-zinc-600">
-                            {self ? 'YOU' : 'RESEARCHER'}
+                          <span className="truncate font-mono text-[9px] tracking-[0.12em] text-zinc-600">
+                            {self ? 'YOU' : t.speaker.toUpperCase()}
                           </span>
                           {prompted && (
                             <span className="font-mono text-[9px] tracking-wide text-amber-400">
@@ -480,7 +480,7 @@ function LiveCall({
 
 // ---- Transport ----
 
-function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
+function Transport({ state }: { state: ReturnType<typeof useSessionReplay> }) {
   return (
     <footer className="flex items-center justify-center gap-4 border-t border-white/[0.06] px-5 py-2.5">
       <button
@@ -526,20 +526,20 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
 
 // ---- Main ----
 
-export function MissionConsole() {
-  const state = useDiligenceDemo(questionsFixture, callFixture);
-  const { company } = questionsFixture;
+export function MissionConsole({ session }: { session: Session }) {
+  const state = useSessionReplay(session);
+  const { meta } = session;
   const { tally } = state;
   const allCovered = state.done && tally.answered === tally.total;
   const [callOpen, setCallOpen] = useState(true);
 
   const pillarOf: Record<string, string> = {};
-  for (const p of questionsFixture.pillars) {
+  for (const p of session.pillars ?? []) {
     for (const qid of p.questions) pillarOf[qid] = p.thesis;
   }
 
   const followup = state.activeFollowups[0];
-  const nextMissed = questionsFixture.questions.find(
+  const nextMissed = session.questions.find(
     (q) => (state.coverage[q.id] ?? 'unanswered') === 'unanswered'
   );
 
@@ -567,10 +567,10 @@ export function MissionConsole() {
 
       <div className="relative flex min-h-0 flex-1 flex-col">
         <CommandBar
-          ticker={company.ticker}
-          company={company.name.replace(', Inc.', '')}
-          exchange={company.exchange}
-          callKind="Diligence call · sell-side"
+          ticker={meta.symbol}
+          company={meta.companyName.replace(', Inc.', '')}
+          exchange={meta.exchange}
+          callKind={meta.callKind}
           answered={tally.answered}
           total={tally.total}
           live={!state.done}
@@ -578,7 +578,7 @@ export function MissionConsole() {
 
         <main className="grid min-h-0 flex-1 grid-cols-1 gap-5 p-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <CoverageBoard
-            questions={questionsFixture.questions}
+            questions={session.questions}
             pillarOf={pillarOf}
             coverage={state.coverage}
             followups={state.activeFollowups}

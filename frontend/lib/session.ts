@@ -1,7 +1,7 @@
 // A "session" is what the console replays — produced either from the real
 // analysis engine (/api/analyze over a live earnings transcript) or from a
 // scripted fixture. One shape, two sources.
-import type { CoverageState, ExpectedVerdict, ThesisDelta } from '@/lib/demo/types';
+import type { CoverageState, ExpectedVerdict, Pillar, ThesisDelta } from '@/lib/demo/types';
 
 export type TurnRole = 'self' | 'subject';
 
@@ -50,6 +50,8 @@ export interface Session {
   turns: SessionTurn[];
   final_coverage: Record<string, CoverageState>;
   thesis_delta: ThesisDelta;
+  /** Investment-thesis pillars grouping the questions (optional). */
+  pillars?: Pillar[];
 }
 
-export type { CoverageState, ExpectedVerdict, ThesisDelta };
+export type { CoverageState, ExpectedVerdict, Pillar, ThesisDelta };
