@@ -1,0 +1,127 @@
+{
+  "company": "CAVA Group, Inc.",
+  "ticker": "CAVA",
+  "source": "Analyst pre-call question list for the CAVA Q1 FY2026 earnings call. The `expected.note_models` values are the fund's own model — the variant view the copilot grounds management's claims against.",
+  "thesis": "CAVA is an early-innings unit-growth compounder: a defensible Mediterranean category lead with best-in-class AUVs and ~25% restaurant-level margins, a long runway to ~1,000 units, and TRAFFIC-LED same-restaurant sales. The bet is that new-unit economics and comp quality hold as the footprint moves beyond the coastal core.",
+  "questions": [
+    {
+      "id": "q1",
+      "pillar": "A long, derisked runway to ~1,000 units",
+      "question": "How derisked is the FY26 unit-growth guide, and how deep is the signed development pipeline beyond the next twelve months?",
+      "complete_when": [
+        "a unit-growth figure or net-new-restaurant count for the year",
+        "some read on signed-lease coverage or pipeline visibility"
+      ],
+      "expected": {
+        "note_models": "~17% unit growth (~65 net new), fully covered by a signed-lease pipeline",
+        "our_view": "Runway is real; watch that openings stay on cadence as they push inland",
+        "watch": "A thin or unsigned pipeline would slip the compounding story"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q2",
+      "pillar": "New-unit economics hold as they scale",
+      "question": "Are recent-vintage new units opening at the modeled AUV, and how are the 2023-24 cohorts maturing on restaurant-level margin?",
+      "complete_when": [
+        "an AUV figure for recent new-unit classes (not just 'tracking well')",
+        "a year-one restaurant-level margin for the recent cohorts"
+      ],
+      "expected": {
+        "note_models": "~$2.6M new-unit AUV at ~20% year-one restaurant-level margin (ramping to ~25% by year two)",
+        "our_view": "New-unit economics underwrite the ~1,000-unit math; a vague answer is not enough",
+        "watch": "Opening below ~$2.6M AUV lowers the whole unit-growth NPV"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q3",
+      "pillar": "New-unit economics hold as they scale",
+      "question": "Can the fleet restaurant-level margin hold through wage inflation, the steak/protein mix shift, and new-unit drag?",
+      "complete_when": [
+        "a restaurant-level margin figure or range for the fleet",
+        "a read on the wage / mix / new-unit-drag pressures"
+      ],
+      "expected": {
+        "note_models": "~25% fleet restaurant-level margin holding",
+        "our_view": "Margin durability underpins the self-funding growth model",
+        "watch": "Sustained margin slippage breaks the self-funding case"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q4",
+      "pillar": "Same-restaurant sales are high-quality, traffic-led",
+      "question": "What is the traffic vs price/mix split in current same-restaurant sales, and is traffic still positive?",
+      "complete_when": [
+        "an explicit traffic vs price/mix split for current comps",
+        "whether traffic is positive, flat, or negative"
+      ],
+      "expected": {
+        "note_models": "Comp is TRAFFIC-LED: ~+5% traffic, ~+3% price/mix",
+        "our_view": "Comp QUALITY is the differentiator; price-led comp is lower quality and signals less runway",
+        "watch": "If comp is price-led with flat traffic, the premium multiple is weaker than underwritten"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q5",
+      "pillar": "Same-restaurant sales are high-quality, traffic-led",
+      "question": "Where does the loyalty relaunch stand, what is the digital sales mix, and what frequency lift are you seeing?",
+      "complete_when": [
+        "a read on the loyalty relaunch / program status",
+        "a digital sales mix figure"
+      ],
+      "expected": {
+        "note_models": "Digital ~35% of sales; loyalty relaunch driving frequency (the cleaner, traffic lever)",
+        "our_view": "Loyalty + digital are the durable traffic levers behind comp quality",
+        "watch": "Weak frequency lift undercuts the traffic-led comp thesis"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q6",
+      "pillar": "A defensible category lead, with optionality",
+      "question": "How defensible is the Mediterranean category lead versus Chipotle, Sweetgreen, and new entrants, and how much pricing power is left?",
+      "complete_when": [
+        "a read on competitive positioning / category lead",
+        "a view on remaining pricing power"
+      ],
+      "expected": {
+        "note_models": "Category-defining lead with durable pricing power",
+        "our_view": "Moat and pricing power determine whether the AUV/margin premium persists",
+        "watch": "Pricing power near its limit makes price-led comp non-repeatable"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q7",
+      "pillar": "A defensible category lead, with optionality",
+      "question": "What is the read on the catering rollout and any smaller-format or new-daypart prototype economics?",
+      "complete_when": [
+        "a read on catering and/or new-format / new-daypart tests"
+      ],
+      "expected": {
+        "note_models": "Optionality (catering, new formats) as incremental layers, not yet in numbers",
+        "our_view": "Free optionality on the growth algorithm",
+        "watch": "Nothing material expected; upside-only"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q8",
+      "pillar": "A long, derisked runway to ~1,000 units",
+      "question": "Is the unit growth self-funded from operating cash flow, or is a raise needed, and is there any M&A or buyback appetite?",
+      "complete_when": [
+        "whether growth is self-funded or needs external capital",
+        "any read on M&A / buyback appetite"
+      ],
+      "expected": {
+        "note_models": "Self-funded from operating cash flow; clean balance sheet; reinvesting in units",
+        "our_view": "Funding risk: dilution or a stretched balance sheet changes the return profile",
+        "watch": "An equity raise would re-rate the return profile"
+      },
+      "state": "unanswered"
+    }
+  ]
+}

@@ -1,15 +1,12 @@
 import type { Metadata } from 'next';
-import { headers } from 'next/headers';
-import { LiveConsole } from '@/components/console/live-console';
-import { getAppConfig } from '@/lib/utils';
+import { LivePoll } from '@/components/console/live-poll';
 
 export const metadata: Metadata = {
   title: 'Diligence Copilot — Live',
-  description: 'Live diligence call: the agent listens and drives the coverage board in real time.',
+  description:
+    'Live diligence call: the backend listens and drives the coverage board in real time.',
 };
 
-export default async function Page() {
-  const hdrs = await headers();
-  const appConfig = await getAppConfig(hdrs);
-  return <LiveConsole appConfig={appConfig} />;
+export default function Page() {
+  return <LivePoll />;
 }
