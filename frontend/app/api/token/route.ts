@@ -75,7 +75,10 @@ export async function POST(req: Request) {
     // Generate participant token
     const participantName = 'user';
     const participantIdentity = `voice_assistant_user_${Math.floor(Math.random() * 10_000)}`;
-    const roomName = `voice_assistant_room_${Math.floor(Math.random() * 10_000)}`;
+    // For the real-audio live demo, pin a fixed room (set DEMO_ROOM) so the
+    // frontend, the agent, and the audio driver (src/play_audio.py) all meet in
+    // one room. Unset → a fresh random room per session (the default behavior).
+    const roomName = process.env.DEMO_ROOM || `voice_assistant_room_${Math.floor(Math.random() * 10_000)}`;
 
     const participantToken = await createParticipantToken(
       { identity: participantIdentity, name: participantName },

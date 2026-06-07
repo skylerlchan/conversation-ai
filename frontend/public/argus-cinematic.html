@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brooks — Cinematic Scenes (screen-record me)</title>
+<style>
+  :root{
+    --bg:#0a0b0f; --emerald:#34d399; --emerald-dim:#6ee7b7;
+    --red:#f87171; --amber:#fbbf24;
+    --z100:#fafafa; --z200:#e4e4e7; --z300:#d4d4d8; --z400:#a1a1aa; --z500:#71717a; --z600:#52525b;
+    --line:rgba(255,255,255,.07); --fill:rgba(255,255,255,.02);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--bg);color:var(--z200);font-family:var(--sans);height:100vh;overflow:hidden}
+
+  /* drifting grid + breathing glow give the whole deck life */
+  /* clean solid background — faint static grid, no glow */
+  .grid-bg{position:fixed;inset:0;opacity:.05;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+    background-size:54px 54px}
+
+  .scene{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:8vh 8vw;overflow:hidden}
+  .scene.active{display:flex}
+
+  /* entrance primitives */
+  .reveal{opacity:0;transform:translateY(44px) scale(.93);filter:blur(12px)}
+  .scene.in .reveal{animation:riseBlur 1.5s cubic-bezier(.16,.72,.2,1) forwards;animation-delay:var(--d,0s)}
+  @keyframes riseBlur{to{opacity:1;transform:none;filter:blur(0)}}
+  .pop{opacity:0}
+  .scene.in .pop{animation:popBig 1.5s cubic-bezier(.18,.82,.24,1) forwards;animation-delay:var(--d,0s)}
+  @keyframes popBig{0%{opacity:0;transform:scale(.58);filter:blur(9px)}
+    60%{opacity:1;transform:scale(1.1);filter:blur(0)}100%{opacity:1;transform:scale(1);filter:blur(0)}}
+
+  /* shared type — bigger, more theatrical */
+  .kicker{font-family:var(--mono);font-size:clamp(12px,1.25vw,17px);letter-spacing:.4em;text-transform:uppercase;
+    color:var(--emerald);margin-bottom:42px}
+  .kicker.amber{color:var(--amber)} .kicker.red{color:var(--red)} .kicker.dim{color:var(--z500)}
+  h1{font-size:clamp(38px,7.2vw,120px);line-height:1;font-weight:700;letter-spacing:-.025em;color:#fff;margin:0}
+  h1 .em{color:var(--emerald)} h1 .am{color:var(--amber)} h1 .rd{color:var(--red)}
+  .emb{color:var(--emerald);font-weight:850;text-shadow:0 0 32px rgba(52,211,153,.6)}
+  .sub{font-size:clamp(17px,2vw,32px);color:var(--z300);margin-top:30px;line-height:1.45;max-width:24ch}
+  .tiny{font-family:var(--mono);font-size:clamp(12px,1.1vw,16px);letter-spacing:.28em;text-transform:uppercase;color:var(--z500)}
+
+  /* Brooks eye — larger, with a breathing iris glow */
+  .eye{width:clamp(140px,16vw,236px);height:clamp(82px,9.4vw,138px);position:relative;margin-bottom:40px}
+  .eye svg{width:100%;height:100%;overflow:visible}
+  .iris{transform-origin:center;animation:scan 5s ease-in-out infinite}
+  @keyframes scan{0%,100%{transform:translateX(-16px)}50%{transform:translateX(16px)}}
+  .eyeGlow{filter:drop-shadow(0 0 20px rgba(52,211,153,.85));animation:irisPulse 3.2s ease-in-out infinite}
+  @keyframes irisPulse{0%,100%{filter:drop-shadow(0 0 14px rgba(52,211,153,.6))}50%{filter:drop-shadow(0 0 30px rgba(52,211,153,1))}}
+
+  /* wordmark — bigger, dramatic per-letter rise */
+  .word{display:flex;gap:.05em;justify-content:center}
+  .word span{font-size:clamp(56px,9.6vw,184px);font-weight:760;letter-spacing:.04em;color:#fff;
+    opacity:0;transform:translateY(34px) scale(.9);filter:blur(10px);
+    text-shadow:0 0 50px rgba(255,255,255,.12)}
+  .scene.in .word span{animation:riseBlur 1.3s cubic-bezier(.16,.72,.2,1) forwards}
+  .scene.in .word span:nth-child(1){animation-delay:.2s}
+  .scene.in .word span:nth-child(2){animation-delay:.35s}
+  .scene.in .word span:nth-child(3){animation-delay:.5s}
+  .scene.in .word span:nth-child(4){animation-delay:.65s}
+  .scene.in .word span:nth-child(5){animation-delay:.8s}
+  .scene.in .word span:nth-child(6){animation-delay:.95s}
+
+  /* stat stack — large, glowing numbers */
+  .stats{display:flex;flex-direction:column;gap:clamp(20px,3vh,40px);align-items:center}
+  .stat{font-size:clamp(34px,6.6vw,108px);font-weight:740;letter-spacing:-.025em;color:#fff;line-height:1}
+  .stat small{display:block;font-family:var(--mono);font-size:clamp(12px,1.05vw,15px);letter-spacing:.22em;
+    color:var(--z500);font-weight:500;margin-top:14px;text-transform:uppercase}
+  .stat.em{color:var(--emerald);text-shadow:0 0 44px rgba(52,211,153,.45)}
+  .stat.am{color:var(--amber);text-shadow:0 0 40px rgba(251,191,36,.35)}
+  .stat.mid{font-size:clamp(26px,4vw,62px);font-weight:680}
+
+  /* checklist (the miss) */
+  .check{width:min(760px,90vw);text-align:left;display:flex;flex-direction:column;gap:clamp(10px,1.5vh,16px)}
+  .crow{display:flex;align-items:center;gap:18px;padding:clamp(13px,1.7vh,20px) 22px;border:1px solid var(--line);
+    border-radius:14px;background:var(--fill);font-size:clamp(16px,1.9vw,28px);color:var(--z300);
+    opacity:0;transform:translateX(-46px)}
+  .scene.in .crow{animation:slideIn 1.05s cubic-bezier(.18,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+  @keyframes slideIn{to{opacity:1;transform:none}}
+  .box{width:clamp(26px,2.3vw,34px);height:clamp(26px,2.3vw,34px);border-radius:8px;border:2px solid var(--z600);
+    flex:none;display:grid;place-items:center;color:#06281c;font-weight:900;font-size:clamp(15px,1.5vw,21px)}
+  /* covered rows tick green */
+  .crow.covered .box{animation:checkPop .5s cubic-bezier(.2,.9,.3,1.4) forwards;animation-delay:var(--cd,0s)}
+  @keyframes checkPop{0%{background:transparent;border-color:var(--z600)}
+    60%{transform:scale(1.32)}100%{background:var(--emerald);border-color:var(--emerald);transform:scale(1)}}
+  .crow.covered .box::after{content:"✓";opacity:0;animation:fadeMark .3s forwards;animation-delay:var(--cd,0s)}
+  @keyframes fadeMark{to{opacity:1}}
+  /* missed rows flare red + UNASKED stamp + shake */
+  .crow.missed{animation:slideIn .7s cubic-bezier(.2,.7,.2,1) forwards, missFlare .8s ease forwards;
+    animation-delay:var(--d,0s), var(--md,2s)}
+  @keyframes missFlare{to{border-color:rgba(248,113,113,.55);background:rgba(248,113,113,.08)}}
+  .crow.missed .box{border-color:var(--red);animation:boxBlink 1s steps(2,start) infinite;animation-delay:var(--md,2s)}
+  @keyframes boxBlink{50%{opacity:.3}}
+  .crow.missed .label{color:#fecaca}
+  .stamp{margin-left:auto;font-family:var(--mono);font-size:clamp(11px,1.05vw,15px);font-weight:700;letter-spacing:.14em;
+    color:var(--red);background:rgba(248,113,113,.14);border:1px solid rgba(248,113,113,.4);
+    padding:4px 11px;border-radius:6px;opacity:0;transform:scale(1.5) rotate(-7deg)}
+  .scene.in .crow.missed .stamp{animation:stampIn .5s cubic-bezier(.2,.9,.3,1.3) forwards;animation-delay:var(--md,2s)}
+  @keyframes stampIn{to{opacity:1;transform:scale(1) rotate(-5deg)}}
+  .crow .label{flex:1}
+
+  /* waveform (live vs after) — taller, more alive */
+  .waves{display:flex;gap:clamp(50px,8vw,130px);align-items:flex-end;justify-content:center;margin-bottom:38px}
+  .wcol{display:flex;flex-direction:column;align-items:center;gap:22px}
+  .wave{display:flex;gap:5px;align-items:center;height:130px}
+  .wave i{width:6px;border-radius:3px;background:var(--emerald)}
+  .wave.live i{animation:wv 1.3s ease-in-out infinite;box-shadow:0 0 12px rgba(52,211,153,.6)}
+  .wave.live i:nth-child(2n){animation-delay:.15s}.wave.live i:nth-child(3n){animation-delay:.3s}.wave.live i:nth-child(4n){animation-delay:.45s}
+  @keyframes wv{0%,100%{height:18px}50%{height:108px}}
+  .wave.dead i{background:var(--z600);height:42px;opacity:.5}
+  .scene.in .wave.dead{animation:fadeout 2.6s ease forwards;animation-delay:.9s}
+  @keyframes fadeout{to{opacity:.1;filter:blur(4px)}}
+  .wlabel{font-family:var(--mono);font-size:clamp(14px,1.5vw,20px);letter-spacing:.2em;text-transform:uppercase}
+  .wlabel.on{color:var(--emerald)} .wlabel.off{color:var(--z600)}
+
+  /* cost cards — heavier, the last one lands red */
+  .cards{display:flex;flex-direction:column;gap:18px;width:min(760px,88vw)}
+  .ccard{display:flex;justify-content:space-between;align-items:center;padding:clamp(18px,2.4vh,28px) 28px;
+    border:1px solid var(--line);border-radius:16px;background:var(--fill);text-align:left}
+  .ccard .who{font-size:clamp(19px,2.3vw,36px);font-weight:660;color:#fff}
+  .ccard .who small{display:block;font-size:clamp(12px,1.05vw,15px);color:var(--z500);font-weight:400;margin-top:6px;
+    font-family:var(--mono);letter-spacing:.04em}
+  .ccard .amt{font-family:var(--mono);font-size:clamp(20px,2.7vw,44px);font-weight:700;color:var(--emerald);white-space:nowrap}
+  .ccard.am{border-color:rgba(251,191,36,.4);background:rgba(251,191,36,.05)} .ccard.am .amt{color:var(--amber)}
+  .ccard.rd{border-color:rgba(248,113,113,.45);background:rgba(248,113,113,.06)} .ccard.rd .amt{color:var(--red)}
+  .amt-col{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+  .src{font-family:var(--mono);font-size:clamp(9px,.82vw,12px);letter-spacing:.05em;color:var(--z600);text-transform:uppercase}
+
+  /* backend pipeline — data gliding through the stages */
+  .pipe-row{display:flex;align-items:center;justify-content:center;width:min(1200px,95vw);margin:6px 0}
+  .stage{display:flex;flex-direction:column;gap:3px;border:1px solid var(--line);background:var(--fill);
+    border-radius:12px;padding:13px 16px;white-space:nowrap;text-align:center;
+    animation:stagePulse 5s ease-in-out infinite;animation-delay:calc(var(--si)*.9s)}
+  .stage b{font-family:var(--sans);font-size:clamp(13px,1.3vw,19px);font-weight:700;color:#fff;letter-spacing:.01em}
+  .stage small{font-family:var(--mono);font-size:clamp(9px,.85vw,12px);color:var(--z500);letter-spacing:.02em}
+  @keyframes stagePulse{0%,72%,100%{border-color:var(--line);box-shadow:none}
+    12%{border-color:rgba(52,211,153,.7);box-shadow:0 0 26px rgba(52,211,153,.22)}}
+  .stage.moss{animation:mossGlow 2.6s ease-in-out infinite}
+  .stage.moss b{color:var(--emerald)}
+  @keyframes mossGlow{0%,100%{border-color:rgba(52,211,153,.45);box-shadow:0 0 18px rgba(52,211,153,.18)}
+    50%{border-color:rgba(52,211,153,.85);box-shadow:0 0 36px rgba(52,211,153,.42)}}
+  .pipe{flex:1;height:2px;background:rgba(255,255,255,.09);position:relative;min-width:24px;margin:0 7px}
+  .pipe::after{content:"";position:absolute;top:-3px;left:0;width:44px;height:8px;border-radius:4px;
+    background:linear-gradient(90deg,transparent,var(--emerald),transparent);
+    filter:drop-shadow(0 0 10px rgba(52,211,153,.9));
+    animation:glide 5s linear infinite;animation-delay:calc(var(--pi)*.9s)}
+  @keyframes glide{0%{left:-44px;opacity:0}8%{opacity:1}92%{opacity:1}100%{left:100%;opacity:0}}
+
+  /* HUD */
+  .hud{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);font-family:var(--mono);font-size:11px;
+    letter-spacing:.12em;color:var(--z600);background:rgba(10,11,15,.7);border:1px solid var(--line);
+    border-radius:8px;padding:7px 14px;display:flex;gap:16px;z-index:50;transition:.3s}
+  .hud.hide{opacity:0}
+  .hud b{color:var(--z300)}
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div>
+
+  <!-- ============ SCENE 1 · INTRO ============ -->
+  <section class="scene" id="s0">
+    <div class="eye reveal" style="--d:0s">
+      <svg viewBox="0 0 200 110">
+        <path d="M8 55 Q100 -8 192 55 Q100 118 8 55 Z" fill="none" stroke="rgba(52,211,153,.45)" stroke-width="2"/>
+        <g class="iris eyeGlow"><circle cx="100" cy="55" r="26" fill="none" stroke="var(--emerald)" stroke-width="2.5"/>
+          <circle cx="100" cy="55" r="9" fill="var(--emerald)"/></g>
+      </svg>
+    </div>
+    <div class="word"><span>B</span><span>R</span><span>O</span><span>O</span><span>K</span><span>S</span></div>
+    <div class="sub reveal" style="--d:.85s">For your most expensive hour on Wall Street.</div>
+    <div class="tiny reveal" style="--d:1.15s;margin-top:38px">WithAI Research · YC&nbsp;P26</div>
+  </section>
+
+  <!-- ============ SCENE 2 · WHO WE ARE ============ -->
+  <section class="scene" id="s0b">
+    <div class="kicker reveal" style="--d:0s">Who we are</div>
+    <div class="stats">
+      <div class="stat mid pop" style="--d:.2s">Princeton<small>financial engineering × CS</small></div>
+      <div class="stat em pop" style="--d:.95s" data-count="300" data-prefix="$" data-suffix="M"><small>hedge-fund desk · since January</small></div>
+      <div class="stat am mid pop" style="--d:1.7s">New York<small>in finance, every day</small></div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 3 · THE CUSTOMER / STAKES ============ -->
+  <section class="scene" id="s1">
+    <div class="kicker reveal" style="--d:0s">Our customer</div>
+    <div class="stats">
+      <div class="stat mid pop" style="--d:.2s">A buy-side hedge fund<small>builds a model to make the trade</small></div>
+      <div class="stat em pop" style="--d:.95s" data-count="1000" data-prefix="$" data-suffix=" / hour"><small>pays an equity research analyst</small></div>
+      <div class="stat am mid pop" style="--d:1.7s" data-count="60" data-suffix=" minutes"><small>to ask every question the model needs</small></div>
+    </div>
+  </section>
+
+  <!-- ============ SCENE 3 · THE MISS (checklist) ============ -->
+  <section class="scene" id="s2">
+    <div class="kicker red reveal" style="--d:0s">What the model needed</div>
+    <div class="check">
+      <div class="crow covered" style="--d:.2s;--cd:.9s"><span class="box"></span><span class="label">Gross-margin trajectory</span></div>
+      <div class="crow covered" style="--d:.35s;--cd:1.3s"><span class="box"></span><span class="label">Unit-growth pipeline</span></div>
+      <div class="crow covered" style="--d:.5s;--cd:1.7s"><span class="box"></span><span class="label">Capital allocation</span></div>
+      <div class="crow missed" style="--d:.7s;--md:2.4s"><span class="box"></span><span class="label">China inventory</span><span class="stamp">NEVER ASKED</span></div>
+      <div class="crow missed" style="--d:.85s;--md:2.7s"><span class="box"></span><span class="label">FY25 pricing</span><span class="stamp">NEVER ASKED</span></div>
+    </div>
+    <div class="tiny reveal" style="--d:3.2s;margin-top:38px">the call just ended</div>
+  </section>
+
+  <!-- ============ SCENE 4 · WHY REAL-TIME ============ -->
+  <section class="scene" id="s3">
+    <div class="kicker reveal" style="--d:0s">Why it has to be live</div>
+    <div class="waves">
+      <div class="wcol reveal" style="--d:.2s">
+        <div class="wave live" id="wlive"></div>
+        <div class="wlabel on">LIVE · still on the line</div>
+      </div>
+      <div class="wcol reveal" style="--d:.5s">
+        <div class="wave dead" id="wdead"></div>
+        <div class="wlabel off">AFTER · too late</div>
+      </div>
+    </div>
+    <h1 class="reveal" style="--d:1s;font-size:clamp(26px,3.6vw,52px)">A notetaker runs <span class="rd">after</span>.<br>Brooks catches it <span class="emb">live.</span></h1>
+  </section>
+
+  <!-- ============ SCENE 6 · BACKEND PIPELINE ============ -->
+  <section class="scene" id="s_back">
+    <div class="kicker reveal" style="--d:0s">Under the hood</div>
+    <div class="pipe-row reveal" style="--d:.3s">
+      <div class="stage" style="--si:0"><b>LiveKit</b><small>live audio</small></div>
+      <div class="pipe" style="--pi:0"></div>
+      <div class="stage" style="--si:1"><b>Deepgram</b><small>transcribe · diarize</small></div>
+      <div class="pipe" style="--pi:1"></div>
+      <div class="stage" style="--si:2"><b>OpenAI</b><small>parse the turn</small></div>
+      <div class="pipe" style="--pi:2"></div>
+      <div class="stage moss" style="--si:3"><b>Moss</b><small>match your filings + memory</small></div>
+      <div class="pipe" style="--pi:3"></div>
+      <div class="stage" style="--si:4"><b>OpenAI</b><small>flag · follow-up</small></div>
+    </div>
+    <div class="sub reveal" style="--d:.8s"><span class="emb">Moss</span> semantic-searches every answer against your filings and memory — live, in milliseconds.</div>
+  </section>
+
+  <!-- ============ SCENE 7 · COST MONTAGE ============ -->
+  <section class="scene" id="s4">
+    <div class="kicker dim reveal" style="--d:0s">Every high-stakes conversation has the same problem</div>
+    <div class="cards">
+      <div class="ccard pop" style="--d:.2s"><div class="who">Kirkland &amp; Ellis<small>restructuring partner</small></div><div class="amt-col"><div class="amt">$2,465/hr</div><div class="src">ABA Journal</div></div></div>
+      <div class="ccard am pop" style="--d:1s"><div class="who">McKinsey &amp; Company<small>strategy partner</small></div><div class="amt-col"><div class="amt">$2,000/hr</div><div class="src">industry est.</div></div></div>
+      <div class="ccard rd pop" style="--d:1.8s"><div class="who">Susman Godfrey<small>top trial lawyer · 2026 rack rate</small></div><div class="amt-col"><div class="amt">$4,000/hr</div><div class="src">Reuters</div></div></div>
+    </div>
+    <div class="tiny reveal" style="--d:1.7s;margin-top:38px">one shot</div>
+  </section>
+
+  <!-- ============ SCENE 6 · THE PAYOFF (bookend — all covered) ============ -->
+  <section class="scene" id="s5">
+    <div class="kicker reveal" style="--d:0s">With Brooks on the call</div>
+    <div class="check">
+      <div class="crow covered" style="--d:.15s;--cd:.7s"><span class="box"></span><span class="label">Gross-margin trajectory</span></div>
+      <div class="crow covered" style="--d:.3s;--cd:1s"><span class="box"></span><span class="label">Unit-growth pipeline</span></div>
+      <div class="crow covered" style="--d:.45s;--cd:1.3s"><span class="box"></span><span class="label">Capital allocation</span></div>
+      <div class="crow covered" style="--d:.6s;--cd:1.6s"><span class="box"></span><span class="label">China inventory</span></div>
+      <div class="crow covered" style="--d:.75s;--cd:1.9s"><span class="box"></span><span class="label">FY25 pricing</span></div>
+    </div>
+    <div class="tiny reveal" style="--d:2.4s;margin-top:38px;color:var(--emerald)">every question asked · zero holes</div>
+  </section>
+
+  <!-- ============ SCENE 7 · CLOSE ============ -->
+  <section class="scene" id="s6">
+    <div class="eye reveal" style="--d:0s">
+      <svg viewBox="0 0 200 110">
+        <path d="M8 55 Q100 -8 192 55 Q100 118 8 55 Z" fill="none" stroke="rgba(52,211,153,.45)" stroke-width="2"/>
+        <g class="iris eyeGlow"><circle cx="100" cy="55" r="26" fill="none" stroke="var(--emerald)" stroke-width="2.5"/>
+          <circle cx="100" cy="55" r="9" fill="var(--emerald)"/></g>
+      </svg>
+    </div>
+    <div class="word"><span>B</span><span>R</span><span>O</span><span>O</span><span>K</span><span>S</span></div>
+    <div class="sub reveal" style="--d:.85s">Catching what matters, <span class="emb">live</span>.</div>
+    <div class="reveal" style="--d:1.2s;margin-top:22px;font-size:clamp(14px,1.5vw,20px);color:var(--z400);max-width:34ch;line-height:1.5">The question you don't ask is the one that costs you.</div>
+    <div class="tiny reveal" style="--d:1.55s;margin-top:32px">WithAI Research · YC&nbsp;P26</div>
+  </section>
+
+  <div class="hud" id="hud"><span><b>→</b> next</span><span><b>←</b> back</span><span><b>R</b> replay</span><span><b>H</b> hide UI</span><span id="counter">1 / 9</span></div>
+
+<script>
+  const scenes=[...document.querySelectorAll('.scene')];
+  let i=0;
+
+  function bars(el,n){el.innerHTML='';for(let k=0;k<n;k++){el.appendChild(document.createElement('i'));}}
+  bars(document.getElementById('wlive'),24);
+  bars(document.getElementById('wdead'),24);
+
+  function countUp(node){
+    const target=+node.dataset.count, pre=node.dataset.prefix||'', suf=node.dataset.suffix||'';
+    const small=node.querySelector('small'); const dur=3000, t0=performance.now();
+    if(!node.firstChild||node.firstChild.nodeType!==3)node.insertBefore(document.createTextNode(''),node.firstChild);
+    function step(t){const p=Math.min(1,(t-t0)/dur); const val=Math.round(target*(1-Math.pow(1-p,3)));
+      node.firstChild.nodeValue=pre+val.toLocaleString()+suf; if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+
+  function show(n){
+    scenes.forEach(s=>s.classList.remove('active','in'));
+    i=(n+scenes.length)%scenes.length;
+    const sc=scenes[i]; sc.classList.add('active');
+    void sc.offsetWidth;                 // force reflow so animations restart
+    sc.classList.add('in');
+    document.getElementById('counter').textContent=(i+1)+' / '+scenes.length;
+    sc.querySelectorAll('[data-count]').forEach(node=>{
+      const d=parseFloat(getComputedStyle(node).getPropertyValue('--d'))||0;
+      setTimeout(()=>countUp(node), d*1000+150);
+    });
+  }
+
+  addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();show(i+1);}
+    else if(e.key==='ArrowLeft'){show(i-1);}
+    else if(e.key==='r'||e.key==='R'){show(i);}
+    else if(e.key==='h'||e.key==='H'){document.getElementById('hud').classList.toggle('hide');}
+    else if(e.key==='f'||e.key==='F'){document.documentElement.requestFullscreen?.();}
+  });
+  addEventListener('click',()=>show(i+1));
+  function fromHash(){const n=parseInt(location.hash.replace('#',''),10);return isNaN(n)?0:n-1;}
+  addEventListener('hashchange',()=>show(fromHash()));
+  show(fromHash());
+  setTimeout(()=>document.getElementById('hud').classList.add('hide'),4000);
+  addEventListener('mousemove',()=>{document.getElementById('hud').classList.remove('hide');
+    clearTimeout(window._h);window._h=setTimeout(()=>document.getElementById('hud').classList.add('hide'),2500);});
+</script>
+</body>
+</html>

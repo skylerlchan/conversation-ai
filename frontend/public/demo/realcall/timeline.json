@@ -1,0 +1,804 @@
+{
+  "audio": "/demo/realcall/call.mp3",
+  "company": "Apple Inc.",
+  "ticker": "AAPL",
+  "source": "Apple Q2 FY26 earnings call (real audio) \u2014 pretend expert/diligence call",
+  "packets": [
+    {
+      "at": 0.0,
+      "type": "transcript",
+      "data": {
+        "t": 1,
+        "speaker": "researcher",
+        "text": "Today, Apple is proud to report $111.2 billion in revenue, up 17 percent from a year ago,"
+      }
+    },
+    {
+      "at": 0.0,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 3,
+          "partial": 0,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 8.94,
+      "type": "transcript",
+      "data": {
+        "t": 2,
+        "speaker": "researcher",
+        "text": "and a March quarter record which was above the high end of our guidance range despite"
+      }
+    },
+    {
+      "at": 8.94,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "partial",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year"
+            ],
+            "contradictions": [],
+            "followup": "Please provide EPS figures and their year-over-year growth to complete the question on profitability."
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 2,
+          "partial": 1,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 13.62,
+      "type": "transcript",
+      "data": {
+        "t": 3,
+        "speaker": "researcher",
+        "text": "supply constraints. Customer enthusiasm for iPhone has been extraordinary, with revenue"
+      }
+    },
+    {
+      "at": 13.62,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "partial",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range"
+            ],
+            "contradictions": [],
+            "followup": "Please specify total revenue growth and EPS growth with exact figures for the March quarter to complete the profitability overview."
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 2,
+          "partial": 1,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 19.68,
+      "type": "transcript",
+      "data": {
+        "t": 4,
+        "speaker": "researcher",
+        "text": "growing 22 percent year over year to achieve a March quarter record. Services reached an"
+      }
+    },
+    {
+      "at": 19.68,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "partial",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary"
+            ],
+            "contradictions": [],
+            "followup": "Quantify iPhone revenue growth and confirm the March-quarter record, and discuss geographic breadth including Greater China and India"
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "partial",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range"
+            ],
+            "contradictions": [],
+            "followup": "Please specify total revenue growth and EPS growth with exact figures for the March quarter to complete the profitability overview."
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 1,
+          "partial": 2,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 26.22,
+      "type": "transcript",
+      "data": {
+        "t": 5,
+        "speaker": "researcher",
+        "text": "all-time revenue record, growing 16 percent from a year ago, while EPS set a March quarter"
+      }
+    },
+    {
+      "at": 26.22,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "partial",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record"
+            ],
+            "contradictions": [],
+            "followup": "Please quantify overall iPhone revenue and describe geographic breadth including Greater China and India under supply constraints."
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "partial",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year"
+            ],
+            "contradictions": [],
+            "followup": "Please provide total revenue growth and EPS with year-over-year growth to confirm profitability strength this quarter."
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 2,
+          "answered": 1
+        }
+      }
+    },
+    {
+      "at": 32.54,
+      "type": "transcript",
+      "data": {
+        "t": 6,
+        "speaker": "researcher",
+        "text": "record of $2.01, up 22 percent year over year."
+      }
+    },
+    {
+      "at": 32.54,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "partial",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record"
+            ],
+            "contradictions": [],
+            "followup": "Please quantify overall iPhone revenue and describe geographic breadth including Greater China and India under supply constraints."
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "partial",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record"
+            ],
+            "contradictions": [],
+            "followup": "Confirm the exact EPS figure and year-over-year growth rate for this quarter."
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 2,
+          "answered": 1
+        }
+      }
+    },
+    {
+      "at": 38.86,
+      "type": "transcript",
+      "data": {
+        "t": 7,
+        "speaker": "researcher",
+        "text": "We set March quarter revenue records and grew double digits in every geographic segment,"
+      }
+    },
+    {
+      "at": 38.86,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "partial",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record"
+            ],
+            "contradictions": [],
+            "followup": "Please quantify overall iPhone revenue and describe geographic breadth including Greater China and India under supply constraints."
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "answered",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record",
+              "EPS $2.01, up 22% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 1,
+          "answered": 2
+        }
+      }
+    },
+    {
+      "at": 44.82,
+      "type": "transcript",
+      "data": {
+        "t": 8,
+        "speaker": "researcher",
+        "text": "including strong double digit growth in Greater China and the rest of Asia Pacific. We also"
+      }
+    },
+    {
+      "at": 44.82,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "answered",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record",
+              "double-digit growth in every geographic segment"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "answered",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record",
+              "EPS $2.01, up 22% year over year",
+              "March quarter revenue records set",
+              "double-digit growth in every geographic segment"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 0,
+          "answered": 3
+        }
+      }
+    },
+    {
+      "at": 50.42,
+      "type": "transcript",
+      "data": {
+        "t": 9,
+        "speaker": "researcher",
+        "text": "achieved March quarter revenue records in both developed and emerging markets and saw"
+      }
+    },
+    {
+      "at": 50.42,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "answered",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record",
+              "double-digit growth in every geographic segment",
+              "double digit growth in Greater China",
+              "double digit growth in rest of Asia Pacific"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "answered",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record",
+              "EPS $2.01, up 22% year over year",
+              "March quarter revenue records set",
+              "double-digit growth in every geographic segment"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 0,
+          "answered": 3
+        }
+      }
+    },
+    {
+      "at": 55.04,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "answered",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record",
+              "double-digit growth in every geographic segment",
+              "double digit growth in Greater China",
+              "double digit growth in rest of Asia Pacific",
+              "achieved March quarter revenue records in both developed and emerging markets"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "answered",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record",
+              "EPS $2.01, up 22% year over year",
+              "March quarter revenue records set",
+              "double-digit growth in every geographic segment",
+              "achieved March quarter revenue records in both developed and emerging markets"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 0,
+          "answered": 3
+        }
+      }
+    },
+    {
+      "at": 55.12,
+      "type": "transcript",
+      "data": {
+        "t": 10,
+        "speaker": "researcher",
+        "text": "double digit growth in nearly every emerging market we track, including India."
+      }
+    },
+    {
+      "at": 61.72,
+      "type": "transcript",
+      "data": {
+        "t": 11,
+        "speaker": "researcher",
+        "text": "We recently marked Apple's 50th anniversary with celebrations in our retail"
+      }
+    },
+    {
+      "at": 61.72,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "answered",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record",
+              "double-digit growth in every geographic segment",
+              "double digit growth in Greater China",
+              "double digit growth in rest of Asia Pacific",
+              "achieved March quarter revenue records in both developed and emerging markets",
+              "double digit growth in nearly every emerging market we track, including India"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "answered",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record",
+              "EPS $2.01, up 22% year over year",
+              "March quarter revenue records set",
+              "double-digit growth in every geographic segment",
+              "achieved March quarter revenue records in both developed and emerging markets"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 0,
+          "answered": 3
+        }
+      }
+    },
+    {
+      "at": 65.92,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) \u2014 with double-digit growth in every geography including strong Greater China and India.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+            "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+            "state": "answered",
+            "facts": [
+              "There are supply constraints",
+              "Customer enthusiasm for iPhone has been extraordinary",
+              "iPhone grew 22% year over year to achieve a March quarter record",
+              "double-digit growth in every geographic segment",
+              "double digit growth in Greater China",
+              "double digit growth in rest of Asia Pacific",
+              "achieved March quarter revenue records in both developed and emerging markets",
+              "double digit growth in nearly every emerging market we track, including India"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How strong was profitability this quarter \u2014 revenue and EPS?",
+            "pillar": "Profitability: record top line and earnings",
+            "state": "answered",
+            "facts": [
+              "Revenue $111.2 billion, up 17% year over year",
+              "March quarter record",
+              "above the high end of guidance range",
+              "iPhone grew 22% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year",
+              "EPS set a March quarter record",
+              "EPS $2.01, up 22% year over year",
+              "March quarter revenue records set",
+              "double-digit growth in every geographic segment",
+              "achieved March quarter revenue records in both developed and emerging markets"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Did Services keep compounding this quarter?",
+            "pillar": "Services momentum: the high-margin compounder",
+            "state": "answered",
+            "facts": [
+              "Services reached an all-time record",
+              "Services grew 16% year over year",
+              "Services all-time revenue record",
+              "Services revenue grew 16% year over year"
+            ],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 0,
+          "partial": 0,
+          "answered": 3
+        }
+      }
+    }
+  ]
+}

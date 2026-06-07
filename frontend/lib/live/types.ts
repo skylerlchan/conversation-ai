@@ -59,12 +59,21 @@ export interface TranscriptPacket {
   timestamp: number;
 }
 
-export type PacketType = 'coverage_update' | 'grounding' | 'transcript';
+/** `interim_transcript.data` — the in-progress utterance, streamed as the speaker
+ * talks (replaced in place until the turn finalizes into a `transcript` packet). */
+export interface InterimTranscriptPacket {
+  speaker: Speaker;
+  text: string;
+  timestamp: number;
+}
+
+export type PacketType = 'coverage_update' | 'grounding' | 'transcript' | 'interim_transcript';
 
 export type LivePacket =
   | { type: 'coverage_update'; data: CoveragePacket }
   | { type: 'grounding'; data: GroundingPacket }
-  | { type: 'transcript'; data: TranscriptPacket };
+  | { type: 'transcript'; data: TranscriptPacket }
+  | { type: 'interim_transcript'; data: InterimTranscriptPacket };
 
 const decoder = new TextDecoder();
 
@@ -82,6 +91,12 @@ export function parseLivePacket(payload: Uint8Array): LivePacket | null {
   if (!msg || typeof msg !== 'object') return null;
   const { type, data } = msg as { type?: unknown; data?: unknown };
   if (typeof type !== 'string' || !data || typeof data !== 'object') return null;
-  if (type !== 'coverage_update' && type !== 'grounding' && type !== 'transcript') return null;
+  if (
+    type !== 'coverage_update' &&
+    type !== 'grounding' &&
+    type !== 'transcript' &&
+    type !== 'interim_transcript'
+  )
+    return null;
   return { type, data } as LivePacket;
 }

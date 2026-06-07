@@ -73,8 +73,12 @@ function initialCoverage(questions: QuestionsFixture): Record<string, CoverageSt
  */
 export function useDiligenceDemo(
   questions: QuestionsFixture,
-  call: CallFixture
+  call: CallFixture,
+  opts?: { externalClock?: boolean }
 ): DiligenceState & { controls: DiligenceControls } {
+  // When an external clock drives advancement (e.g. per-turn audio finishing),
+  // the internal interval is disabled so the two can't double-advance.
+  const externalClock = opts?.externalClock ?? false;
   const turns = call.turns;
   const [cursor, setCursor] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -90,6 +94,7 @@ export function useDiligenceDemo(
       setPlaying(false);
       return;
     }
+    if (externalClock) return; // audio drives advancement; no internal interval
     timer.current = setInterval(() => {
       setCursor((c) => {
         if (c >= turns.length) return c;
@@ -99,7 +104,7 @@ export function useDiligenceDemo(
     return () => {
       if (timer.current) clearInterval(timer.current);
     };
-  }, [playing, speedMs, done, turns.length]);
+  }, [playing, speedMs, done, turns.length, externalClock]);
 
   const controls = useMemo<DiligenceControls>(
     () => ({

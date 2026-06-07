@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brooks — Expert Call (demo)</title>
+<style>
+  :root{
+    --bg:#0a0b0f; --emerald:#34d399; --emerald-dim:#6ee7b7;
+    --red:#f87171; --amber:#fbbf24;
+    --z200:#e4e4e7; --z300:#d4d4d8; --z400:#a1a1aa; --z500:#71717a; --z600:#52525b;
+    --line:rgba(255,255,255,.06); --fill:rgba(255,255,255,.02);
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:var(--bg); color:var(--z200); font-family:var(--sans);
+    height:100vh; overflow:hidden; position:relative;
+  }
+  .grid-bg{
+    position:absolute; inset:0; opacity:.18; pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),
+                     linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
+    background-size:44px 44px;
+  }
+  .glow{position:absolute;left:50%;top:-160px;transform:translateX(-50%);
+    width:42rem;height:20rem;border-radius:9999px;background:rgba(52,211,153,.10);
+    filter:blur(110px);pointer-events:none}
+  .wrap{position:relative;display:flex;flex-direction:column;height:100%}
+
+  /* command bar */
+  .cmd{display:flex;align-items:center;justify-content:space-between;
+    padding:14px 18px;border-bottom:1px solid var(--line)}
+  .cmd-left{display:flex;align-items:center;gap:14px}
+  .dot{width:8px;height:8px;border-radius:9999px;background:var(--emerald);
+    box-shadow:0 0 0 0 rgba(52,211,153,.6);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(52,211,153,.5)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+  .live{font-family:var(--mono);font-size:11px;letter-spacing:.18em;color:var(--emerald);text-transform:uppercase;font-weight:600}
+  .tkr{font-family:var(--mono);font-weight:700;font-size:15px;color:#fff;letter-spacing:.04em}
+  .sub{font-size:12px;color:var(--z500)}
+  .cmd-right{display:flex;align-items:center;gap:20px}
+  .clock{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:20px;font-weight:700;color:#fff;letter-spacing:.06em}
+  .clock .cap{font-size:9px;letter-spacing:.2em;color:var(--z500);font-weight:600}
+  .clock.warn{color:var(--amber)}
+  .gauge{font-family:var(--mono);font-size:12px;color:var(--z400)}
+  .gauge b{color:var(--emerald)}
+
+  main{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,.85fr) minmax(0,.8fr);
+    gap:16px;padding:16px;flex:1;min-height:0}
+  .label{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--z500);text-transform:uppercase;font-weight:500;margin:0 0 8px}
+  .col{display:flex;flex-direction:column;min-height:0}
+  .scroll{overflow-y:auto;min-height:0;flex:1;padding-right:4px}
+  .scroll::-webkit-scrollbar{width:6px}.scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:3px}
+
+  /* must-ask cards */
+  .card{border:1px solid var(--line);background:var(--fill);border-radius:12px;padding:11px 12px;margin-bottom:9px;transition:.35s}
+  .card .top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+  .rank{font-family:var(--mono);font-size:10px;color:var(--z600)}
+  .chip{font-family:var(--mono);font-size:8px;letter-spacing:.08em;padding:1px 5px;border-radius:4px;text-transform:uppercase}
+  .chip.open{background:rgba(248,113,113,.12);color:var(--red)}
+  .chip.partial{background:rgba(251,191,36,.14);color:var(--amber)}
+  .chip.done{background:rgba(52,211,153,.14);color:var(--emerald)}
+  .card .q{font-size:13px;line-height:1.4;color:var(--z300);font-weight:500}
+  .card .why{font-size:11px;color:var(--z500);margin-top:6px;display:flex;gap:6px;align-items:center}
+  .card .why::before{content:"";width:5px;height:5px;border-radius:2px;background:var(--z600);flex:none}
+  .card.hero{border-color:rgba(248,113,113,.35);background:rgba(248,113,113,.05)}
+  .card.hero .why::before{background:var(--red)}
+  .card.hero .why{color:#fca5a5}
+  .card.pulse{animation:cardpulse 1s ease 2}
+  @keyframes cardpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.02);border-color:var(--red)}}
+  .card.answered{opacity:.62}
+  .card.answered .q{color:var(--z400)}
+
+  /* center */
+  .nextstep{border:1px solid rgba(52,211,153,.25);background:rgba(52,211,153,.05);border-radius:12px;padding:12px 13px;min-height:96px;transition:.35s}
+  .nextstep.flag{border-color:rgba(248,113,113,.4);background:rgba(248,113,113,.06)}
+  .ns-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald);display:flex;align-items:center;gap:6px;margin-bottom:7px}
+  .nextstep.flag .ns-kicker{color:var(--red)}
+  .ns-body{font-size:13.5px;line-height:1.45;color:var(--z200)}
+  .ns-meta{font-size:11px;color:var(--z500);margin-top:7px}
+
+  .now{margin-top:14px}
+  .now-box{border:1px solid var(--line);background:var(--fill);border-radius:12px;padding:12px 13px;min-height:64px}
+  .now-box p{margin:0;font-size:14px;line-height:1.5;color:#f4f4f5}
+  .transcript{margin-top:8px}
+  .t-line{font-size:12px;line-height:1.45;color:var(--z500);margin:0 0 6px}
+  .t-line .spk{font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--z600);margin-right:6px}
+  .t-line.you{color:var(--emerald-dim)}
+  .t-line.you .spk{color:var(--emerald)}
+
+  /* model */
+  .assume{border:1px solid var(--line);background:var(--fill);border-radius:10px;padding:9px 11px;margin-bottom:8px;transition:.4s}
+  .assume .aid{font-family:var(--mono);font-size:9px;color:var(--z600)}
+  .assume .note{font-size:12px;line-height:1.4;color:var(--z300);margin-top:3px}
+  .assume.challenged{border-color:rgba(248,113,113,.45);background:rgba(248,113,113,.08);animation:cardpulse 1s ease 1}
+  .assume.challenged .note{color:#fecaca}
+  .assume .tag{display:none;font-family:var(--mono);font-size:8px;letter-spacing:.08em;color:var(--red);background:rgba(248,113,113,.15);padding:1px 5px;border-radius:4px;margin-left:6px}
+  .assume.challenged .tag{display:inline}
+  .assume .delta{font-size:11px;color:#fca5a5;margin-top:4px;display:none}
+  .assume.challenged .delta{display:block}
+
+  /* earpiece cue */
+  .ear{position:absolute;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+    display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:9999px;
+    background:rgba(10,11,15,.9);border:1px solid rgba(52,211,153,.4);
+    box-shadow:0 8px 40px rgba(0,0,0,.5);opacity:0;transition:.4s;pointer-events:none;max-width:560px}
+  .ear.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .ear .wave{display:flex;gap:2px;align-items:center}
+  .ear .wave i{width:2px;height:10px;background:var(--emerald);border-radius:2px;animation:wv .8s infinite ease-in-out}
+  .ear .wave i:nth-child(2){animation-delay:.1s}.ear .wave i:nth-child(3){animation-delay:.2s}.ear .wave i:nth-child(4){animation-delay:.3s}
+  @keyframes wv{0%,100%{height:5px}50%{height:14px}}
+  .ear span{font-size:12.5px;color:var(--z200)}.ear b{color:var(--emerald)}
+
+  /* memo overlay */
+  .memo{position:absolute;inset:0;background:rgba(7,8,11,.86);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.5s;z-index:20}
+  .memo.show{opacity:1;pointer-events:auto}
+  .memo-card{width:min(620px,92vw);border:1px solid var(--line);background:#0d0e13;border-radius:16px;padding:24px 26px}
+  .memo-card h3{margin:0 0 4px;font-size:17px;color:#fff;letter-spacing:.01em}
+  .memo-card .mh{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--emerald);margin-bottom:14px}
+  .delta-row{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:13px}
+  .delta-row:first-of-type{border-top:none}
+  .delta-row .k{color:var(--z400);flex:1}
+  .delta-row .v{font-family:var(--mono);font-size:12px}
+  .delta-row .v .old{color:var(--z600);text-decoration:line-through;margin-right:6px}
+  .delta-row .v .new{color:var(--red)}
+  .delta-row .v .ok{color:var(--emerald)}
+  .memo-foot{margin-top:16px;font-size:12px;color:var(--z500);line-height:1.5}
+  .memo-foot b{color:var(--z300)}
+
+  .replay{position:absolute;right:16px;bottom:14px;z-index:30;font-family:var(--mono);font-size:11px;
+    letter-spacing:.08em;color:var(--z400);background:rgba(255,255,255,.04);border:1px solid var(--line);
+    border-radius:8px;padding:7px 12px;cursor:pointer;text-transform:uppercase}
+  .replay:hover{color:#fff;border-color:rgba(255,255,255,.2)}
+  .disclaimer{position:absolute;left:16px;bottom:14px;z-index:30;font-size:10px;color:var(--z600);font-family:var(--mono)}
+</style>
+</head>
+<body>
+  <div class="grid-bg"></div><div class="glow"></div>
+  <div class="wrap">
+    <header class="cmd">
+      <div class="cmd-left">
+        <span class="dot"></span>
+        <span class="live">LIVE</span>
+        <span class="tkr">CAVA</span>
+        <span class="sub">Expert call · former CAVA regional operator</span>
+      </div>
+      <div class="cmd-right">
+        <div class="clock" id="clock"><span class="cap">LEFT</span><span id="clock-t">52:00</span></div>
+        <div class="gauge"><b id="g-done">0</b> / <span id="g-total">6</span> model-critical</div>
+      </div>
+    </header>
+
+    <main>
+      <!-- must-ask -->
+      <section class="col">
+        <h2 class="label">Must ask · ranked by what your model needs</h2>
+        <div class="scroll" id="cards"></div>
+      </section>
+
+      <!-- center -->
+      <section class="col">
+        <div class="nextstep" id="nextstep">
+          <div class="ns-kicker" id="ns-kicker">● Brooks · standing by</div>
+          <div class="ns-body" id="ns-body">Listening. Surfacing the question your model needs most.</div>
+          <div class="ns-meta" id="ns-meta"></div>
+        </div>
+        <div class="now">
+          <h2 class="label">Live call</h2>
+          <div class="now-box"><p id="now">…</p></div>
+          <div class="scroll transcript" id="transcript" style="max-height:34vh;margin-top:8px"></div>
+        </div>
+      </section>
+
+      <!-- model -->
+      <section class="col">
+        <h2 class="label">Your model · assumptions</h2>
+        <div class="scroll" id="assumptions"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="ear" id="ear">
+    <div class="wave"><i></i><i></i><i></i><i></i></div>
+    <span id="ear-txt"></span>
+  </div>
+
+  <div class="memo" id="memo">
+    <div class="memo-card">
+      <div class="mh">Call memo · auto-generated</div>
+      <h3>CAVA — expert call, former regional operator</h3>
+      <div style="margin-top:16px">
+        <div class="delta-row"><span class="k">New-unit AUV (2024 class)</span><span class="v"><span class="old">$2.6M</span><span class="new">$2.4M actual · ~18% yr-1</span></span></div>
+        <div class="delta-row"><span class="k">Comp quality</span><span class="v"><span class="old">traffic-led</span><span class="new">price-led · traffic flat</span></span></div>
+        <div class="delta-row"><span class="k">Fleet restaurant margin</span><span class="v"><span class="ok">~25% — confirmed</span></span></div>
+        <div class="delta-row"><span class="k">Unit runway / funding</span><span class="v"><span class="ok">self-funded — confirmed</span></span></div>
+        <div class="delta-row"><span class="k">Catering optionality</span><span class="v"><span class="ok">early, upside-only</span></span></div>
+      </div>
+      <div class="memo-foot">
+        <b>Net:</b> lower new-unit AUV to ~$2.4M, downgrade comp quality (price-led, not traffic-led),
+        re-test the premium multiple. <b>5 of 5 model-critical questions answered</b> — every line links to
+        the moment it was said. Time used: 16 of 60 minutes.
+      </div>
+    </div>
+  </div>
+
+  <button class="replay" id="replay">↻ Replay</button>
+  <div class="disclaimer">Synthetic demo — CAVA brand real; operator + numbers illustrative</div>
+
+<script>
+const QUESTIONS = [
+  {id:"q2", rank:"①", q:"What AUV is the 2024 class actually opening at, and year-one restaurant margin?", why:"Drives ~40% of unit-growth NPV · confidence LOW", hero:true},
+  {id:"q3", rank:"②", q:"Can fleet restaurant-level margin hold through wages, steak mix, new-unit drag?", why:"±300bps ≈ ±$0.40 EPS"},
+  {id:"q4", rank:"③", q:"Traffic vs price split in current comp — is traffic still positive?", why:"Premium multiple rides on comp quality"},
+  {id:"q1", rank:"④", q:"How signed is the FY26 unit-growth pipeline beyond 12 months?", why:"65 net-new must be real to compound"},
+  {id:"q5", rank:"⑤", q:"Loyalty relaunch + digital mix — what frequency lift are you seeing?", why:"SSS assumes +4% traffic, unverified"},
+  {id:"q7", rank:"⑥", q:"Catering rollout and any new-format / new-daypart economics?", why:"Free optionality — not in numbers"},
+];
+const ASSUMPTIONS = [
+  {id:"a-auv", note:"New-unit AUV $2.6M, ~20% yr-1 margin → ramps to ~25%", delta:"Operator: ~$2.4M, high-teens yr-1 — ~8% light"},
+  {id:"a-comp", note:"Comp is traffic-led: ~+5% traffic, ~+3% price/mix", delta:"Operator: price-led, double-digit price, traffic flat"},
+  {id:"a-marg", note:"Fleet restaurant-level margin ~25% holding", delta:""},
+  {id:"a-run", note:"~17% unit growth (~65 net new), signed pipeline", delta:""},
+  {id:"a-fund", note:"Self-funded from op cash flow; clean balance sheet", delta:""},
+];
+
+const $=s=>document.querySelector(s), el=(t,c)=>{const e=document.createElement(t);if(c)e.className=c;return e;};
+let DONE=0, timers=[];
+
+function buildCards(){
+  const root=$("#cards"); root.innerHTML="";
+  QUESTIONS.forEach(c=>{
+    const d=el("div","card"+(c.hero?" hero":"")); d.id="c-"+c.id;
+    d.innerHTML=`<div class="top"><span class="rank">${c.rank}</span><span class="chip open" id="chip-${c.id}">unasked</span></div>
+      <div class="q">${c.q}</div><div class="why">${c.why}</div>`;
+    root.appendChild(d);
+  });
+}
+function buildAssumptions(){
+  const root=$("#assumptions"); root.innerHTML="";
+  ASSUMPTIONS.forEach(a=>{
+    const d=el("div","assume"); d.id=a.id;
+    d.innerHTML=`<div><span class="aid">${a.id}</span><span class="tag">CHALLENGED</span></div>
+      <div class="note">${a.note}</div><div class="delta">→ ${a.delta}</div>`;
+    root.appendChild(d);
+  });
+}
+function setState(id,state){
+  const chip=$("#chip-"+id), card=$("#c-"+id);
+  if(!chip)return;
+  chip.className="chip "+(state==="answered"?"done":state==="partial"?"partial":"open");
+  chip.textContent=state==="answered"?"answered":state==="partial"?"partial":"unasked";
+  if(state==="answered"){card.classList.add("answered");card.classList.remove("hero");DONE++;$("#g-done").textContent=DONE;}
+  if(state==="pulse"){card.classList.add("pulse");}
+}
+function setNow(t){$("#now").textContent=t;}
+function addT(spk,text,you){
+  const p=el("p","t-line"+(you?" you":""));
+  p.innerHTML=`<span class="spk">${spk}</span>${text}`;
+  $("#transcript").appendChild(p);
+  $("#transcript").scrollTop=$("#transcript").scrollHeight;
+}
+function nextStep(kicker,body,meta,flag){
+  $("#nextstep").className="nextstep"+(flag?" flag":"");
+  $("#ns-kicker").innerHTML=(flag?"⚑ ":"● ")+kicker;
+  $("#ns-body").textContent=body;
+  $("#ns-meta").textContent=meta||"";
+}
+function challenge(id){const a=$("#"+id);if(a)a.classList.add("challenged");}
+function ear(html){const e=$("#ear");$("#ear-txt").innerHTML=html;e.classList.add("show");
+  timers.push(setTimeout(()=>e.classList.remove("show"),3600));}
+
+// clock: 52:00 -> ~36:00 over the run
+let clockT=52*60;
+function fmt(s){const m=Math.floor(s/60),x=Math.floor(s%60);return m+":"+String(x).padStart(2,"0");}
+let clockTimer;
+function runClock(){clockTimer=setInterval(()=>{clockT=Math.max(36*60,clockT-3.2);$("#clock-t").textContent=fmt(clockT);
+  if(clockT<=40*60)$("#clock").classList.add("warn");},100);}
+
+const at=(s,fn)=>timers.push(setTimeout(fn,s*1000));
+
+function play(){
+  // reset
+  timers.forEach(clearTimeout); clearInterval(clockTimer); timers=[]; DONE=0; clockT=52*60;
+  $("#g-done").textContent=0; $("#clock-t").textContent="52:00"; $("#clock").classList.remove("warn");
+  $("#transcript").innerHTML=""; $("#memo").classList.remove("show");
+  buildCards(); buildAssumptions();
+  nextStep("Brooks · standing by","Listening. Surfacing the question your model needs most.","");
+  setNow("…"); runClock();
+
+  // ---- the scene ----
+  at(0.3,()=>{setNow("So before specifics — what really sets this team apart is the culture in the kitchens, the throughput they've dialed in.");
+    addT("OP","…what sets this team apart is the culture in the kitchens.");});
+  at(3.2,()=>{setNow("And the menu innovation pipeline — the steak rollout's been a huge driver of buzz this year.");
+    addT("OP","The steak rollout's been a huge driver of buzz.");});
+
+  // the dodge
+  at(6.4,()=>{setNow("And honestly the new classes are opening strong — one of the best new-unit stories in the whole group.");
+    addT("OP","The new classes are opening strong — one of the best new-unit stories in the group.");});
+  at(8.0,()=>{ setState("q2","pulse");
+    nextStep("Ask this — he dodged the number","He glided past the AUV. Your model = $2.6M. Ask what the 2024 class is actually opening at, and its year-one margin.","grounds: Meridian note · new-unit economics");
+    ear('<b>Brooks:</b> He never gave the number — ask what the 2024 class is opening at.');});
+
+  // analyst forces it (live)
+  at(11.5,()=>{setNow("You: Let me pin that down — your model has $2.6M. What's the 2024 class actually opening at, and the year-one margin?");
+    addT("YOU","Let me pin that down — what's the 2024 class actually opening at?",true);});
+
+  // the real number — MAGIC
+  at(15,()=>{setNow("Fair. The 2024 class is opening a touch below — call it around $2.4M, not 2.6. Year-one margin's high-teens, ramping to low-twenties.");
+    addT("OP","Call it ~$2.4M, not 2.6 — year-one margin high-teens.");});
+  at(16.8,()=>{setState("q2","answered"); challenge("a-auv");
+    nextStep("Captured — model moved","New-unit AUV ~$2.4M vs $2.6M modeled (~8% light); yr-1 margin ~18% vs ~20%. Ramp shape intact.","✎ thesis delta logged");});
+
+  // contradiction
+  at(22,()=>{setNow("On the comp — most of this year's been price. They took double-digit menu price; traffic's been roughly flat.");
+    addT("OP","Most of the comp's been price — traffic roughly flat.");});
+  at(24,()=>{setState("q4","answered"); challenge("a-comp");
+    nextStep("Contradiction vs your note","Your note models traffic-led comp (+5% traffic). He just said price-led, traffic flat — that breaks the premium-multiple case.","",true);
+    ear('<b>Brooks:</b> Contradiction — your note says traffic-led, he said price-led.');});
+
+  // clean answers
+  at(29,()=>{setNow("Margins — fleet's holding around 24 to 25. Steak's accretive to check, pricing's covered the wage inflation.");
+    addT("OP","Fleet margin holding ~24–25%.");setState("q3","answered");});
+  at(33,()=>{setNow("Pipeline's effectively signed two years out as they push inland — build cadence is the only constraint.");
+    addT("OP","Pipeline signed ~2 years out.");setState("q1","answered");});
+  at(36.5,()=>{setNow("Loyalty relaunch is live, points-based — early frequency's encouraging. Digital's about a third of sales.");
+    addT("OP","Loyalty live; digital ~35%.");setState("q5","answered");});
+
+  // the nudge
+  at(40,()=>{nextStep("Don't hang up yet","1 model-critical question still open: catering / new-format optionality. ~36 min left — Brooks nudges before you lose the seat.","");
+    setState("q7","pulse");
+    ear('<b>Brooks:</b> Catering still uncovered — ask before you wrap.');});
+  at(43.5,()=>{setNow("You: Before we run out of time — catering, and any new formats?");
+    addT("YOU","Before we run out of time — catering and new formats?",true);});
+  at(46.5,()=>{setNow("Catering's an underrated layer, growing nicely. They're testing a smaller format and a breakfast daypart — not in numbers yet.");
+    addT("OP","Catering growing; testing smaller format + breakfast.");setState("q7","answered");
+    nextStep("All model-critical questions covered","Zero holes. Memo + model deltas ready.","");});
+
+  at(50.5,()=>{$("#memo").classList.add("show"); clearInterval(clockTimer);});
+}
+
+$("#replay").addEventListener("click",play);
+play();
+</script>
+</body>
+</html>

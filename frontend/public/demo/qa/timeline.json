@@ -1,0 +1,1374 @@
+{
+  "audio": "/demo/qa/qa.mp3",
+  "ticker": "AAPL",
+  "company": "Apple Inc.",
+  "minutesLeft": 6,
+  "askAnswer": "Cook said supply is gated by advanced-node chip availability, mainly iPhone, shifting to Mac in June. He did not give the magnitude.",
+  "source": "Apple Q2 FY26 earnings call Q&A \u2014 Eric Woodring (Morgan Stanley) to Tim Cook (real audio)",
+  "packets": [
+    {
+      "at": 0.0,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "just"
+      }
+    },
+    {
+      "at": 0.0,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL mid-supercycle: iPhone 17 demand outrunning supply. Pin where it's constrained, how big the gap is, and when it clears, before the hour runs out.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "iPhone or Mac constrained?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How big is the unmet demand?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q3",
+            "question": "Is June still constrained?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q4",
+            "question": "Gross margin trend?",
+            "pillar": "Margins",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q5",
+            "question": "Services and AI durable?",
+            "pillar": "Forward",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 5,
+          "partial": 0,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 0.12,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "to"
+      }
+    },
+    {
+      "at": 0.7,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "maybe"
+      }
+    },
+    {
+      "at": 0.96,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "contextualize"
+      }
+    },
+    {
+      "at": 1.88,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "the"
+      }
+    },
+    {
+      "at": 2.48,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "supply"
+      }
+    },
+    {
+      "at": 2.84,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "constraints"
+      }
+    },
+    {
+      "at": 3.24,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "you"
+      }
+    },
+    {
+      "at": 3.46,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "alluded"
+      }
+    },
+    {
+      "at": 3.64,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "to"
+      }
+    },
+    {
+      "at": 3.86,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "in"
+      }
+    },
+    {
+      "at": 4.0,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "your"
+      }
+    },
+    {
+      "at": 4.14,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "prepared"
+      }
+    },
+    {
+      "at": 4.54,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "remarks"
+      }
+    },
+    {
+      "at": 5.68,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "meaning"
+      }
+    },
+    {
+      "at": 6.08,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "you"
+      }
+    },
+    {
+      "at": 6.68,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "know"
+      }
+    },
+    {
+      "at": 6.68,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "how"
+      }
+    },
+    {
+      "at": 6.74,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "much"
+      }
+    },
+    {
+      "at": 6.9,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "did"
+      }
+    },
+    {
+      "at": 7.24,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "demand"
+      }
+    },
+    {
+      "at": 7.56,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "outpace"
+      }
+    },
+    {
+      "at": 8.0,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "supply"
+      }
+    },
+    {
+      "at": 8.38,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "for"
+      }
+    },
+    {
+      "at": 8.66,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "iPhone"
+      }
+    },
+    {
+      "at": 8.98,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "and"
+      }
+    },
+    {
+      "at": 9.48,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "Mac"
+      }
+    },
+    {
+      "at": 9.48,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "in"
+      }
+    },
+    {
+      "at": 9.66,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "the"
+      }
+    },
+    {
+      "at": 9.9,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "March"
+      }
+    },
+    {
+      "at": 10.0,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "quarter"
+      }
+    },
+    {
+      "at": 10.44,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "And"
+      }
+    },
+    {
+      "at": 10.64,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "does"
+      }
+    },
+    {
+      "at": 10.8,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "your"
+      }
+    },
+    {
+      "at": 11.06,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "June"
+      }
+    },
+    {
+      "at": 11.26,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "quarter"
+      }
+    },
+    {
+      "at": 11.54,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "guidance"
+      }
+    },
+    {
+      "at": 12.32,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "also"
+      }
+    },
+    {
+      "at": 12.88,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "reflect"
+      }
+    },
+    {
+      "at": 13.28,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "supply"
+      }
+    },
+    {
+      "at": 13.7,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "constraints"
+      }
+    },
+    {
+      "at": 13.98,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "for"
+      }
+    },
+    {
+      "at": 14.26,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "those"
+      }
+    },
+    {
+      "at": 14.54,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "segments"
+      }
+    },
+    {
+      "at": 15.04,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "or"
+      }
+    },
+    {
+      "at": 15.6,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "is"
+      }
+    },
+    {
+      "at": 15.92,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "that"
+      }
+    },
+    {
+      "at": 16.12,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "kind"
+      }
+    },
+    {
+      "at": 16.28,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "of"
+      }
+    },
+    {
+      "at": 16.32,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "an"
+      }
+    },
+    {
+      "at": 16.64,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "unconstrained"
+      }
+    },
+    {
+      "at": 17.4,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "guide"
+      }
+    },
+    {
+      "at": 18.1,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "as"
+      }
+    },
+    {
+      "at": 18.28,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "you"
+      }
+    },
+    {
+      "at": 18.48,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "see"
+      }
+    },
+    {
+      "at": 18.58,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "it"
+      }
+    },
+    {
+      "at": 18.78,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "today"
+      }
+    },
+    {
+      "at": 19.02,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "And"
+      }
+    },
+    {
+      "at": 19.4,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "then"
+      }
+    },
+    {
+      "at": 19.5,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "a"
+      }
+    },
+    {
+      "at": 19.64,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "quick"
+      }
+    },
+    {
+      "at": 19.76,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "follow"
+      }
+    },
+    {
+      "at": 20.0,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "up"
+      }
+    },
+    {
+      "at": 20.08,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "please"
+      }
+    },
+    {
+      "at": 20.28,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "thank"
+      }
+    },
+    {
+      "at": 20.46,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "you"
+      }
+    },
+    {
+      "at": 21.7,
+      "type": "transcript",
+      "data": {
+        "t": 1,
+        "speaker": "analyst",
+        "text": "just to maybe contextualize the supply constraints you alluded to in your prepared remarks meaning you know how much did demand outpace supply for iPhone and Mac in the March quarter And does your June quarter guidance also reflect supply constraints for those segments or is that kind of an unconstrained guide as you see it today And then a quick follow up please thank you Yeah hi"
+      }
+    },
+    {
+      "at": 21.7,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL mid-supercycle: iPhone 17 demand outrunning supply. Pin where it's constrained, how big the gap is, and when it clears, before the hour runs out.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "iPhone or Mac constrained?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How big is the unmet demand?",
+            "pillar": "Supply",
+            "state": "partial",
+            "facts": [
+              "Eric asked how big the unmet demand is, and whether June is still constrained"
+            ],
+            "contradictions": [],
+            "followup": "Not answered yet. Watch for a number, units or percent."
+          },
+          {
+            "id": "q3",
+            "question": "Is June still constrained?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q4",
+            "question": "Gross margin trend?",
+            "pillar": "Margins",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q5",
+            "question": "Services and AI durable?",
+            "pillar": "Forward",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 4,
+          "partial": 1,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 21.78,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "Yeah"
+      }
+    },
+    {
+      "at": 21.78,
+      "type": "word",
+      "data": {
+        "turn": 1,
+        "speaker": "analyst",
+        "w": "hi"
+      }
+    },
+    {
+      "at": 22.26,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "Eric"
+      }
+    },
+    {
+      "at": 22.5,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "thanks"
+      }
+    },
+    {
+      "at": 22.68,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "for"
+      }
+    },
+    {
+      "at": 22.84,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "your"
+      }
+    },
+    {
+      "at": 23.52,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "comments"
+      }
+    },
+    {
+      "at": 23.74,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "We"
+      }
+    },
+    {
+      "at": 24.3,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "were"
+      }
+    },
+    {
+      "at": 24.58,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "constrained"
+      }
+    },
+    {
+      "at": 25.1,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "during"
+      }
+    },
+    {
+      "at": 25.5,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "the"
+      }
+    },
+    {
+      "at": 26.0,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "March"
+      }
+    },
+    {
+      "at": 26.0,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "quarter"
+      }
+    },
+    {
+      "at": 26.0,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL mid-supercycle: iPhone 17 demand outrunning supply. Pin where it's constrained, how big the gap is, and when it clears, before the hour runs out.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "iPhone or Mac constrained?",
+            "pillar": "Supply",
+            "state": "partial",
+            "facts": [
+              "Constrained in the March quarter, mainly iPhone, less on Mac"
+            ],
+            "contradictions": [],
+            "followup": "Is it demand or supply? Get the root cause."
+          },
+          {
+            "id": "q2",
+            "question": "How big is the unmet demand?",
+            "pillar": "Supply",
+            "state": "partial",
+            "facts": [
+              "Eric asked how big the unmet demand is, and whether June is still constrained"
+            ],
+            "contradictions": [],
+            "followup": "Still no number. Push for units or percent."
+          },
+          {
+            "id": "q3",
+            "question": "Is June still constrained?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q4",
+            "question": "Gross margin trend?",
+            "pillar": "Margins",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q5",
+            "question": "Services and AI durable?",
+            "pillar": "Forward",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 3,
+          "partial": 2,
+          "answered": 0
+        }
+      }
+    },
+    {
+      "at": 27.34,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "And"
+      }
+    },
+    {
+      "at": 27.66,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "this"
+      }
+    },
+    {
+      "at": 27.94,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "was"
+      }
+    },
+    {
+      "at": 28.18,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "primarily"
+      }
+    },
+    {
+      "at": 28.74,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "on"
+      }
+    },
+    {
+      "at": 29.18,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "iPhone"
+      }
+    },
+    {
+      "at": 30.38,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "and"
+      }
+    },
+    {
+      "at": 31.02,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "to"
+      }
+    },
+    {
+      "at": 31.16,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "a"
+      }
+    },
+    {
+      "at": 31.5,
+      "type": "coverage_update",
+      "data": {
+        "company": "Apple Inc.",
+        "ticker": "AAPL",
+        "thesis": "AAPL mid-supercycle: iPhone 17 demand outrunning supply. Pin where it's constrained, how big the gap is, and when it clears, before the hour runs out.",
+        "questions": [
+          {
+            "id": "q1",
+            "question": "iPhone or Mac constrained?",
+            "pillar": "Supply",
+            "state": "answered",
+            "facts": [
+              "Constrained in the March quarter, mainly iPhone, less on Mac",
+              "Root cause is advanced-node chip supply for their SOCs"
+            ],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q2",
+            "question": "How big is the unmet demand?",
+            "pillar": "Supply",
+            "state": "partial",
+            "facts": [
+              "Eric asked how big the unmet demand is, and whether June is still constrained"
+            ],
+            "contradictions": [],
+            "followup": "Eric asked how big the gap is. Cook gave the where, not the how much. Push for units or percent."
+          },
+          {
+            "id": "q3",
+            "question": "Is June still constrained?",
+            "pillar": "Supply",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q4",
+            "question": "Gross margin trend?",
+            "pillar": "Margins",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          },
+          {
+            "id": "q5",
+            "question": "Services and AI durable?",
+            "pillar": "Forward",
+            "state": "unanswered",
+            "facts": [],
+            "contradictions": [],
+            "followup": null
+          }
+        ],
+        "counts": {
+          "unanswered": 3,
+          "partial": 1,
+          "answered": 1
+        }
+      }
+    },
+    {
+      "at": 31.5,
+      "type": "thesis_delta",
+      "data": {
+        "questionId": "q1",
+        "field": "Supply constraint",
+        "from": "Transient, demand led",
+        "to": "Structural, capped by chip supply",
+        "means": "Units are capped by advanced-node chip supply, not demand. Model the upside as supply gated."
+      }
+    },
+    {
+      "at": 31.6,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "lesser"
+      }
+    },
+    {
+      "at": 31.6,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "extent"
+      }
+    },
+    {
+      "at": 32.1,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "on"
+      }
+    },
+    {
+      "at": 32.3,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "the"
+      }
+    },
+    {
+      "at": 32.48,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "Mac"
+      }
+    },
+    {
+      "at": 33.7,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "And"
+      }
+    },
+    {
+      "at": 33.96,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "as"
+      }
+    },
+    {
+      "at": 34.18,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "we"
+      }
+    },
+    {
+      "at": 34.4,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "talked"
+      }
+    },
+    {
+      "at": 34.64,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "about"
+      }
+    },
+    {
+      "at": 34.86,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "in"
+      }
+    },
+    {
+      "at": 35.0,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "the"
+      }
+    },
+    {
+      "at": 35.16,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "last"
+      }
+    },
+    {
+      "at": 35.42,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "call"
+      }
+    },
+    {
+      "at": 35.98,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "the"
+      }
+    },
+    {
+      "at": 36.44,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "constraints"
+      }
+    },
+    {
+      "at": 36.7,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "were"
+      }
+    },
+    {
+      "at": 37.02,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "primarily"
+      }
+    },
+    {
+      "at": 37.62,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "driven"
+      }
+    },
+    {
+      "at": 37.94,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "by"
+      }
+    },
+    {
+      "at": 38.26,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "the"
+      }
+    },
+    {
+      "at": 38.44,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "availability"
+      }
+    },
+    {
+      "at": 38.88,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "of"
+      }
+    },
+    {
+      "at": 39.12,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "the"
+      }
+    },
+    {
+      "at": 39.32,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "advanced"
+      }
+    },
+    {
+      "at": 39.64,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "nodes"
+      }
+    },
+    {
+      "at": 39.98,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "our"
+      }
+    },
+    {
+      "at": 40.38,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "SOCs"
+      }
+    },
+    {
+      "at": 40.86,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "are"
+      }
+    },
+    {
+      "at": 41.12,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "produced"
+      }
+    },
+    {
+      "at": 41.46,
+      "type": "word",
+      "data": {
+        "turn": 2,
+        "speaker": "researcher",
+        "w": "on"
+      }
+    },
+    {
+      "at": 41.94,
+      "type": "transcript",
+      "data": {
+        "t": 2,
+        "speaker": "researcher",
+        "text": "Eric thanks for your comments We were constrained during the March quarter And this was primarily on iPhone and to a lesser extent on the Mac And as we talked about in the last call the constraints were primarily driven by the availability of the advanced nodes our SOCs are produced on"
+      }
+    }
+  ]
+}

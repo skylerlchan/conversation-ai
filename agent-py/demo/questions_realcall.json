@@ -1,0 +1,48 @@
+{
+  "company": "Apple Inc.",
+  "ticker": "AAPL",
+  "source": "Buy-side diligence questions for the REAL Apple Q2 FY26 call opening (~1 min). complete_when criteria match what Cook actually states in the opening, so the engine grades real answers as the audio plays.",
+  "thesis": "AAPL prints a record March quarter: revenue $111.2B (+17%) above guidance despite supply constraints, an iPhone March-quarter record on 22% growth, an all-time Services record (+16%), and EPS of $2.01 (+22%) — with double-digit growth in every geography including strong Greater China and India.",
+  "questions": [
+    {
+      "id": "q1",
+      "pillar": "Hardware cycle and demand breadth: iPhone strength against a supply-constrained backdrop, broad across geographies",
+      "question": "How strong was iPhone, and how broad was demand across geographies given the supply constraints?",
+      "complete_when": [
+        "Quantifies iPhone revenue growth and the March-quarter record",
+        "Notes the supply-constraint backdrop",
+        "Cites geographic breadth (for example Greater China and India)"
+      ],
+      "expected": {
+        "note_models": "iPhone +22% to a March-quarter record; total revenue $111.2B (+17%) above guidance despite supply constraints; double-digit growth in every geography with strong Greater China and India",
+        "our_view": "Demand is broad and outrunning supply, with China strong and India a runway"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q2",
+      "pillar": "Profitability: record top line and earnings",
+      "question": "How strong was profitability this quarter — revenue and EPS?",
+      "complete_when": [
+        "States total revenue growth and that it set a March-quarter record",
+        "Cites EPS and its year-over-year growth"
+      ],
+      "expected": {
+        "note_models": "Revenue $111.2B, up 17%, a March-quarter record above guidance; diluted EPS $2.01, up 22%, a March-quarter record",
+        "our_view": "Record top and bottom line, ahead of guidance"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q3",
+      "pillar": "Services momentum: the high-margin compounder",
+      "question": "Did Services keep compounding this quarter?",
+      "complete_when": ["States Services growth and that it set an all-time record"],
+      "expected": {
+        "note_models": "Services an all-time revenue record, growing 16% year over year",
+        "our_view": "Services remains the durable high-margin compounder"
+      },
+      "state": "unanswered"
+    }
+  ]
+}

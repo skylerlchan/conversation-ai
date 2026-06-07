@@ -9,6 +9,8 @@ export interface ConsoleQuestion {
   id: string;
   text: string;
   pillar?: string;
+  /** Facts the copilot extracted that answer this question (shown once covered). */
+  facts?: string[];
 }
 
 export interface ConsoleFollowup {
@@ -212,7 +214,7 @@ export function liveModel(args: {
       exchange: '',
     },
     callKind: args.callKind ?? 'Diligence call · live',
-    questions: cards.map((c) => ({ id: c.id, text: c.question, pillar: c.pillar })),
+    questions: cards.map((c) => ({ id: c.id, text: c.question, pillar: c.pillar, facts: c.facts })),
     coverage: coverageMap,
     activeFollowups,
     flags,

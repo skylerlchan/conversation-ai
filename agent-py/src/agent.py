@@ -125,6 +125,12 @@ class DiligenceListener(Agent):
         # consumed when the turn finalizes). See SpeakerRoles + on_enter.
         self._speaker_roles = SpeakerRoles()
         self._current_turn_speaker_id: str | None = None
+        # Streaming STT emits very short final segments; buffer them per speaker
+        # and commit a turn after a brief pause (debounce), so the transcript and
+        # scoring see whole utterances instead of 2-3 word shards.
+        self._buf: list[str] = []
+        self._buf_speaker: str | None = None
+        self._flush_task: asyncio.Task | None = None
         # The coverage engine's dedicated LLM (out-of-band; never speaks). When
         # None — e.g. unit tests that only check silence — per-turn scoring is
         # skipped. `_tasks` retains in-flight scoring tasks so they aren't GC'd.
@@ -156,47 +162,77 @@ class DiligenceListener(Agent):
             except Exception:
                 logger.exception("Failed to preload Moss indexes; will retry on use")
 
-    def _on_user_input_transcribed(self, ev) -> None:
-        """Remember the diarized speaker of the in-progress turn.
+    # Commit a buffered turn after this much silence (no new STT segment).
+    _FLUSH_GAP_S = 1.3
 
-        The final transcript's speaker id wins (a turn is usually one speaker);
-        it is consumed and cleared when the turn finalizes in
-        ``on_user_turn_completed``. No-op when diarization is off (speaker_id is
-        None), leaving the safe "researcher" default in place.
+    def _on_user_input_transcribed(self, ev) -> None:
+        """Drive the live transcript + coverage straight from STT events.
+
+        Streaming STT emits short final segments, so we accumulate them per speaker
+        and commit a whole turn after a brief pause (``_FLUSH_GAP_S``). On every
+        event we publish the growing buffer as ``interim_transcript`` so text
+        appears live as the person speaks; the committed turn is what gets scored.
+
+        Speaker labeling: diarization tags each event with a speaker id mapped to a
+        role (first speaker = analyst, the rest = researcher; unknown = researcher).
+        A speaker change flushes the current buffer so turns never mix voices.
         """
-        speaker_id = getattr(ev, "speaker_id", None)
-        if getattr(ev, "is_final", False) and speaker_id is not None:
-            self._current_turn_speaker_id = speaker_id
+        text = (getattr(ev, "transcript", "") or "").strip()
+        if not text:
+            return
+        speaker = self._speaker_roles.role_for(getattr(ev, "speaker_id", None))
+        is_final = getattr(ev, "is_final", False)
+
+        # A new voice ends the previous speaker's turn.
+        if self._buf and speaker != self._buf_speaker:
+            self._commit_buffer()
+
+        if is_final:
+            self._buf.append(text)
+            self._buf_speaker = speaker
+
+        # Stream the live utterance: committed-so-far buffer plus the in-flight partial.
+        live = " ".join(self._buf + ([] if is_final else [text])).strip()
+        if live:
+            self._spawn(self._publish("interim_transcript", {"speaker": speaker, "text": live}))
+
+        # Debounce: commit the buffer once the speaker pauses.
+        if self._flush_task is not None:
+            self._flush_task.cancel()
+        self._flush_task = asyncio.create_task(self._flush_after(self._FLUSH_GAP_S))
+
+    async def _flush_after(self, delay: float) -> None:
+        try:
+            await asyncio.sleep(delay)
+        except asyncio.CancelledError:
+            return
+        self._commit_buffer()
+
+    def _commit_buffer(self) -> None:
+        """Commit the buffered segments as one turn: surface it and score it."""
+        if not self._buf:
+            return
+        text = " ".join(self._buf).strip()
+        speaker = self._buf_speaker or "researcher"
+        self._buf = []
+        self._buf_speaker = None
+        if not text:
+            return
+        self._turns.append(text)
+        turn_index = len(self._turns)
+        logger.info("turn (%d, %s): %s", turn_index, speaker, text)
+        self._spawn(self.publish_transcript(turn_index, speaker, text))
+        if self._verdict_llm is not None:
+            self._spawn(self._score_turn(text))
 
     async def on_user_turn_completed(self, turn_ctx, new_message) -> None:
-        """Consume each finalized turn — and never reply.
+        """Never reply — the copilot is a silent listener.
 
-        Records the turn, labels the speaker (analyst vs researcher) from
-        diarization, publishes it to the console transcript, scores coverage in
-        the background, then raises `StopResponse` so the agent produces no spoken
-        reply. This node runs before reply generation, so raising here keeps the
-        copilot silent even if an LLM is ever attached to the session.
-
-        Speaker labeling: the STT runs with diarization on, so each turn carries a
-        speaker id we map to a role via `SpeakerRoles` (first speaker = analyst,
-        the rest = researcher; unknown = researcher). The label drives the
-        transcript display only — coverage is still scored on every turn, so a
-        mislabel never drops a real researcher answer. The grading engine only
-        advances a question on a satisfying answer, so an analyst re-asking can't
-        false-advance it either.
+        Transcript + scoring are driven by ``_on_user_input_transcribed`` (the full
+        STT text). This node only guarantees silence: raising ``StopResponse``
+        before reply generation keeps the copilot silent even if an LLM is ever
+        attached to the session.
         """
-        text = (new_message.text_content or "").strip()
-        if text:
-            self._turns.append(text)
-            speaker = self._speaker_roles.role_for(self._current_turn_speaker_id)
-            self._current_turn_speaker_id = None
-            logger.info("turn (%d, %s): %s", len(self._turns), speaker, text)
-            # Surface the turn to the console immediately, before scoring.
-            await self.publish_transcript(len(self._turns), speaker, text)
-            # Score coverage in the background so the turn pipeline stays fast
-            # (no one waits on the AI — it never speaks).
-            if self._verdict_llm is not None:
-                self._spawn(self._score_turn(text))
         raise StopResponse()
 
     def _spawn(self, coro) -> None:
@@ -356,6 +392,14 @@ async def my_agent(ctx: JobContext):
     listener = DiligenceListener(
         room=ctx.room, user_id=user_id, verdict_llm=verdict_llm
     )
+    # Which participant's audio to transcribe. With a receive-only viewer (the
+    # console) also in the room, auto-link would attach to whoever joined first.
+    # DILIGENCE_SPEAKER_IDENTITY pins STT to the call-audio participant (e.g. the
+    # recording driver, identity "researcher"); unset = link to the first speaker.
+    speaker_identity = os.getenv("DILIGENCE_SPEAKER_IDENTITY")
+    room_opts: dict = {}
+    if speaker_identity:
+        room_opts["participant_identity"] = speaker_identity
     await session.start(
         agent=listener,
         room=ctx.room,
@@ -367,6 +411,7 @@ async def my_agent(ctx: JobContext):
             ),
             # The copilot never publishes audio — it is silent on the call.
             audio_output=False,
+            **room_opts,
         ),
     )
 

@@ -1,0 +1,61 @@
+{
+  "_note": "Grounding corpus the copilot retrieves from Moss mid-call for the Apple FY2025 Q4 demo. Two kinds of chunks: REAL (figures quoted verbatim from Apple earnings-call transcripts pulled via FMP — these are the 'receipts' the copilot cites when it flags management's framing) and MODEL (the fund's own variant view — realistic but synthetic, the 'note'). The China receipt (real-china-trajectory) is the spine of the hero moment: a 'September quarter record in Greater China' that was actually down 4% YoY.",
+  "chunks": [
+    {
+      "id": "real-china-trajectory",
+      "source": "earnings_transcripts",
+      "source_label": "Apple earnings calls (FMP) — Greater China revenue YoY",
+      "grounds_question": "q1",
+      "kind": "real",
+      "text": "Greater China revenue, year-over-year, from Apple's own quarterly calls: FY25Q1 (Dec'24) DOWN 11%; FY25Q2 (Mar'25) DOWN 2%; FY25Q3 (Jun'25) UP 4%; FY25Q4 (Sep'25) DOWN 4%. The Sep'25 quarter reverted to decline after a single positive quarter."
+    },
+    {
+      "id": "real-china-thiscall",
+      "source": "FY25Q4_transcript",
+      "source_label": "Apple FY2025 Q4 call, 2025-10-30 (FMP)",
+      "grounds_question": "q1",
+      "kind": "real",
+      "text": "Within this same call: CFO Kevan Parekh, opening remarks — 'We achieved all-time revenue records in the Americas, Europe, Japan and rest of Asia Pacific as well as a September quarter record in Greater China.' CEO Tim Cook, in Q&A — 'The Greater China revenue was down 4% year-over-year in the September quarter.' Analyst Amit Daryanani (Evercore) — 'the performance in China, at least in September quarter, was a bit muted.' Analyst Samik Chatterjee (JPMorgan) — 'you talked about the strong momentum you're seeing in China, which is also driving your confidence for the December quarter.'"
+    },
+    {
+      "id": "model-china",
+      "source": "fund_model",
+      "source_label": "Our model — the note (variant view)",
+      "grounds_question": "q1",
+      "kind": "model",
+      "text": "We model Greater China inflecting to low-single-digit YoY GROWTH in FY26 after the FY25 decline, and that inflection is baked into the December 'best quarter ever' guide. China is ~15% of revenue and our single biggest variance driver. A 'record' qualifier that masks a YoY decline is a quality flag — management's momentum language must reconcile to the segment number."
+    },
+    {
+      "id": "real-iphone-services",
+      "source": "FY25Q4_transcript",
+      "source_label": "Apple FY2025 Q4 call, 2025-10-30 (FMP)",
+      "grounds_question": "q2",
+      "kind": "real",
+      "text": "FY25Q4 actuals (Kevan Parekh): iPhone revenue $49B, up 6% YoY, driven by the iPhone 16 family; September-quarter record for iPhone upgraders; installed base at an all-time high. Services revenue $28.8B, up 15% YoY, an all-time record (Services gross margin 75.3%). Company gross margin 47.2%, above the high end of guidance. Diluted EPS $1.85, up 13% YoY adjusted. December guide: total revenue +10-12% YoY, iPhone revenue 'to grow double digits year-over-year… our best iPhone quarter ever,' Services growth 'similar to' FY25 (~14%), gross margin 47-48% including ~$1.4B of tariff-related costs (up from ~$1.1B in the September quarter)."
+    },
+    {
+      "id": "model-iphone",
+      "source": "fund_model",
+      "source_label": "Our model — the note (variant view)",
+      "grounds_question": "q2",
+      "kind": "model",
+      "text": "We model iPhone returning to double-digit YoY growth in the December quarter on the iPhone 17 cycle, with record upgraders, and treat Apple Intelligence as a multi-year upgrade catalyst. The re-rating rests on iPhone re-accelerating on units/upgraders, not channel fill or price."
+    },
+    {
+      "id": "model-services",
+      "source": "fund_model",
+      "source_label": "Our model — the note (variant view)",
+      "grounds_question": "q3",
+      "kind": "model",
+      "text": "We model Services ~13-14% YoY at ~75% gross margin and haircut for regulatory risk to the ~$20B Google traffic-acquisition payment. Services is the margin engine and the multiple support; the Google-payment risk is the watch item, not the growth rate. (On the call, BofA's Wamsi Mohan probed 'the sustainability of these very strong mid-teens growth rates.')"
+    },
+    {
+      "id": "model-margin",
+      "source": "fund_model",
+      "source_label": "Our model — the note (variant view)",
+      "grounds_question": "q4",
+      "kind": "model",
+      "text": "We model company gross margin holding ~47%, with the tariff drag (~$1.1-1.5B/qtr) absorbed by favorable mix and Services. Every ~100bps of gross margin is ~$0.10 of EPS. A tariff step-up that mix can't offset compresses EPS below the December guide."
+    }
+  ]
+}

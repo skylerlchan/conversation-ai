@@ -1,0 +1,102 @@
+{
+  "company": "Apple Inc.",
+  "ticker": "AAPL",
+  "source": "Analyst pre-call question list for Apple's FY2025 Q4 earnings call (Sep quarter, reported 2025-10-30). The `expected.note_models` values are the fund's own model — the variant view the copilot grounds management's claims against. The `expected.receipt` values are REAL prior-call / same-call figures pulled from Apple earnings transcripts (FMP) and are what the copilot cites when it flags the spin.",
+  "thesis": "Apple is an installed-base compounder (~2.4B active devices): Services compounding mid-teens at ~75% gross margin, with the iPhone 17 + Apple Intelligence cycle re-accelerating hardware. The bet is that Greater China inflects back to growth, iPhone re-accelerates into the December 'best ever' guide, Services holds ~14%, and company gross margin holds ~47% as tariff costs step up. China is the swing factor on the whole December guide.",
+  "questions": [
+    {
+      "id": "q1",
+      "pillar": "Greater China inflects back to growth",
+      "question": "Is Greater China actually returning to growth, or is a 'record' framing masking another year-over-year decline?",
+      "complete_when": [
+        "a year-over-year direction or number for Greater China revenue (not just a 'record' qualifier)",
+        "whether the December guide assumes China growth"
+      ],
+      "expected": {
+        "note_models": "We model Greater China inflecting to low-single-digit YoY GROWTH in FY26 after the FY25 decline; China growth is baked into the December 'best quarter ever' guide.",
+        "our_view": "China is ~15% of revenue and the single biggest variance driver. We will not accept a 'record' qualifier in place of the YoY number — momentum language must reconcile to the segment number.",
+        "watch": "A 'September quarter record in Greater China' framing that actually hides a YoY DECLINE is a quality flag, not a positive.",
+        "receipt": "REAL Greater China YoY trajectory from Apple's own calls: FY25Q1 (Dec'24) -11%; FY25Q2 (Mar'25) -2%; FY25Q3 (Jun'25) +4%; FY25Q4 (Sep'25) -4%. On THIS call: CFO Kevan Parekh opens with 'a September quarter record in Greater China'; CEO Tim Cook later concedes 'Greater China revenue was down 4% year-over-year.' Analyst Amit Daryanani (Evercore) pushed back live that China was 'a bit muted.'",
+        "model_weight": "high",
+        "confidence": "low",
+        "why_it_matters": "~15% of revenue and the swing factor behind the December 'best quarter ever' guide — effectively a quarter of NPV rides on whether China is really inflecting."
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q2",
+      "pillar": "iPhone re-acceleration & the AI cycle",
+      "question": "Is the iPhone 17 + Apple Intelligence cycle actually driving an upgrade super-cycle behind the 'best iPhone quarter ever' December guide?",
+      "complete_when": [
+        "an iPhone revenue growth figure plus a read on upgraders/switchers",
+        "whether Apple Intelligence is cited as a real demand driver"
+      ],
+      "expected": {
+        "note_models": "We model iPhone returning to double-digit YoY growth in the December quarter on the iPhone 17 cycle, with record upgraders; AI as a multi-year upgrade catalyst.",
+        "our_view": "The entire re-rating rests on iPhone re-accelerating. 'Strong demand' is not enough — we need the growth driver to be units/upgraders, not channel fill or price.",
+        "watch": "If December strength is compare-driven or price/mix rather than upgraders, the AI super-cycle is weaker than underwritten.",
+        "receipt": "REAL FY25Q4 actuals: iPhone revenue $49B, +6% YoY (iPhone 16 family); September-quarter record for upgraders; installed base at an all-time high. December guide: iPhone revenue to 'grow double digits year-over-year… our best iPhone quarter ever' (Kevan Parekh). On the 17 cycle Cook cited 'traffic up significantly year-over-year.'",
+        "model_weight": "high",
+        "confidence": "medium",
+        "why_it_matters": "iPhone is ~half of revenue; the December double-digit guide is the spine of the bull case."
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q3",
+      "pillar": "Services durability & regulatory exposure",
+      "question": "Can Services sustain mid-teens growth, and what is the exposure to the Google/Alphabet payment and App Store regulation?",
+      "complete_when": [
+        "a Services growth rate or revenue figure",
+        "a read on regulatory exposure (Google TAC / App Store)"
+      ],
+      "expected": {
+        "note_models": "We model Services ~13-14% YoY at ~75% gross margin, and we haircut for regulatory risk to the ~$20B Google traffic-acquisition payment.",
+        "our_view": "Services is the margin engine and the multiple support. Mix and the Google-payment risk are the watch items, not the growth rate itself.",
+        "watch": "Mid-teens decelerating, or an adverse ruling on the Google payment, re-rates the Services multiple.",
+        "receipt": "REAL FY25Q4 actuals: Services revenue $28.8B, +15% YoY (all-time record), ~75.3% gross margin; full-year Services >$100B, +14%. December guide: Services to grow 'at a year-over-year rate similar to' FY25 (~14%). Analyst Wamsi Mohan (BofA) questioned the 'sustainability of these very strong mid-teens growth rates.'",
+        "model_weight": "high",
+        "confidence": "medium",
+        "why_it_matters": "Services is ~28% of revenue at ~75% gross margin — the profit and multiple driver."
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q4",
+      "pillar": "Gross margin durability vs tariffs",
+      "question": "Can company gross margin hold ~47% as tariff costs step up?",
+      "complete_when": [
+        "a gross-margin figure or guide",
+        "the tariff cost impact / direction"
+      ],
+      "expected": {
+        "note_models": "We model company gross margin holding ~47%, with the tariff drag (~$1.1-1.5B/qtr) absorbed by favorable mix and Services.",
+        "our_view": "Gross-margin durability underwrites the EPS algorithm; every ~100bps of GM is ~$0.10 of EPS.",
+        "watch": "A tariff step-up that mix can't offset compresses EPS below the guide.",
+        "receipt": "REAL FY25Q4 actuals: company gross margin 47.2% (above the high end of the guide), +70bps sequentially; products GM 36.2%, Services GM 75.3%; diluted EPS $1.85, +13% YoY adj. December guide: GM 47-48%, including an estimated $1.4B of tariff-related costs (up from ~$1.1B in the September quarter).",
+        "model_weight": "medium",
+        "confidence": "medium",
+        "why_it_matters": "Every ~100bps of gross margin is ~$0.10 of EPS — the buffer that protects the December guide."
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q5",
+      "pillar": "Capital return",
+      "question": "What is the buyback pace and capital-return appetite from here?",
+      "complete_when": [
+        "a read on buyback pace or capital-return priorities"
+      ],
+      "expected": {
+        "note_models": "We model ~$90-100B/yr of buyback continuing, with the long-run net-cash-neutral target intact.",
+        "our_view": "Buyback is a few points of the annual EPS-growth algorithm — secondary to China and iPhone, but it backstops EPS.",
+        "watch": "A slowdown in buyback pace changes the EPS bridge.",
+        "receipt": "REAL context: Apple returned ~$100B+ to shareholders over FY25; net income $27.5B in the September quarter; FY25 total revenue $416B.",
+        "model_weight": "low",
+        "confidence": "high",
+        "why_it_matters": "Buyback contributes a few points of annual EPS growth — the backstop, not the thesis."
+      },
+      "state": "unanswered"
+    }
+  ]
+}
