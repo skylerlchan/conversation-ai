@@ -66,7 +66,7 @@ function Waveform({ active }: { active: boolean }) {
 
 // ---- Command bar ----
 
-function CommandBar({
+export function CommandBar({
   ticker,
   company,
   exchange,
@@ -228,7 +228,7 @@ function QuestionRow({
 
 // ---- Coverage board: missed (top) + completed (bottom) ----
 
-function CoverageBoard({
+export function CoverageBoard({
   questions,
   pillarOf,
   coverage,
@@ -305,7 +305,7 @@ function CoverageBoard({
 
 // ---- The single next actionable step (center focus) ----
 
-function NextStep({
+export function NextStep({
   followup,
   nextMissed,
   pillar,
