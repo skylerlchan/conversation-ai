@@ -52,7 +52,9 @@ export function Launcher() {
   }, []);
 
   function launch(symbol: string) {
-    router.push(`/console?symbol=${encodeURIComponent(symbol)}`);
+    // The live console connects to the LiveKit room and renders off the agent's
+    // packets. The scripted replay (no backend needed) stays at /console.
+    router.push(`/console/live?symbol=${encodeURIComponent(symbol)}`);
   }
 
   return (

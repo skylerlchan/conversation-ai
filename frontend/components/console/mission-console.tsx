@@ -12,9 +12,19 @@ import {
   PauseIcon,
   PlayIcon,
 } from '@phosphor-icons/react/dist/ssr';
-import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
+import {
+  type ConsoleFlag,
+  type ConsoleFollowup,
+  type ConsoleModel,
+  type ConsoleQuestion,
+  type ConsoleTurn,
+  fixtureModel,
+  nextMissed as nextMissedOf,
+  pillarOf as pillarOfModel,
+} from '@/lib/console-model';
 import { callFixture, questionsFixture } from '@/lib/demo';
 import type { CoverageState } from '@/lib/demo/types';
+import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
 import { cn } from '@/lib/shadcn/utils';
 
 const STATE: Record<CoverageState, { label: string; dot: string; glow: string; text: string }> = {
@@ -32,8 +42,6 @@ const STATE: Record<CoverageState, { label: string; dot: string; glow: string; t
   },
   unanswered: { label: 'OPEN', dot: 'bg-zinc-600', glow: '', text: 'text-zinc-500' },
 };
-
-type Question = (typeof questionsFixture.questions)[number];
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
@@ -84,7 +92,7 @@ function CommandBar({
   live: boolean;
 }) {
   const open = total - answered;
-  const pct = (answered / total) * 100;
+  const pct = total > 0 ? (answered / total) * 100 : 0;
   return (
     <header className="flex items-center gap-4 border-b border-white/[0.06] px-5 py-3">
       <div className="flex items-center gap-2">
@@ -139,11 +147,11 @@ function QuestionRow({
   flag,
   compact = false,
 }: {
-  q: Question;
+  q: ConsoleQuestion;
   state: CoverageState;
   pillar?: string;
-  followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
-  flag?: ReturnType<typeof useDiligenceDemo>['flags'][number];
+  followup?: ConsoleFollowup;
+  flag?: ConsoleFlag;
   compact?: boolean;
 }) {
   const meta = STATE[state];
@@ -235,11 +243,11 @@ function CoverageBoard({
   followups,
   flags,
 }: {
-  questions: Question[];
+  questions: ConsoleQuestion[];
   pillarOf: Record<string, string>;
   coverage: Record<string, CoverageState>;
-  followups: ReturnType<typeof useDiligenceDemo>['activeFollowups'];
-  flags: ReturnType<typeof useDiligenceDemo>['flags'];
+  followups: ConsoleFollowup[];
+  flags: ConsoleFlag[];
 }) {
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
@@ -311,8 +319,8 @@ function NextStep({
   pillar,
   allCovered,
 }: {
-  followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
-  nextMissed?: Question;
+  followup?: ConsoleFollowup;
+  nextMissed?: ConsoleQuestion;
   pillar?: string;
   allCovered: boolean;
 }) {
@@ -393,7 +401,7 @@ function LiveCall({
   open,
   onToggle,
 }: {
-  transcript: ReturnType<typeof useDiligenceDemo>['transcript'];
+  transcript: ConsoleTurn[];
   playing: boolean;
   open: boolean;
   onToggle: () => void;
@@ -431,7 +439,7 @@ function LiveCall({
             <div className="mt-2 flex min-h-0 flex-col gap-2">
               <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
                 <p className="text-[15px] leading-relaxed text-zinc-100">
-                  {latest ? latest.text : 'Press play to start the call.'}
+                  {latest ? latest.text : 'Waiting for the call to start.'}
                 </p>
               </div>
               <div className="max-h-[34vh] space-y-2 overflow-y-auto pr-1">
@@ -478,22 +486,32 @@ function LiveCall({
   );
 }
 
-// ---- Transport ----
+// ---- Transport (fixture replay only) ----
 
-function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
+export interface TransportControls {
+  cursor: number;
+  playing: boolean;
+  done: boolean;
+  back: () => void;
+  toggle: () => void;
+  step: () => void;
+  restart: () => void;
+}
+
+function Transport({ t }: { t: TransportControls }) {
   return (
     <footer className="flex items-center justify-center gap-4 border-t border-white/[0.06] px-5 py-2.5">
       <button
-        onClick={state.controls.back}
-        disabled={state.cursor === 0}
+        onClick={t.back}
+        disabled={t.cursor === 0}
         className="text-zinc-400 hover:text-white disabled:opacity-30"
         aria-label="Back"
       >
         <CaretLeftIcon weight="bold" className="size-4" />
       </button>
-      {state.done ? (
+      {t.done ? (
         <button
-          onClick={state.controls.restart}
+          onClick={t.restart}
           className="flex size-9 items-center justify-center rounded-full bg-emerald-400 text-black"
           aria-label="Restart"
         >
@@ -501,11 +519,11 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
         </button>
       ) : (
         <button
-          onClick={state.controls.toggle}
+          onClick={t.toggle}
           className="flex size-9 items-center justify-center rounded-full bg-white text-black hover:bg-zinc-200"
-          aria-label={state.playing ? 'Pause' : 'Play'}
+          aria-label={t.playing ? 'Pause' : 'Play'}
         >
-          {state.playing ? (
+          {t.playing ? (
             <PauseIcon weight="fill" className="size-4" />
           ) : (
             <PlayIcon weight="fill" className="size-4" />
@@ -513,8 +531,8 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
         </button>
       )}
       <button
-        onClick={state.controls.step}
-        disabled={state.done}
+        onClick={t.step}
+        disabled={t.done}
         className="text-zinc-400 hover:text-white disabled:opacity-30"
         aria-label="Step"
       >
@@ -524,34 +542,22 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
   );
 }
 
-// ---- Main ----
+// ---- Presentational console: one UI, driven by a ConsoleModel ----
 
-export function MissionConsole() {
-  const state = useDiligenceDemo(questionsFixture, callFixture);
-  const { company } = questionsFixture;
-  const { tally } = state;
-  const allCovered = state.done && tally.answered === tally.total;
+export function MissionConsoleView({
+  model,
+  transport,
+}: {
+  model: ConsoleModel;
+  /** When present, renders the replay transport (fixture mode). */
+  transport?: TransportControls;
+}) {
   const [callOpen, setCallOpen] = useState(true);
 
-  const pillarOf: Record<string, string> = {};
-  for (const p of questionsFixture.pillars) {
-    for (const qid of p.questions) pillarOf[qid] = p.thesis;
-  }
-
-  const followup = state.activeFollowups[0];
-  const nextMissed = questionsFixture.questions.find(
-    (q) => (state.coverage[q.id] ?? 'unanswered') === 'unanswered'
-  );
-
-  const { play, restart } = state.controls;
-  useEffect(() => {
-    play();
-  }, [play]);
-  useEffect(() => {
-    if (!state.done) return;
-    const id = setTimeout(() => restart(), 7000);
-    return () => clearTimeout(id);
-  }, [state.done, restart]);
+  const allCovered = model.done && model.tally.answered === model.tally.total && model.tally.total > 0;
+  const pillar = pillarOfModel(model);
+  const followup = model.activeFollowups[0];
+  const next = nextMissedOf(model);
 
   return (
     <div className="relative flex h-svh flex-col overflow-hidden bg-[#0a0b0f] text-zinc-200">
@@ -567,42 +573,74 @@ export function MissionConsole() {
 
       <div className="relative flex min-h-0 flex-1 flex-col">
         <CommandBar
-          ticker={company.ticker}
-          company={company.name.replace(', Inc.', '')}
-          exchange={company.exchange}
-          callKind="Diligence call · sell-side"
-          answered={tally.answered}
-          total={tally.total}
-          live={!state.done}
+          ticker={model.company.ticker}
+          company={model.company.name}
+          exchange={model.company.exchange}
+          callKind={model.callKind}
+          answered={model.tally.answered}
+          total={model.tally.total}
+          live={model.live}
         />
 
         <main className="grid min-h-0 flex-1 grid-cols-1 gap-5 p-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
           <CoverageBoard
-            questions={questionsFixture.questions}
-            pillarOf={pillarOf}
-            coverage={state.coverage}
-            followups={state.activeFollowups}
-            flags={state.flags}
+            questions={model.questions}
+            pillarOf={pillar}
+            coverage={model.coverage}
+            followups={model.activeFollowups}
+            flags={model.flags}
           />
 
           <section className="flex min-h-0 flex-col gap-4">
             <NextStep
               followup={followup}
-              nextMissed={nextMissed}
-              pillar={nextMissed ? pillarOf[nextMissed.id] : undefined}
+              nextMissed={next}
+              pillar={next ? pillar[next.id] : undefined}
               allCovered={allCovered}
             />
             <LiveCall
-              transcript={state.transcript}
-              playing={state.playing}
+              transcript={model.transcript}
+              playing={model.playing}
               open={callOpen}
               onToggle={() => setCallOpen((o) => !o)}
             />
           </section>
         </main>
 
-        <Transport state={state} />
+        {transport && <Transport t={transport} />}
       </div>
     </div>
+  );
+}
+
+// ---- Fixture container: the scripted CAVA/CMG replay (the /console demo) ----
+
+export function MissionConsole() {
+  const state = useDiligenceDemo(questionsFixture, callFixture);
+  const model = fixtureModel(state, questionsFixture);
+
+  const { play, restart } = state.controls;
+  useEffect(() => {
+    play();
+  }, [play]);
+  useEffect(() => {
+    if (!state.done) return;
+    const id = setTimeout(() => restart(), 7000);
+    return () => clearTimeout(id);
+  }, [state.done, restart]);
+
+  return (
+    <MissionConsoleView
+      model={model}
+      transport={{
+        cursor: state.cursor,
+        playing: state.playing,
+        done: state.done,
+        back: state.controls.back,
+        toggle: state.controls.toggle,
+        step: state.controls.step,
+        restart: state.controls.restart,
+      }}
+    />
   );
 }

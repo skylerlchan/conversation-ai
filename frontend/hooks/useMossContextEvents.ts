@@ -25,7 +25,10 @@ function parsePayload(payload: Uint8Array): MossContextEvent | null {
   try {
     const raw = textDecoder.decode(payload);
     const message = JSON.parse(raw);
-    if (!message || message.type !== 'moss_context' || typeof message.data !== 'object') {
+    // The live agent publishes `grounding`; the older starter used `moss_context`.
+    // Accept both so the /voice "Knowledge Matches" panel works either way.
+    const isContext = message?.type === 'grounding' || message?.type === 'moss_context';
+    if (!message || !isContext || typeof message.data !== 'object') {
       return null;
     }
 
