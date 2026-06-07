@@ -399,7 +399,7 @@ function LiveCall({
       label="Live call"
       right={<Waveform active={streaming || (playing && Boolean(current))} />}
       className="min-h-0 flex-1"
-      bodyClassName="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto pr-1"
+      bodyClassName="flex min-h-0 flex-1 flex-col justify-end gap-3 overflow-y-auto pr-1"
     >
       {current ? (
         <div>
@@ -544,6 +544,85 @@ function AskBar({ answer }: { answer?: string }) {
   );
 }
 
+// ---- Sources: the financial docs + models the copilot is pulling to ground ----
+
+export interface Source {
+  type: string; // 10-K, 10-Q, DCF, NOTE, CONSENSUS, CALL
+  title: string;
+  detail: string;
+  relevance?: number; // 0..1, drives the match bar
+}
+
+const SOURCE_TAG: Record<string, string> = {
+  '10-K': 'bg-sky-400/15 text-sky-300',
+  '10-Q': 'bg-sky-400/15 text-sky-300',
+  DCF: 'bg-emerald-400/15 text-emerald-300',
+  MODEL: 'bg-emerald-400/15 text-emerald-300',
+  NOTE: 'bg-amber-400/15 text-amber-300',
+  CONSENSUS: 'bg-violet-400/15 text-violet-300',
+  CALL: 'bg-zinc-400/15 text-zinc-300',
+};
+
+function SourcesPanel({ sources }: { sources: Source[] }) {
+  const pulling = sources.length > 0;
+  return (
+    <Section
+      label="Sources"
+      sub={pulling ? `${sources.length} pulled` : 'standing by'}
+      right={
+        pulling ? (
+          <span className="flex items-center gap-1 font-mono text-[9px] tracking-wide text-emerald-400">
+            <span className="size-1.5 animate-pulse rounded-full bg-emerald-400" />
+            grounding
+          </span>
+        ) : undefined
+      }
+      className="h-[186px] shrink-0"
+      bodyClassName="overflow-hidden"
+    >
+      <AnimatePresence initial={false}>
+        {sources.map((s) => (
+          <motion.div
+            key={s.title}
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.45, ease: 'easeOut' }}
+            className="flex items-center gap-3 border-t border-white/[0.05] py-2 first:border-t-0"
+          >
+            <span
+              className={cn(
+                'w-[58px] shrink-0 rounded-[3px] px-1.5 py-0.5 text-center font-mono text-[9px] font-semibold tracking-wide',
+                SOURCE_TAG[s.type] ?? 'bg-white/10 text-zinc-300'
+              )}
+            >
+              {s.type}
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[12.5px] font-medium text-zinc-200">{s.title}</p>
+              <p className="truncate text-[11px] text-zinc-500">{s.detail}</p>
+            </div>
+            {typeof s.relevance === 'number' && (
+              <div className="flex shrink-0 items-center gap-2">
+                <div className="h-1 w-12 overflow-hidden rounded-full bg-white/[0.08]">
+                  <motion.div
+                    className="h-full rounded-full bg-emerald-400"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.round(s.relevance * 100)}%` }}
+                    transition={{ duration: 0.7, delay: 0.25, ease: 'easeOut' }}
+                  />
+                </div>
+                <span className="w-7 text-right font-mono text-[9px] text-zinc-500 tabular-nums">
+                  {Math.round(s.relevance * 100)}%
+                </span>
+              </div>
+            )}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </Section>
+  );
+}
+
 // ---- Presentational console: one UI, driven by a ConsoleModel ----
 
 export function MissionConsoleView({
@@ -552,6 +631,7 @@ export function MissionConsoleView({
   liveTurn,
   minutesLeft,
   askAnswer,
+  sources,
 }: {
   model: ConsoleModel;
   /** When present, renders the replay transport (fixture mode). */
@@ -564,6 +644,8 @@ export function MissionConsoleView({
   minutesLeft?: number;
   /** Canned answer for the ask bar (demo). */
   askAnswer?: string;
+  /** Financial docs + models the copilot is pulling, shown below the transcript. */
+  sources?: Source[];
 }) {
   const allCovered =
     model.done && model.tally.answered === model.tally.total && model.tally.total > 0;
@@ -592,6 +674,7 @@ export function MissionConsoleView({
           <CopilotInsight followup={followup} nextMissed={next} allCovered={allCovered} />
           <LiveCall transcript={model.transcript} playing={model.playing} liveTurn={liveTurn} />
           <AskBar answer={askAnswer} />
+          <SourcesPanel sources={sources ?? []} />
         </div>
       </main>
 

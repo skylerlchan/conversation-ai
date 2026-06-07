@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Brooks — Expert Call (demo)</title>
+<title>Brox — Expert Call (demo)</title>
 <style>
   :root{
     --bg:#0a0b0f; --emerald:#34d399; --emerald-dim:#6ee7b7;
@@ -163,7 +163,7 @@
       <!-- center -->
       <section class="col">
         <div class="nextstep" id="nextstep">
-          <div class="ns-kicker" id="ns-kicker">● Brooks · standing by</div>
+          <div class="ns-kicker" id="ns-kicker">● Brox · standing by</div>
           <div class="ns-body" id="ns-body">Listening. Surfacing the question your model needs most.</div>
           <div class="ns-meta" id="ns-meta"></div>
         </div>
@@ -287,7 +287,7 @@ function play(){
   $("#g-done").textContent=0; $("#clock-t").textContent="52:00"; $("#clock").classList.remove("warn");
   $("#transcript").innerHTML=""; $("#memo").classList.remove("show");
   buildCards(); buildAssumptions();
-  nextStep("Brooks · standing by","Listening. Surfacing the question your model needs most.","");
+  nextStep("Brox · standing by","Listening. Surfacing the question your model needs most.","");
   setNow("…"); runClock();
 
   // ---- the scene ----
@@ -301,7 +301,7 @@ function play(){
     addT("OP","The new classes are opening strong — one of the best new-unit stories in the group.");});
   at(8.0,()=>{ setState("q2","pulse");
     nextStep("Ask this — he dodged the number","He glided past the AUV. Your model = $2.6M. Ask what the 2024 class is actually opening at, and its year-one margin.","grounds: Meridian note · new-unit economics");
-    ear('<b>Brooks:</b> He never gave the number — ask what the 2024 class is opening at.');});
+    ear('<b>Brox:</b> He never gave the number — ask what the 2024 class is opening at.');});
 
   // analyst forces it (live)
   at(11.5,()=>{setNow("You: Let me pin that down — your model has $2.6M. What's the 2024 class actually opening at, and the year-one margin?");
@@ -318,7 +318,7 @@ function play(){
     addT("OP","Most of the comp's been price — traffic roughly flat.");});
   at(24,()=>{setState("q4","answered"); challenge("a-comp");
     nextStep("Contradiction vs your note","Your note models traffic-led comp (+5% traffic). He just said price-led, traffic flat — that breaks the premium-multiple case.","",true);
-    ear('<b>Brooks:</b> Contradiction — your note says traffic-led, he said price-led.');});
+    ear('<b>Brox:</b> Contradiction — your note says traffic-led, he said price-led.');});
 
   // clean answers
   at(29,()=>{setNow("Margins — fleet's holding around 24 to 25. Steak's accretive to check, pricing's covered the wage inflation.");
@@ -329,9 +329,9 @@ function play(){
     addT("OP","Loyalty live; digital ~35%.");setState("q5","answered");});
 
   // the nudge
-  at(40,()=>{nextStep("Don't hang up yet","1 model-critical question still open: catering / new-format optionality. ~36 min left — Brooks nudges before you lose the seat.","");
+  at(40,()=>{nextStep("Don't hang up yet","1 model-critical question still open: catering / new-format optionality. ~36 min left — Brox nudges before you lose the seat.","");
     setState("q7","pulse");
-    ear('<b>Brooks:</b> Catering still uncovered — ask before you wrap.');});
+    ear('<b>Brox:</b> Catering still uncovered — ask before you wrap.');});
   at(43.5,()=>{setNow("You: Before we run out of time — catering, and any new formats?");
     addT("YOU","Before we run out of time — catering and new formats?",true);});
   at(46.5,()=>{setNow("Catering's an underrated layer, growing nicely. They're testing a smaller format and a breakfast daypart — not in numbers yet.");

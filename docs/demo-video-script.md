@@ -1,9 +1,9 @@
-# Brooks — Demo Video Script
+# Brox — Demo Video Script
 
 _Created 2026-06-07_
 
 **Company:** WithAI Research (YC P26) — tools for hedge funds.
-**Product:** Brooks — for your most expensive hour on Wall Street. The silent second analyst that makes sure you never hang up having missed the question that mattered.
+**Product:** Brox — for your most expensive hour on Wall Street. The silent second analyst that makes sure you never hang up having missed the question that mattered.
 
 **Format:** ~90-second hackathon demo video.
 **Structure:** SKYLER sets up the story + stakes → EDISON runs the technical demo → SKYLER closes on cost + the bigger picture.
@@ -35,9 +35,9 @@ One hour to ask every question that matters. When the call ends, the line is dea
 
 ## EDISON — the product / live demo
 
-### [0:50] How Brooks works
+### [0:50] How Brox works
 
-**EDISON:** So we built Brooks. It's that second analyst — except it never misses. It sits silently on the call. It doesn't talk, it doesn't interrupt. It watches.
+**EDISON:** So we built Brox. It's that second analyst — except it never misses. It sits silently on the call. It doesn't talk, it doesn't interrupt. It watches.
 
 > _On screen: live transcript, coverage tracker ticking up, call clock running._
 
@@ -45,7 +45,7 @@ It knows every question you planned to ask, tracks what's been covered in real t
 
 > _On screen: red flag pops._
 
-Management just said margins expanded — Brooks knows their last 10-Q guided them _down_, and flags it while you can still push back, live.
+Management just said margins expanded — Brox knows their last 10-Q guided them _down_, and flags it while you can still push back, live.
 
 > _On screen: countdown — "01:30 left · NOT ASKED: China inventory, FY25 pricing"_
 
@@ -57,7 +57,7 @@ And before you run out of time, it tells you exactly what you're about to walk a
 
 ### [1:15] Why real-time, why premium
 
-**SKYLER:** This only works in real time. A notetaker runs _after_ the call — too late, the person's already gone. Brooks protects the one hour you can't get back.
+**SKYLER:** This only works in real time. A notetaker runs _after_ the call — too late, the person's already gone. Brox protects the one hour you can't get back.
 
 And that's why it's a premium product. A fund spends thousands on the call and millions on the position. Making sure they don't waste that hour is the easiest yes in finance.
 
@@ -71,7 +71,7 @@ Every high-stakes conversation has the same problem. One shot.
 
 ### [1:50] Close
 
-**SKYLER:** We're WithAI Research. Brooks — never hang up having missed the question that mattered.
+**SKYLER:** We're WithAI Research. Brox — never hang up having missed the question that mattered.
 
 ---
 
@@ -79,7 +79,7 @@ Every high-stakes conversation has the same problem. One shot.
 
 > WithAI Research (YC P26) builds real-time tools for hedge funds. We work alongside small hedge funds every day — sitting right next to them — and watched the same thing happen over and over: a $1,000/hr diligence call, one hour, and an analyst hanging up having forgotten to ask the one question their model needed.
 >
-> Brooks is the silent second analyst that fixes it. It sits on the live call, tracks every question you planned to ask, cross-references the company's own filings in real time, and surfaces what you're about to walk away without — while the line is still open. Async notetakers run after the call, when it's already too late. Brooks protects the one hour you can't get back.
+> Brox is the silent second analyst that fixes it. It sits on the live call, tracks every question you planned to ask, cross-references the company's own filings in real time, and surfaces what you're about to walk away without — while the line is still open. Async notetakers run after the call, when it's already too late. Brox protects the one hour you can't get back.
 >
 > Built by Edison & Skyler.
 

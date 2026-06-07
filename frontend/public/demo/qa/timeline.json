@@ -203,6 +203,16 @@
       }
     },
     {
+      "at": 6.0,
+      "type": "source",
+      "data": {
+        "type": "10-K",
+        "title": "Apple 10-K FY2025",
+        "detail": "Names advanced-node component supply as a key risk",
+        "relevance": 0.91
+      }
+    },
+    {
       "at": 6.08,
       "type": "word",
       "data": {
@@ -347,6 +357,16 @@
       }
     },
     {
+      "at": 10.0,
+      "type": "source",
+      "data": {
+        "type": "DCF",
+        "title": "Internal DCF model",
+        "detail": "iPhone units drive ~40% of unit-growth NPV",
+        "relevance": 0.95
+      }
+    },
+    {
       "at": 10.44,
       "type": "word",
       "data": {
@@ -443,6 +463,16 @@
         "turn": 1,
         "speaker": "analyst",
         "w": "for"
+      }
+    },
+    {
+      "at": 14.0,
+      "type": "source",
+      "data": {
+        "type": "10-Q",
+        "title": "Apple 10-Q Q2 FY2026",
+        "detail": "Products gross margin 38.7%, company 49.3%",
+        "relevance": 0.86
       }
     },
     {

@@ -2,7 +2,11 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRightIcon } from '@phosphor-icons/react/dist/ssr';
-import { MissionConsoleView, type ThesisDelta } from '@/components/console/mission-console';
+import {
+  MissionConsoleView,
+  type Source,
+  type ThesisDelta,
+} from '@/components/console/mission-console';
 import { liveModel } from '@/lib/console-model';
 import type { CoveragePacket, TranscriptPacket } from '@/lib/live/types';
 
@@ -13,7 +17,7 @@ interface WordData {
 }
 interface TimelinePacket {
   at: number;
-  type: 'word' | 'transcript' | 'coverage_update' | 'thesis_delta';
+  type: 'word' | 'transcript' | 'coverage_update' | 'thesis_delta' | 'source';
   data: unknown;
 }
 interface Timeline {
@@ -31,6 +35,24 @@ const TIMELINE_URL = '/demo/qa/timeline.json';
 const WORD_MIN_MS = 95;
 // Hold the transcript ~1.7s behind the audio, like real speech-to-text latency.
 const TRANSCRIPT_LAG_S = 1.7;
+
+// Cinematic camera (only with ?cinematic=1): zoom + pan to follow the action,
+// keyed to the audio clock. z = zoom, ox/oy = transform-origin %. CSS transitions
+// ease each move; the DOM re-rasterizes at the zoom so text stays crisp.
+interface Shot {
+  at: number;
+  z: number;
+  ox: number;
+  oy: number;
+}
+const SHOTS: Shot[] = [
+  { at: 0, z: 1.0, ox: 50, oy: 50 }, // establish: see the whole console
+  { at: 7, z: 1.6, ox: 72, oy: 60 }, // 1) the live transcript, streaming (bottom-anchored)
+  { at: 14, z: 1.9, ox: 72, oy: 84 }, // 2) the sources it's pulling (10-K, DCF, 10-Q), bottom
+  { at: 22, z: 1.6, ox: 72, oy: 14 }, // 3) the copilot insight
+  { at: 32, z: 1.7, ox: 24, oy: 18 }, // 4) the q1 beat: cross-off, answer, updating model
+  { at: 41, z: 1.0, ox: 50, oy: 50 }, // 5) zoom back out: the payoff
+];
 
 function StartGate({ onStart, ticker }: { onStart: () => void; ticker: string }) {
   return (
@@ -74,22 +96,28 @@ export function QaConsole() {
   const [transcript, setTranscript] = useState<TranscriptPacket[]>([]);
   const [liveTurn, setLiveTurn] = useState<{ speaker: string; text: string } | null>(null);
   const [thesisDelta, setThesisDelta] = useState<ThesisDelta | null>(null);
+  const [sources, setSources] = useState<Source[]>([]);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const rafRef = useRef(0);
+  const [cinematic, setCinematic] = useState(false);
+  const [cam, setCam] = useState<Shot>(SHOTS[0]);
+  const camIdx = useRef(0);
 
   // Board events (coverage/insight) fire on the audio clock; the transcript
   // (turn commits + words) lags ~1s behind, like real STT.
-  const { board, commits, words } = useMemo(() => {
+  const { board, commits, words, srcs } = useMemo(() => {
     const ps = timeline?.packets ?? [];
     return {
       board: ps.filter((p) => p.type === 'coverage_update' || p.type === 'thesis_delta'),
       commits: ps.filter((p) => p.type === 'transcript'),
       words: ps.filter((p) => p.type === 'word'),
+      srcs: ps.filter((p) => p.type === 'source'),
     };
   }, [timeline]);
 
   const boardCursor = useRef(0);
   const commitCursor = useRef(0);
+  const srcCursor = useRef(0);
   const shown = useRef(0);
   const lastReveal = useRef(0);
   const buf = useRef<{ turn: number; words: string[] }>({ turn: 0, words: [] });
@@ -99,6 +127,11 @@ export function QaConsole() {
       .then((r) => r.json())
       .then(setTimeline)
       .catch(() => setTimeline(null));
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined')
+      setCinematic(new URLSearchParams(window.location.search).get('cinematic') === '1');
   }, []);
 
   const tick = useCallback(() => {
@@ -135,9 +168,22 @@ export function QaConsole() {
         shown.current++;
         lastReveal.current = now;
       }
+      // Sources stream in (lagged) as the copilot pulls the relevant docs/models.
+      while (srcCursor.current < srcs.length && srcs[srcCursor.current].at <= lagged) {
+        const s = srcs[srcCursor.current].data as Source;
+        setSources((prev) => (prev.some((x) => x.title === s.title) ? prev : [...prev, s]));
+        srcCursor.current++;
+      }
+      // Advance the cinematic camera to the active shot (keyed to the audio clock).
+      let ci = camIdx.current;
+      while (ci + 1 < SHOTS.length && SHOTS[ci + 1].at <= t) ci++;
+      if (ci !== camIdx.current) {
+        camIdx.current = ci;
+        setCam(SHOTS[ci]);
+      }
     }
     rafRef.current = requestAnimationFrame(tick);
-  }, [board, commits, words]);
+  }, [board, commits, words, srcs]);
 
   const onStart = useCallback(async () => {
     // Seed the question board immediately so it's visible from t=0; everything
@@ -145,9 +191,13 @@ export function QaConsole() {
     if (board.length) setCoverage(board[0].data as CoveragePacket);
     boardCursor.current = board.length ? 1 : 0;
     commitCursor.current = 0;
+    srcCursor.current = 0;
+    setSources([]);
     shown.current = 0;
     lastReveal.current = 0;
     buf.current = { turn: 0, words: [] };
+    camIdx.current = 0;
+    setCam(SHOTS[0]);
     setStarted(true);
     setLive(true);
     try {
@@ -169,6 +219,13 @@ export function QaConsole() {
     callKind: 'Expert call · live',
   });
 
+  // Camera: center the shot's focal point (ox/oy) in frame, then clamp so the
+  // content always fills the viewport (no black bars). transform-origin 0 0.
+  const z = cam.z;
+  const clampT = (v: number) => Math.max(-(z - 1), Math.min(0, v));
+  const camTx = (clampT(0.5 - (cam.ox / 100) * z) * 100).toFixed(2);
+  const camTy = (clampT(0.5 - (cam.oy / 100) * z) * 100).toFixed(2);
+
   return (
     <>
       {timeline && (
@@ -184,6 +241,28 @@ export function QaConsole() {
       )}
       {!started ? (
         <StartGate onStart={onStart} ticker={timeline?.ticker ?? 'AAPL'} />
+      ) : cinematic ? (
+        <div className="h-svh w-full overflow-hidden bg-[#0a0b0f]">
+          <div
+            style={{
+              height: '100%',
+              transformOrigin: '0 0',
+              transform: `translate(${camTx}%, ${camTy}%) scale(${z})`,
+              // Ease-out: each move starts immediately and decelerates into the
+              // shot (no slow-start hesitation), so transitions read as distinct.
+              transition: 'transform 1.4s cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          >
+            <MissionConsoleView
+              model={model}
+              liveTurn={liveTurn}
+              thesisDelta={thesisDelta}
+              minutesLeft={timeline?.minutesLeft}
+              askAnswer={timeline?.askAnswer}
+              sources={sources}
+            />
+          </div>
+        </div>
       ) : (
         <MissionConsoleView
           model={model}
@@ -191,6 +270,7 @@ export function QaConsole() {
           thesisDelta={thesisDelta}
           minutesLeft={timeline?.minutesLeft}
           askAnswer={timeline?.askAnswer}
+          sources={sources}
         />
       )}
     </>

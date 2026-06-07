@@ -49,6 +49,14 @@ ASK_ANSWER = (
     "shifting to Mac in June. He did not give the magnitude."
 )
 
+# Financial docs + models the copilot pulls to ground the call: doc name + the
+# actual fact it carries. (at_seconds, type, title, fact, relevance 0..1).
+SOURCES = [
+    (6, "10-K", "Apple 10-K FY2025", "Names advanced-node component supply as a key risk", 0.91),
+    (10, "DCF", "Internal DCF model", "iPhone units drive ~40% of unit-growth NPV", 0.95),
+    (14, "10-Q", "Apple 10-Q Q2 FY2026", "Products gross margin 38.7%, company 49.3%", 0.86),
+]
+
 
 def card(q, state, facts=None, followup=None):
     return {
@@ -135,7 +143,11 @@ def main() -> None:
 
     packets.append({"at": cook_end, "type": "transcript", "data": {"t": 2, "speaker": "researcher", "text": cook_text}})
 
-    packets.sort(key=lambda p: (p["at"], {"word": 0, "transcript": 1, "coverage_update": 2, "thesis_delta": 3}[p["type"]]))
+    for at, typ, title, detail, rel in SOURCES:
+        packets.append({"at": float(at), "type": "source", "data": {"type": typ, "title": title, "detail": detail, "relevance": rel}})
+
+    order = {"word": 0, "transcript": 1, "coverage_update": 2, "thesis_delta": 3, "source": 4}
+    packets.sort(key=lambda p: (p["at"], order[p["type"]]))
 
     OUT.mkdir(parents=True, exist_ok=True)
     timeline = {
