@@ -11,6 +11,13 @@ KMS
 .pytest_cache
 .ruff_cache
 
+# Ingestion corpus: source PDFs and raw Unsiloed parse cache (often large/proprietary).
+# The distilled chunks live in knowledge.json, which IS tracked.
+corpus/pdfs/*
+corpus/parsed/*
+!corpus/pdfs/.gitkeep
+!corpus/parsed/.gitkeep
+
 # Claude Code
 .claude/settings.local.json
 .claude/worktrees/
@@ -31,3 +38,5 @@ KMS
 
 # GitHub CLI
 .github/personal-instructions.md
+corpus/raw/*
+!corpus/raw/.gitkeep
