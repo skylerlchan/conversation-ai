@@ -113,25 +113,28 @@ async def build_indexes() -> None:
 
     client = MossClient(project_id, project_key)
 
-    print(
-        f"Creating Moss knowledge index '{knowledge_index}' with "
-        f"{len(knowledge_docs)} docs using model '{model_id}'..."
-    )
-    knowledge_result = await client.create_index(knowledge_index, knowledge_docs, model_id)
-    print(
-        f"  done (job: {knowledge_result.job_id}, index: {knowledge_result.index_name}, "
-        f"docs: {knowledge_result.doc_count})"
-    )
+    # Moss caps indexes per project, and create_index always makes a fresh
+    # index — so re-running this against indexes that already exist would bust
+    # the cap (HTTP 429 "Index limit reached"). Delete any same-named index
+    # first to keep the build idempotent and re-runnable.
+    existing = {idx.name for idx in await client.list_indexes()}
 
-    print(
-        f"Creating Moss memory index '{memory_index}' with "
-        f"{len(memory_docs)} seed doc(s) using model '{model_id}'..."
-    )
-    memory_result = await client.create_index(memory_index, memory_docs, model_id)
-    print(
-        f"  done (job: {memory_result.job_id}, index: {memory_result.index_name}, "
-        f"docs: {memory_result.doc_count})"
-    )
+    async def rebuild(name: str, docs: list[DocumentInfo], label: str) -> None:
+        if name in existing:
+            print(f"Replacing existing index '{name}'...")
+            await client.delete_index(name)
+        print(
+            f"Creating Moss {label} index '{name}' with {len(docs)} doc(s) "
+            f"using model '{model_id}'..."
+        )
+        result = await client.create_index(name, docs, model_id)
+        print(
+            f"  done (job: {result.job_id}, index: {result.index_name}, "
+            f"docs: {result.doc_count})"
+        )
+
+    await rebuild(knowledge_index, knowledge_docs, "knowledge (RAG)")
+    await rebuild(memory_index, memory_docs, "memory")
 
     print("Both Moss indexes created. Knowledge (RAG) and memory are ready for use.")
 
