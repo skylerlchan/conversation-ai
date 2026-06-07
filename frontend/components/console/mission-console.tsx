@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowCounterClockwiseIcon,
@@ -8,59 +8,32 @@ import {
   CaretLeftIcon,
   CaretRightIcon,
   CheckCircleIcon,
+  CheckIcon,
   PauseIcon,
   PlayIcon,
 } from '@phosphor-icons/react/dist/ssr';
-import {
-  type CopilotEvent,
-  type CopilotEventType,
-  useDiligenceDemo,
-} from '@/hooks/useDiligenceDemo';
+import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
 import { callFixture, questionsFixture } from '@/lib/demo';
 import type { CoverageState } from '@/lib/demo/types';
 import { cn } from '@/lib/shadcn/utils';
-
-const ACCENT: Record<CopilotEventType, { bar: string; text: string }> = {
-  grounding: { bar: 'bg-sky-400', text: 'text-sky-400' },
-  followup: { bar: 'bg-amber-400', text: 'text-amber-400' },
-  flag: { bar: 'bg-red-400', text: 'text-red-400' },
-  thesis: { bar: 'bg-violet-400', text: 'text-violet-400' },
-  nudge: { bar: 'bg-zinc-400', text: 'text-zinc-400' },
-};
 
 const STATE: Record<CoverageState, { label: string; dot: string; glow: string; text: string }> = {
   answered: {
     label: 'COVERED',
     dot: 'bg-emerald-400',
-    glow: 'shadow-[0_0_12px_2px_rgba(52,211,153,0.55)]',
+    glow: 'shadow-[0_0_10px_1px_rgba(52,211,153,0.5)]',
     text: 'text-emerald-400',
   },
   partial: {
     label: 'THIN',
     dot: 'bg-amber-400',
-    glow: 'shadow-[0_0_12px_2px_rgba(251,191,36,0.6)]',
+    glow: 'shadow-[0_0_10px_1px_rgba(251,191,36,0.6)]',
     text: 'text-amber-400',
   },
-  unanswered: {
-    label: 'OPEN',
-    dot: 'bg-zinc-600',
-    glow: '',
-    text: 'text-zinc-500',
-  },
+  unanswered: { label: 'OPEN', dot: 'bg-zinc-600', glow: '', text: 'text-zinc-500' },
 };
 
-function Panel({ className, children }: { className?: string; children: React.ReactNode }) {
-  return (
-    <div
-      className={cn(
-        'rounded-xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm',
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-}
+type Question = (typeof questionsFixture.questions)[number];
 
 function Label({ children }: { children: React.ReactNode }) {
   return (
@@ -99,7 +72,6 @@ function CommandBar({
   exchange,
   callKind,
   answered,
-  partial,
   total,
   live,
 }: {
@@ -108,10 +80,10 @@ function CommandBar({
   exchange: string;
   callKind: string;
   answered: number;
-  partial: number;
   total: number;
   live: boolean;
 }) {
+  const open = total - answered;
   const pct = (answered / total) * 100;
   return (
     <header className="flex items-center gap-4 border-b border-white/[0.06] px-5 py-3">
@@ -143,13 +115,8 @@ function CommandBar({
       </span>
 
       <div className="ml-auto flex items-center gap-3">
-        <div className="text-right">
-          <div className="font-mono text-sm font-semibold text-white tabular-nums">
-            {answered}
-            <span className="text-zinc-600">/{total}</span>
-            <span className="ml-1 text-[10px] tracking-wide text-zinc-500">COVERED</span>
-          </div>
-        </div>
+        <span className="font-mono text-[11px] text-emerald-400 tabular-nums">{answered} done</span>
+        <span className="font-mono text-[11px] text-zinc-500 tabular-nums">{open} missed</span>
         <div className="h-1.5 w-40 overflow-hidden rounded-full bg-white/[0.06]">
           <motion.div
             className="h-full rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
@@ -157,46 +124,52 @@ function CommandBar({
             transition={{ duration: 0.5 }}
           />
         </div>
-        {partial > 0 && (
-          <span className="font-mono text-[10px] tracking-wide text-amber-400">{partial} THIN</span>
-        )}
       </div>
     </header>
   );
 }
 
-// ---- Coverage rail: investment-thesis pillars (hero) ----
-
-type Question = (typeof questionsFixture.questions)[number];
+// ---- A single question row ----
 
 function QuestionRow({
   q,
   state,
+  pillar,
   followup,
   flag,
+  compact = false,
 }: {
   q: Question;
   state: CoverageState;
+  pillar?: string;
   followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
   flag?: ReturnType<typeof useDiligenceDemo>['flags'][number];
+  compact?: boolean;
 }) {
   const meta = STATE[state];
   return (
-    <div className="px-3 py-2">
+    <div
+      className={cn(
+        'rounded-lg border p-2.5',
+        state === 'partial'
+          ? 'border-amber-400/30 bg-amber-400/[0.05]'
+          : state === 'answered'
+            ? 'border-white/[0.05] bg-white/[0.01]'
+            : 'border-white/[0.07] bg-white/[0.02]'
+      )}
+    >
       <div className="flex items-start gap-2.5">
-        <motion.span
-          key={`${q.id}-${state}`}
-          initial={{ scale: 0.5 }}
-          animate={{ scale: 1 }}
-          transition={{ type: 'spring', stiffness: 480, damping: 20 }}
-          className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot, meta.glow)}
-        />
+        {state === 'answered' ? (
+          <CheckIcon weight="bold" className="mt-0.5 size-3.5 shrink-0 text-emerald-400" />
+        ) : (
+          <span className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot, meta.glow)} />
+        )}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[9px] text-zinc-600">{q.id}</span>
-            <span className={cn('font-mono text-[8px] tracking-[0.14em]', meta.text)}>
-              {meta.label}
-            </span>
+            {pillar && (
+              <span className="truncate font-mono text-[9px] text-zinc-600">· {pillar}</span>
+            )}
             {flag && (
               <span className="rounded-sm bg-red-500/15 px-1 font-mono text-[8px] tracking-wide text-red-400">
                 INCONSISTENCY
@@ -205,8 +178,8 @@ function QuestionRow({
           </div>
           <p
             className={cn(
-              'mt-0.5 text-[12px] leading-snug',
-              state === 'answered' ? 'text-zinc-500' : 'text-zinc-300'
+              'mt-0.5 leading-snug',
+              compact ? 'text-[12px] text-zinc-500' : 'text-[12px] text-zinc-300'
             )}
           >
             {q.text}
@@ -220,7 +193,7 @@ function QuestionRow({
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                 className="overflow-hidden"
               >
-                <div className="rounded-lg border border-amber-400/30 bg-amber-400/[0.07] p-2.5">
+                <div className="rounded-md border border-amber-400/30 bg-amber-400/[0.08] p-2">
                   <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-amber-400">
                     ASK NEXT
                   </p>
@@ -238,7 +211,7 @@ function QuestionRow({
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                 className="overflow-hidden"
               >
-                <div className="rounded-lg border border-red-500/30 bg-red-500/[0.07] p-2.5">
+                <div className="rounded-md border border-red-500/30 bg-red-500/[0.08] p-2">
                   <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-red-400">
                     CONTRADICTS THE {flag.vs.toUpperCase()}
                   </p>
@@ -253,258 +226,254 @@ function QuestionRow({
   );
 }
 
-function CoverageRail({
-  pillars,
-  questionsById,
+// ---- Coverage board: missed (top) + completed (bottom) ----
+
+function CoverageBoard({
+  questions,
+  pillarOf,
   coverage,
   followups,
   flags,
-  allCovered,
-  activeQuestionId,
 }: {
-  pillars: typeof questionsFixture.pillars;
-  questionsById: Record<string, Question>;
+  questions: Question[];
+  pillarOf: Record<string, string>;
   coverage: Record<string, CoverageState>;
   followups: ReturnType<typeof useDiligenceDemo>['activeFollowups'];
   flags: ReturnType<typeof useDiligenceDemo>['flags'];
-  allCovered: boolean;
-  activeQuestionId?: string;
 }) {
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
 
+  const missed = questions
+    .filter((q) => (coverage[q.id] ?? 'unanswered') !== 'answered')
+    // thin (needs a follow-up) above not-yet-asked
+    .sort((a, b) => Number(coverage[b.id] === 'partial') - Number(coverage[a.id] === 'partial'));
+  const completed = questions.filter((q) => coverage[q.id] === 'answered');
+
   return (
-    <div className="flex min-h-0 flex-col">
-      <div className="mb-2 flex items-center justify-between">
-        <Label>Investment thesis · coverage</Label>
-        {allCovered && (
-          <span className="flex items-center gap-1 font-mono text-[10px] tracking-wide text-emerald-400">
-            <CheckCircleIcon weight="fill" className="size-3" /> ZERO HOLES
-          </span>
-        )}
-      </div>
-      <div className="min-h-0 flex-1 space-y-2.5 overflow-y-auto pr-1">
-        {pillars.map((pillar) => {
-          const qs = pillar.questions.map((id) => questionsById[id]).filter(Boolean);
-          const states = qs.map((q) => coverage[q.id] ?? 'unanswered');
-          const answered = states.filter((s) => s === 'answered').length;
-          const anyThin = states.some((s) => s === 'partial');
-          const allDone = qs.length > 0 && answered === qs.length;
-          const active = activeQuestionId ? pillar.questions.includes(activeQuestionId) : false;
-          return (
-            <div
-              key={pillar.id}
-              className={cn(
-                'rounded-xl border backdrop-blur-sm transition-colors',
-                allDone
-                  ? 'border-emerald-400/25 bg-emerald-400/[0.04]'
-                  : anyThin
-                    ? 'border-amber-400/30 bg-amber-400/[0.04]'
-                    : 'border-white/[0.06] bg-white/[0.02]',
-                active && 'ring-1 ring-emerald-400/40'
-              )}
-            >
-              <div className="flex items-center gap-2.5 px-3 pt-2.5 pb-2">
-                <span className="font-mono text-[10px] font-semibold text-zinc-600">
-                  {pillar.id}
-                </span>
-                <p className="flex-1 text-[12px] leading-snug font-medium text-zinc-100">
-                  {pillar.thesis}
-                </p>
-                <div className="flex items-center gap-1">
-                  {states.map((s, i) => (
-                    <span
-                      key={i}
-                      className={cn('size-1.5 rounded-full', STATE[s].dot, STATE[s].glow)}
-                    />
-                  ))}
-                </div>
-                <span className="font-mono text-[10px] text-zinc-500 tabular-nums">
-                  {answered}/{qs.length}
-                </span>
-              </div>
-              <div className="border-t border-white/[0.04]">
-                {qs.map((q) => (
-                  <QuestionRow
-                    key={q.id}
-                    q={q}
-                    state={coverage[q.id] ?? 'unanswered'}
-                    followup={fuByQ.get(q.id)}
-                    flag={flagByQ.get(q.id)}
-                  />
-                ))}
-              </div>
+    <div className="flex min-h-0 flex-col gap-3">
+      <section className="flex min-h-0 flex-1 flex-col">
+        <div className="mb-2 flex items-center gap-2">
+          <Label>Missed</Label>
+          <span className="font-mono text-[10px] text-zinc-600">{missed.length}</span>
+        </div>
+        <div className="min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
+          {missed.length === 0 ? (
+            <div className="flex items-center gap-2 rounded-lg border border-emerald-400/30 bg-emerald-400/[0.06] p-2.5 text-[12px] font-medium text-emerald-300">
+              <CheckCircleIcon weight="fill" className="size-4" /> Nothing missed — zero holes.
             </div>
-          );
-        })}
-      </div>
+          ) : (
+            missed.map((q) => (
+              <QuestionRow
+                key={q.id}
+                q={q}
+                state={coverage[q.id] ?? 'unanswered'}
+                pillar={pillarOf[q.id]}
+                followup={fuByQ.get(q.id)}
+                flag={flagByQ.get(q.id)}
+              />
+            ))
+          )}
+        </div>
+      </section>
+
+      <section className="flex min-h-0 flex-1 flex-col">
+        <div className="mb-2 flex items-center gap-2">
+          <Label>Completed</Label>
+          <span className="font-mono text-[10px] text-emerald-400">{completed.length}</span>
+        </div>
+        <div className="min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
+          {completed.length === 0 ? (
+            <p className="text-[12px] text-zinc-600">Answered questions land here.</p>
+          ) : (
+            completed.map((q) => (
+              <QuestionRow
+                key={q.id}
+                q={q}
+                state="answered"
+                pillar={pillarOf[q.id]}
+                flag={flagByQ.get(q.id)}
+                compact
+              />
+            ))
+          )}
+        </div>
+      </section>
     </div>
   );
 }
 
-// ---- Center: now speaking + transcript ----
+// ---- The single next actionable step (center focus) ----
 
-function CallStream({
+function NextStep({
+  followup,
+  nextMissed,
+  pillar,
+  allCovered,
+}: {
+  followup?: ReturnType<typeof useDiligenceDemo>['activeFollowups'][number];
+  nextMissed?: Question;
+  pillar?: string;
+  allCovered: boolean;
+}) {
+  let kind: 'done' | 'ask' | 'cover';
+  let eyebrow: string;
+  let body: string;
+  let sub: string | undefined;
+
+  if (allCovered) {
+    kind = 'done';
+    eyebrow = 'All covered';
+    body = 'Every question answered. You can hang up with zero holes.';
+  } else if (followup) {
+    kind = 'ask';
+    eyebrow = 'Ask now';
+    body = followup.text;
+    sub = `Closes ${followup.questionId}`;
+  } else if (nextMissed) {
+    kind = 'cover';
+    eyebrow = 'Cover next';
+    body = nextMissed.text;
+    sub = pillar;
+  } else {
+    kind = 'done';
+    eyebrow = 'Listening';
+    body = 'Tracking the call.';
+  }
+
+  const accent =
+    kind === 'ask'
+      ? 'border-amber-400/40 bg-amber-400/[0.06]'
+      : kind === 'done'
+        ? 'border-emerald-400/40 bg-emerald-400/[0.06]'
+        : 'border-white/10 bg-white/[0.03]';
+  const eyebrowColor =
+    kind === 'ask' ? 'text-amber-400' : kind === 'done' ? 'text-emerald-400' : 'text-zinc-400';
+
+  return (
+    <div>
+      <Label>Next step</Label>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${kind}-${body}`}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25 }}
+          className={cn('mt-2 rounded-2xl border p-5', accent)}
+        >
+          <div className="flex items-center gap-2">
+            {kind === 'done' ? (
+              <CheckCircleIcon weight="fill" className="size-4 text-emerald-400" />
+            ) : (
+              <ArrowRightIcon weight="bold" className={cn('size-4', eyebrowColor)} />
+            )}
+            <span
+              className={cn(
+                'font-mono text-[11px] font-bold tracking-[0.2em] uppercase',
+                eyebrowColor
+              )}
+            >
+              {eyebrow}
+            </span>
+          </div>
+          <p className="mt-3 text-[20px] leading-snug font-medium text-white">{body}</p>
+          {sub && <p className="mt-2 font-mono text-[11px] tracking-wide text-zinc-500">{sub}</p>}
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ---- Retractable live call ----
+
+function LiveCall({
   transcript,
   playing,
+  open,
+  onToggle,
 }: {
   transcript: ReturnType<typeof useDiligenceDemo>['transcript'];
   playing: boolean;
+  open: boolean;
+  onToggle: () => void;
 }) {
   const latest = transcript[transcript.length - 1];
   const isSubject = latest && latest.speaker === 'researcher';
   return (
-    <div className="flex min-h-0 flex-col gap-3">
-      <Label>Live call</Label>
-      <Panel className="p-3">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] tracking-[0.15em] text-zinc-500">
-            {latest ? (isSubject ? 'RESEARCHER SPEAKING' : 'YOU ASKING') : 'STANDING BY'}
-          </span>
+    <div className="flex min-h-0 flex-col">
+      <button
+        onClick={onToggle}
+        className="flex items-center gap-2.5 py-1 text-left"
+        aria-expanded={open}
+      >
+        <CaretRightIcon
+          weight="bold"
+          className={cn('size-3 text-zinc-500 transition-transform', open && 'rotate-90')}
+        />
+        <Label>Live call</Label>
+        <span className="font-mono text-[10px] text-zinc-600">
+          {latest ? (isSubject ? 'researcher speaking' : 'you asking') : 'standing by'}
+        </span>
+        <span className="ml-1">
           <Waveform active={playing && Boolean(latest)} />
-        </div>
-        <p className="mt-2 min-h-[3.5rem] text-[15px] leading-relaxed text-zinc-100">
-          {latest ? latest.text : 'Press play to start the call.'}
-        </p>
-      </Panel>
+        </span>
+      </button>
 
-      <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
-        {transcript.slice(0, -1).map((t) => {
-          const self = t.speaker === 'analyst';
-          const prompted = Boolean(t.prompted_by_copilot);
-          return (
-            <div key={t.t} className={cn('flex flex-col', self ? 'items-end' : 'items-start')}>
-              <div className="mb-0.5 flex items-center gap-1.5 px-1">
-                <span className="font-mono text-[9px] tracking-[0.12em] text-zinc-600">
-                  {self ? 'YOU' : 'RESEARCHER'}
-                </span>
-                {prompted && (
-                  <span className="font-mono text-[9px] tracking-wide text-amber-400">
-                    ◂ COPILOT
-                  </span>
-                )}
-              </div>
-              <div
-                className={cn(
-                  'max-w-[88%] rounded-2xl px-3 py-1.5 text-[13px] leading-snug',
-                  self
-                    ? 'rounded-br-sm bg-emerald-400/10 text-emerald-50/90'
-                    : 'rounded-bl-sm bg-white/[0.04] text-zinc-400'
-                )}
-              >
-                {t.text}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
-
-// ---- Right: copilot stream + thesis ----
-
-function CopilotStream({ events }: { events: CopilotEvent[] }) {
-  const ordered = [...events].reverse();
-  return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <Label>Copilot</Label>
-      <div className="mt-2 min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
-        {ordered.length === 0 && (
-          <p className="text-[12px] text-zinc-600">
-            Every lookup, follow-up, and flag streams here as the call runs.
-          </p>
-        )}
-        <AnimatePresence initial={false}>
-          {ordered.map((ev) => {
-            const c = ACCENT[ev.type];
-            return (
-              <motion.div
-                key={ev.id}
-                layout
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="relative overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.02] py-2 pr-2.5 pl-3"
-              >
-                <span className={cn('absolute inset-y-0 left-0 w-[3px]', c.bar)} />
-                <div className="flex items-center gap-2">
-                  <span className={cn('font-mono text-[9px] tracking-[0.14em]', c.text)}>
-                    {ev.type.toUpperCase()}
-                  </span>
-                  {ev.questionId && (
-                    <span className="font-mono text-[9px] text-zinc-600">{ev.questionId}</span>
-                  )}
-                </div>
-                {ev.text && (
-                  <p className="mt-1 text-[11px] leading-snug text-zinc-400">{ev.text}</p>
-                )}
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-      </div>
-    </div>
-  );
-}
-
-function ThesisPanel({
-  cards,
-  done,
-}: {
-  cards: ReturnType<typeof useDiligenceDemo>['thesisDeltas'];
-  done: boolean;
-}) {
-  const final = callFixture.thesis_delta;
-  return (
-    <div className="flex min-h-0 flex-1 flex-col">
-      <Label>Thesis delta</Label>
-      <div className="mt-2 min-h-0 flex-1 space-y-1.5 overflow-y-auto pr-1">
-        {cards.length === 0 && (
-          <p className="text-[12px] text-zinc-600">
-            When an answer moves a modeled assumption, it changes here.
-          </p>
-        )}
-        {done && cards.length > 0 ? (
-          <>
-            {final.changes.map((c) => (
-              <motion.div
-                key={c.field}
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2.5"
-              >
-                <p className="font-mono text-[9px] tracking-[0.12em] text-zinc-500 uppercase">
-                  {c.field}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="min-h-0 overflow-hidden"
+          >
+            <div className="mt-2 flex min-h-0 flex-col gap-2">
+              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
+                <p className="text-[15px] leading-relaxed text-zinc-100">
+                  {latest ? latest.text : 'Press play to start the call.'}
                 </p>
-                <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[12px]">
-                  <span className="text-zinc-500 line-through">{c.from}</span>
-                  <ArrowRightIcon className="size-3 text-violet-400" weight="bold" />
-                  <span className="font-semibold text-violet-300">{c.to}</span>
-                </div>
-              </motion.div>
-            ))}
-            <div className="rounded-lg border border-violet-400/30 bg-violet-400/[0.07] p-2.5">
-              <p className="font-mono text-[9px] tracking-[0.14em] text-violet-400">NET</p>
-              <p className="mt-1 text-[11px] leading-snug text-zinc-300">{final.net}</p>
+              </div>
+              <div className="max-h-[34vh] space-y-2 overflow-y-auto pr-1">
+                {transcript
+                  .slice(0, -1)
+                  .reverse()
+                  .map((t) => {
+                    const self = t.speaker === 'analyst';
+                    const prompted = Boolean(t.prompted_by_copilot);
+                    return (
+                      <div
+                        key={t.t}
+                        className={cn('flex flex-col', self ? 'items-end' : 'items-start')}
+                      >
+                        <div className="mb-0.5 flex items-center gap-1.5 px-1">
+                          <span className="font-mono text-[9px] tracking-[0.12em] text-zinc-600">
+                            {self ? 'YOU' : 'RESEARCHER'}
+                          </span>
+                          {prompted && (
+                            <span className="font-mono text-[9px] tracking-wide text-amber-400">
+                              ◂ COPILOT
+                            </span>
+                          )}
+                        </div>
+                        <div
+                          className={cn(
+                            'max-w-[88%] rounded-2xl px-3 py-1.5 text-[12px] leading-snug',
+                            self
+                              ? 'rounded-br-sm bg-emerald-400/10 text-emerald-50/90'
+                              : 'rounded-bl-sm bg-white/[0.04] text-zinc-400'
+                          )}
+                        >
+                          {t.text}
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
-          </>
-        ) : (
-          <AnimatePresence initial={false}>
-            {cards.map((card) => (
-              <motion.div
-                key={card.id}
-                layout
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="rounded-lg border border-violet-400/20 bg-violet-400/[0.05] p-2.5"
-              >
-                <p className="font-mono text-[9px] text-zinc-500">{card.questionId}</p>
-                <p className="mt-1 text-[11px] leading-snug text-zinc-300">{card.text}</p>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 }
@@ -512,13 +481,8 @@ function ThesisPanel({
 // ---- Transport ----
 
 function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
-  const speeds = [
-    { label: 'SLOW', ms: 4000 },
-    { label: 'NORMAL', ms: 2600 },
-    { label: 'FAST', ms: 1400 },
-  ];
   return (
-    <footer className="flex items-center gap-3 border-t border-white/[0.06] px-5 py-2.5">
+    <footer className="flex items-center justify-center gap-4 border-t border-white/[0.06] px-5 py-2.5">
       <button
         onClick={state.controls.back}
         disabled={state.cursor === 0}
@@ -530,7 +494,7 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
       {state.done ? (
         <button
           onClick={state.controls.restart}
-          className="flex size-8 items-center justify-center rounded-full bg-emerald-400 text-black"
+          className="flex size-9 items-center justify-center rounded-full bg-emerald-400 text-black"
           aria-label="Restart"
         >
           <ArrowCounterClockwiseIcon weight="bold" className="size-4" />
@@ -538,7 +502,7 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
       ) : (
         <button
           onClick={state.controls.toggle}
-          className="flex size-8 items-center justify-center rounded-full bg-white text-black hover:bg-zinc-200"
+          className="flex size-9 items-center justify-center rounded-full bg-white text-black hover:bg-zinc-200"
           aria-label={state.playing ? 'Pause' : 'Play'}
         >
           {state.playing ? (
@@ -556,27 +520,6 @@ function Transport({ state }: { state: ReturnType<typeof useDiligenceDemo> }) {
       >
         <CaretRightIcon weight="bold" className="size-4" />
       </button>
-
-      <span className="ml-1 font-mono text-[10px] text-zinc-600 tabular-nums">
-        {Math.min(state.cursor, state.total)} / {state.total}
-      </span>
-
-      <div className="ml-auto flex items-center gap-1">
-        {speeds.map((s) => (
-          <button
-            key={s.label}
-            onClick={() => state.controls.setSpeedMs(s.ms)}
-            className={cn(
-              'rounded px-2 py-1 font-mono text-[9px] tracking-[0.12em] transition-colors',
-              state.speedMs === s.ms
-                ? 'bg-white/10 text-white'
-                : 'text-zinc-600 hover:text-zinc-300'
-            )}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
     </footer>
   );
 }
@@ -588,20 +531,17 @@ export function MissionConsole() {
   const { company } = questionsFixture;
   const { tally } = state;
   const allCovered = state.done && tally.answered === tally.total;
+  const [callOpen, setCallOpen] = useState(true);
 
-  const questionsById = useMemo(
-    () => Object.fromEntries(questionsFixture.questions.map((q) => [q.id, q])),
-    []
-  );
-  // The pillar whose question is being addressed right now (last researcher turn).
-  let activeQuestionId: string | undefined;
-  for (let i = state.transcript.length - 1; i >= 0; i--) {
-    const t = state.transcript[i];
-    if (t.speaker === 'researcher' && t.expected?.addresses?.length) {
-      activeQuestionId = t.expected.addresses[0];
-      break;
-    }
+  const pillarOf: Record<string, string> = {};
+  for (const p of questionsFixture.pillars) {
+    for (const qid of p.questions) pillarOf[qid] = p.thesis;
   }
+
+  const followup = state.activeFollowups[0];
+  const nextMissed = questionsFixture.questions.find(
+    (q) => (state.coverage[q.id] ?? 'unanswered') === 'unanswered'
+  );
 
   const { play, restart } = state.controls;
   useEffect(() => {
@@ -615,7 +555,6 @@ export function MissionConsole() {
 
   return (
     <div className="relative flex h-svh flex-col overflow-hidden bg-[#0a0b0f] text-zinc-200">
-      {/* ambient grid */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.18]"
         style={{
@@ -633,25 +572,32 @@ export function MissionConsole() {
           exchange={company.exchange}
           callKind="Diligence call · sell-side"
           answered={tally.answered}
-          partial={tally.partial}
           total={tally.total}
           live={!state.done}
         />
 
-        <main className="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)_minmax(0,0.85fr)]">
-          <CoverageRail
-            pillars={questionsFixture.pillars}
-            questionsById={questionsById}
+        <main className="grid min-h-0 flex-1 grid-cols-1 gap-5 p-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+          <CoverageBoard
+            questions={questionsFixture.questions}
+            pillarOf={pillarOf}
             coverage={state.coverage}
             followups={state.activeFollowups}
             flags={state.flags}
-            allCovered={allCovered}
-            activeQuestionId={activeQuestionId}
           />
-          <CallStream transcript={state.transcript} playing={state.playing} />
+
           <section className="flex min-h-0 flex-col gap-4">
-            <CopilotStream events={state.copilotEvents} />
-            <ThesisPanel cards={state.thesisDeltas} done={state.done} />
+            <NextStep
+              followup={followup}
+              nextMissed={nextMissed}
+              pillar={nextMissed ? pillarOf[nextMissed.id] : undefined}
+              allCovered={allCovered}
+            />
+            <LiveCall
+              transcript={state.transcript}
+              playing={state.playing}
+              open={callOpen}
+              onToggle={() => setCallOpen((o) => !o)}
+            />
           </section>
         </main>
 
