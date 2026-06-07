@@ -65,8 +65,8 @@ export function useLiveDiligence(): ConsoleModel & { groundings: GroundingPacket
   }, [room]);
 
   const model = useMemo(
-    () => liveModel({ coverage, transcript, live: connected }),
-    [coverage, transcript, connected]
+    () => liveModel({ coverage, transcript, groundings, live: connected }),
+    [coverage, transcript, groundings, connected]
   );
 
   return { ...model, groundings };

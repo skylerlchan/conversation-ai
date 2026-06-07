@@ -1,0 +1,137 @@
+{
+  "_note": "SYNTHETIC DEMO FIXTURE — not investment advice. Scripted buy-side diligence call for the Diligence-Call Copilot demo, grounded in the topics Apple raised on its Q2 FY2026 earnings call (Apr 30 2026): a supply-gated iPhone 17 / Mac supercycle, the memory-cost gross-margin overhang plus the shift away from net-cash-neutral, and the forward call on Services / advertising / AI. Each researcher turn carries an `expected` block = the golden coverage verdict the engine should produce. Both the stage script and the test/driver fixture.",
+  "company": "AAPL",
+  "summary": "Three questions. q1 (supply-gated hardware supercycle) ticks green cleanly. q2 (margin + capital) goes amber on an over-claimed 'margins are great, returning tons of cash' answer that glosses the building memory-cost overhang and the capital-allocation shift -> the copilot fires a grounded follow-up -> closes green with the real gross-margin bridge and the net-cash-neutral change. q3 (forward: Services / ads / AI) ticks green. Hang up all-green.",
+  "coverage_states": ["unanswered", "partial", "answered"],
+  "turns": [
+    {
+      "t": 1,
+      "speaker": "analyst",
+      "asks": ["q1"],
+      "text": "Thanks for the time. Let's start with the cycle. iPhone 17 looks like the strongest lineup you've ever had — where are you actually supply-constrained right now, iPhone versus Mac, and what's the root cause?"
+    },
+    {
+      "t": 2,
+      "speaker": "researcher",
+      "text": "It's a genuine supercycle. iPhone revenue was up about twenty-two percent, the strongest cycle in our history, with a March-quarter record for upgraders and double-digit growth across most major markets. We're supply-constrained, not demand-constrained: iPhone was the binding constraint in the March quarter, and the constraint shifts to Mac — the mini, Studio, and MacBook Neo — into June. The root cause is availability of the advanced process nodes our SOCs are built on. MacBook Neo demand in particular has been off the charts.",
+      "expected": {
+        "addresses": ["q1"],
+        "coverage": { "q1": "answered" },
+        "extracted_facts": [
+          "iPhone revenue up ~22%, strongest cycle in company history; March-quarter upgrader record",
+          "Supply-constrained, not demand-constrained: iPhone binding in the March quarter, shifting to Mac (mini, Studio, MacBook Neo) into June",
+          "Root cause is advanced-node SOC availability; MacBook Neo demand off the charts"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q1 -> GREEN. Grounding: Q2 FY26 call — supply-gated supercycle, advanced-node SOC constraint shifting iPhone->Mac into June."
+    },
+    {
+      "t": 3,
+      "speaker": "analyst",
+      "asks": ["q2"],
+      "text": "Good. On margins — where is gross margin running, and how should I think about it from here?"
+    },
+    {
+      "t": 4,
+      "speaker": "researcher",
+      "text": "Margins are in great shape. Gross margin's been strong, mix is favorable, and we're returning a ton of cash to shareholders. Nothing I'd flag there — it's a really healthy picture.",
+      "expected": {
+        "addresses": ["q2"],
+        "coverage": { "q2": "partial" },
+        "extracted_facts": [
+          "Characterizes gross margin as strong with favorable mix",
+          "Emphasizes capital return but gives no bridge and no caveat"
+        ],
+        "contradiction": {
+          "vs": "note",
+          "detail": "'Margins are great, nothing to flag' glosses the building memory-cost overhang the note models as a growing gross-margin headwind beyond June, and skips the capital-allocation shift — Apple dropping the net-cash-neutral target and lifting the buyback authorization by $100B. Either the headwind is being downplayed or the bridge is being skipped."
+        },
+        "followup": "They glossed the bridge. Ask them to walk the gross-margin bridge — specifically where memory costs go beyond June and what offsets them (mix, tariffs, leverage, FX) — and to explain dropping net-cash-neutral and the $100B buyback increase.",
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q2 -> AMBER (partial). Glosses the memory-cost overhang + the net-cash-neutral change. Follow-up card fires. Hero moment."
+    },
+    {
+      "t": 5,
+      "speaker": "analyst",
+      "asks": ["q2"],
+      "is_followup_for": "q2",
+      "prompted_by_copilot": "Ask them to walk the gross-margin bridge — memory beyond June and the offsets — and explain dropping net-cash-neutral and the $100B buyback.",
+      "text": "Let me pin that down. Walk me through the gross-margin bridge — where do memory costs go beyond June and what offsets them — and separately, what does dropping the net-cash-neutral target and the hundred-billion buyback increase actually signal?"
+    },
+    {
+      "t": 6,
+      "speaker": "researcher",
+      "text": "Fair. Company gross margin is around forty-nine percent. Memory is minimal-to-modest as a headwind right now, but it builds into a growing drag beyond the June quarter; this quarter we're helped by favorable mix and lower tariffs and hurt by some seasonal deleverage, with FX roughly neutral. On capital: we're moving away from net-cash-neutral as a formal target — we'll evaluate cash and debt independently — and we raised the buyback authorization by a hundred billion. So you're right to separate the strong headline from the memory trajectory.",
+      "expected": {
+        "addresses": ["q2"],
+        "coverage": { "q2": "answered" },
+        "extracted_facts": [
+          "Company gross margin ~49%",
+          "Memory minimal-to-modest now, building headwind beyond June; mix + lower tariffs help, seasonal deleverage hurts, FX ~neutral",
+          "Dropping net-cash-neutral as a formal target; buyback authorization raised by $100B"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": "Margin bridge confirmed: ~49% GM with a memory-cost headwind building beyond June, partly offset by mix/tariffs. Capital-allocation posture shifted — net-cash-neutral target dropped, +$100B buyback. The initial 'nothing to flag' over-claim was corrected."
+      },
+      "copilot_surfaced": "q2 -> GREEN. Bridge confirms the memory overhang beyond June + the capital shift. Thesis-delta card."
+    },
+    {
+      "t": 7,
+      "speaker": "analyst",
+      "asks": ["q3"],
+      "text": "Last big one — the forward call. How durable are Services and the advertising lever, and what's the AI strategy and what's it costing you?"
+    },
+    {
+      "t": 8,
+      "speaker": "researcher",
+      "text": "Services keeps compounding at high margin — services gross margin was up about twenty basis points sequentially on mix — and advertising is a fresh lever: App Store search ads are growing and we're launching Apple Maps ads in the US and Canada this summer. On AI, it's two-pronged — a collaboration with Google alongside our own in-house foundational models — and R&D is accelerating faster than overall opex to fund it. We're treating AI as incremental investment on top of the normal roadmap.",
+      "expected": {
+        "addresses": ["q3"],
+        "coverage": { "q3": "answered" },
+        "extracted_facts": [
+          "Services compounding at high margin; services gross margin +~20bps sequentially on mix",
+          "Advertising lever: App Store search ads growing; Apple Maps ads launching US/Canada this summer",
+          "AI is two-pronged — Google collaboration plus in-house foundational models; R&D accelerating faster than opex"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q3 -> GREEN. ALL 3 QUESTIONS GREEN. Zero holes."
+    },
+    {
+      "t": 9,
+      "speaker": "analyst",
+      "asks": [],
+      "text": "That's my whole list. Appreciate you separating the headline margin from the memory trajectory — that was the one I most needed to nail down."
+    }
+  ],
+  "final_coverage": {
+    "q1": "answered",
+    "q2": "answered",
+    "q3": "answered"
+  },
+  "thesis_delta": {
+    "summary": "Thesis intact and sharpened. The one live wobble — management's 'margins are great, nothing to flag' over-claim — was corrected under follow-up to the real bridge (~49% GM with a memory-cost headwind building beyond June) and the capital-allocation shift (net-cash-neutral dropped, +$100B buyback). The supply-gated iPhone 17 / Mac supercycle and the Services / advertising / AI forward call both held.",
+    "changes": [
+      {
+        "field": "gross_margin_bridge",
+        "from": "headline 'margins are great', no caveat",
+        "to": "~49% GM with a building memory-cost headwind beyond June, partly offset by mix/tariffs",
+        "source_turn": 6
+      },
+      {
+        "field": "capital_allocation",
+        "from": "net-cash-neutral target",
+        "to": "target dropped; cash and debt evaluated independently; +$100B buyback authorization",
+        "source_turn": 6
+      }
+    ],
+    "net": "Hold / add. The load-bearing checks — supply-gated demand strength and the memory-cost margin trajectory — both held once the bridge was forced out."
+  }
+}

@@ -56,7 +56,13 @@ Rules:
 
 
 def _questions_block(call: CallState) -> str:
-    """Render the question list (with grading criteria) for the model."""
+    """Render the static question definitions (id/question/complete_when/expected).
+
+    Deliberately omits the mutable ``current_state`` so this block is byte-stable
+    across every turn of a call — it lives in the cacheable system prefix (see
+    ``grade_turn``). The live coverage states are rendered separately by
+    ``_states_block`` into the volatile user message.
+    """
     lines: list[str] = []
     for q in call.questions:
         lines.append(f"- id: {q.id}")
@@ -66,8 +72,12 @@ def _questions_block(call: CallState) -> str:
             lines.extend(f"    - {c}" for c in q.complete_when)
         if q.expected:
             lines.append(f"  expected: {json.dumps(q.expected)}")
-        lines.append(f"  current_state: {q.state}")
     return "\n".join(lines)
+
+
+def _states_block(call: CallState) -> str:
+    """Render the per-question current coverage state (changes during the call)."""
+    return "\n".join(f"- {q.id}: {q.state}" for q in call.questions)
 
 
 async def grade_turn(
@@ -82,22 +92,28 @@ async def grade_turn(
     notes/filings (Moss) for what the researcher just said — when present, the
     engine grounds contradictions and follow-ups in the note's actual figures.
     """
+    # Static prefix — rules + thesis + question definitions. Identical on every
+    # turn of a call, so the inference gateway prefix-caches it (OpenAI auto-caches
+    # stable prefixes >~1k tokens; verify via usage.prompt_cached_tokens). Keeping
+    # the mutable coverage state, grounding, and turn out of here is what makes the
+    # cache hit — any byte change in the prefix invalidates the whole cache.
+    system = (
+        f"{_RULES}\n\nTHESIS: {call.thesis}\n\nQUESTIONS:\n{_questions_block(call)}"
+    )
     research = (
         f"RESEARCH CONTEXT (the analyst's notes / filings):\n{grounding}\n\n"
         if grounding.strip()
         else ""
     )
-    chat_ctx = ChatContext.empty()
-    chat_ctx.add_message(role="system", content=_RULES)
-    chat_ctx.add_message(
-        role="user",
-        content=(
-            f"THESIS: {call.thesis}\n\n"
-            f"QUESTIONS:\n{_questions_block(call)}\n\n"
-            f"{research}"
-            f"RESEARCHER JUST SAID:\n{turn_text}"
-        ),
+    # Volatile tail — current coverage + retrieved context + the new turn.
+    user = (
+        f"CURRENT COVERAGE:\n{_states_block(call)}\n\n"
+        f"{research}"
+        f"RESEARCHER JUST SAID:\n{turn_text}"
     )
+    chat_ctx = ChatContext.empty()
+    chat_ctx.add_message(role="system", content=system)
+    chat_ctx.add_message(role="user", content=user)
     stream = verdict_llm.chat(chat_ctx=chat_ctx, response_format=TurnVerdict)
     response = await stream.collect()
     return TurnVerdict.model_validate_json(response.text)

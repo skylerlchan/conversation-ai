@@ -1,8 +1,8 @@
 // Types for the Diligence-Call Copilot demo data contract.
 //
 // These mirror the fixtures in `agent-py/demo/` (the source of truth):
-// `cava_questions.json` (pre-call question list + modeled assumptions) and
-// `cava_call.json` (the scripted call, each researcher turn carrying the
+// `apple-questions.json` (pre-call question list + modeled assumptions) and
+// `apple-call.json` (the scripted call, each researcher turn carrying the
 // `expected` coverage verdict the live coverage engine must reproduce).
 
 /** The coverage state machine: states only ever move forward. */
@@ -78,6 +78,16 @@ export interface Turn {
   expected?: ExpectedVerdict;
   /** Human-readable note on what the copilot put on screen for this turn. */
   copilot_surfaced?: string;
+  /** Grounded note/corpus snippets the copilot surfaced as context for this turn. */
+  grounding?: GroundingSnippet[];
+}
+
+/** A grounded snippet behind a researcher turn — what the note/corpus says. */
+export interface GroundingSnippet {
+  /** Where it came from, e.g. "Your note · modeled" or "AAPL 10-K (corpus)". */
+  label: string;
+  text: string;
+  score?: number;
 }
 
 export interface ThesisChange {

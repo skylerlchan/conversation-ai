@@ -12,7 +12,7 @@ interface Hit {
   exchange: string;
 }
 
-const SUGGESTED = ['CAVA', 'NVDA', 'CMG', 'COST', 'SBUX'];
+const SUGGESTED = ['AAPL', 'MSFT', 'GOOGL', 'NVDA', 'AMZN'];
 
 export function Launcher() {
   const router = useRouter();
@@ -100,7 +100,7 @@ export function Launcher() {
               value={q}
               onChange={(e) => setQ(e.target.value)}
               onFocus={() => hits.length && setOpen(true)}
-              placeholder="Search a ticker — CAVA, NVDA, any name…"
+              placeholder="Search a ticker — AAPL, MSFT, any name…"
               className="w-full bg-transparent text-[15px] text-white placeholder:text-zinc-600 focus:outline-none"
             />
             {loading && (
@@ -141,7 +141,7 @@ export function Launcher() {
 
         {/* Primary CTA */}
         <button
-          onClick={() => launch('CAVA')}
+          onClick={() => launch('AAPL')}
           className={cn(
             'mt-8 flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-[15px] font-semibold text-black',
             'transition-transform hover:scale-[1.01] hover:bg-zinc-100'
@@ -152,7 +152,7 @@ export function Launcher() {
         </button>
 
         <p className="mt-5 font-mono text-[10px] tracking-wide text-zinc-600">
-          Demo replays a recorded CAVA diligence call · live data connects at the event
+          Demo replays a recorded AAPL diligence call · live data connects at the event
         </p>
       </motion.div>
     </div>

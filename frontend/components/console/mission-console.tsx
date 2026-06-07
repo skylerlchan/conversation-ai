@@ -11,9 +11,12 @@ import {
   CheckIcon,
   PauseIcon,
   PlayIcon,
+  QuotesIcon,
+  WarningIcon,
 } from '@phosphor-icons/react/dist/ssr';
 import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
 import {
+  type ConsoleEvidence,
   type ConsoleFlag,
   type ConsoleFollowup,
   type ConsoleModel,
@@ -30,45 +33,86 @@ import { callFixture, questionsFixture } from '@/lib/demo';
 import type { CoverageState } from '@/lib/demo/types';
 import { cn } from '@/lib/shadcn/utils';
 
-const STATE: Record<CoverageState, { label: string; dot: string; glow: string; text: string }> = {
+// Solid, glow-free coverage states. The accent is a hard left-cut on each row;
+// no soft shadows or gradients (the console reads as a terminal, not a card UI).
+const STATE: Record<
+  CoverageState,
+  { label: string; dot: string; text: string; bar: string; fill: string }
+> = {
   answered: {
     label: 'COVERED',
     dot: 'bg-emerald-400',
-    glow: 'shadow-[0_0_10px_1px_rgba(52,211,153,0.5)]',
     text: 'text-emerald-400',
+    bar: 'border-emerald-400/60',
+    fill: 'bg-white/[0.02]',
   },
   partial: {
     label: 'THIN',
     dot: 'bg-amber-400',
-    glow: 'shadow-[0_0_10px_1px_rgba(251,191,36,0.6)]',
     text: 'text-amber-400',
+    bar: 'border-amber-400',
+    fill: 'bg-amber-400/[0.07]',
   },
-  unanswered: { label: 'OPEN', dot: 'bg-zinc-600', glow: '', text: 'text-zinc-500' },
+  unanswered: {
+    label: 'OPEN',
+    dot: 'bg-zinc-600',
+    text: 'text-zinc-500',
+    bar: 'border-white/15',
+    fill: 'bg-white/[0.015]',
+  },
 };
 
-function Label({ children }: { children: React.ReactNode }) {
+// ---- Shared panel chrome: a solid block with a hard header bar ----
+
+function Panel({
+  title,
+  sub,
+  right,
+  children,
+  bodyClassName,
+  className,
+}: {
+  title: React.ReactNode;
+  sub?: React.ReactNode;
+  right?: React.ReactNode;
+  children: React.ReactNode;
+  bodyClassName?: string;
+  className?: string;
+}) {
   return (
-    <h2 className="font-mono text-[10px] font-medium tracking-[0.2em] text-zinc-500 uppercase">
-      {children}
-    </h2>
+    <section
+      className={cn(
+        'flex min-h-0 flex-col overflow-hidden rounded-lg border border-white/10 bg-[#0c0d12]',
+        className
+      )}
+    >
+      <div className="flex items-center gap-2 border-b border-white/[0.08] px-3 py-2">
+        <h2 className="font-mono text-[10px] font-semibold tracking-[0.18em] text-zinc-400 uppercase">
+          {title}
+        </h2>
+        {sub && <span className="font-mono text-[10px] tracking-wide text-zinc-600">{sub}</span>}
+        {right && <div className="ml-auto flex items-center">{right}</div>}
+      </div>
+      <div className={cn('min-h-0 flex-1', bodyClassName)}>{children}</div>
+    </section>
   );
 }
 
 function Waveform({ active }: { active: boolean }) {
   const bars = [0.4, 0.7, 1, 0.6, 0.85, 0.5, 0.95, 0.65, 0.45, 0.8, 0.55];
   return (
-    <div className="flex h-5 items-center gap-[3px]">
+    <div className="flex h-4 items-center gap-[3px]">
       {bars.map((h, i) => (
         <motion.span
           key={i}
-          className="w-[3px] rounded-full bg-emerald-400/80"
+          className="w-[3px] bg-emerald-400/80"
           animate={active ? { scaleY: [h, h * 0.3, h] } : { scaleY: 0.2 }}
           transition={
             active
               ? { duration: 0.7 + (i % 4) * 0.18, repeat: Infinity, ease: 'easeInOut' }
               : { duration: 0.3 }
           }
-          style={{ height: `${h * 20}px`, originY: 0.5 }}
+          style={{ height: `${h * 16}px`, originY: 0.5 }}
         />
       ))}
     </div>
@@ -97,11 +141,11 @@ function CommandBar({
   const open = total - answered;
   const pct = total > 0 ? (answered / total) * 100 : 0;
   return (
-    <header className="flex items-center gap-4 border-b border-white/[0.06] px-5 py-3">
+    <header className="flex items-center gap-4 border-b border-white/10 bg-[#0c0d12] px-5 py-3">
       <div className="flex items-center gap-2">
         <span className="relative flex size-2.5">
           {live && (
-            <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+            <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-50" />
           )}
           <span
             className={cn(
@@ -110,10 +154,17 @@ function CommandBar({
             )}
           />
         </span>
-        <span className="font-mono text-[10px] font-semibold tracking-[0.2em] text-emerald-400">
+        <span
+          className={cn(
+            'font-mono text-[10px] font-semibold tracking-[0.2em]',
+            live ? 'text-emerald-400' : 'text-zinc-500'
+          )}
+        >
           {live ? 'LIVE' : 'ENDED'}
         </span>
       </div>
+
+      <div className="h-5 w-px bg-white/10" />
 
       <div className="flex items-baseline gap-2">
         <span className="font-mono text-lg font-bold tracking-tight text-white">{ticker}</span>
@@ -121,20 +172,23 @@ function CommandBar({
         <span className="font-mono text-[10px] tracking-wide text-zinc-600">{exchange}</span>
       </div>
 
-      <span className="rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] tracking-wide text-zinc-400">
+      <span className="rounded-sm border border-white/10 bg-white/[0.03] px-2 py-0.5 font-mono text-[10px] tracking-wide text-zinc-400">
         {callKind}
       </span>
 
       <div className="ml-auto flex items-center gap-3">
         <span className="font-mono text-[11px] text-emerald-400 tabular-nums">{answered} done</span>
-        <span className="font-mono text-[11px] text-zinc-500 tabular-nums">{open} missed</span>
-        <div className="h-1.5 w-40 overflow-hidden rounded-full bg-white/[0.06]">
+        <span className="font-mono text-[11px] text-zinc-500 tabular-nums">{open} open</span>
+        <div className="flex h-2 w-44 overflow-hidden rounded-sm border border-white/10 bg-black/40">
           <motion.div
-            className="h-full rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.6)]"
+            className="h-full bg-emerald-400"
             animate={{ width: `${pct}%` }}
             transition={{ duration: 0.5 }}
           />
         </div>
+        <span className="font-mono text-[11px] text-zinc-400 tabular-nums">
+          {answered}/{total}
+        </span>
       </div>
     </header>
   );
@@ -157,25 +211,19 @@ function QuestionRow({
 }) {
   const meta = STATE[state];
   return (
-    <div
-      className={cn(
-        'rounded-lg border p-2.5',
-        state === 'partial'
-          ? 'border-amber-400/30 bg-amber-400/[0.05]'
-          : state === 'answered'
-            ? 'border-white/[0.05] bg-white/[0.01]'
-            : 'border-white/[0.07] bg-white/[0.02]'
-      )}
-    >
+    <div className={cn('border-l-2 py-2 pr-2.5 pl-2.5', meta.bar, meta.fill)}>
       <div className="flex items-start gap-2.5">
         {state === 'answered' ? (
           <CheckIcon weight="bold" className="mt-0.5 size-3.5 shrink-0 text-emerald-400" />
         ) : (
-          <span className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot, meta.glow)} />
+          <span className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot)} />
         )}
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <span className="font-mono text-[9px] text-zinc-600">{q.id}</span>
+            <span className={cn('font-mono text-[8px] tracking-[0.14em]', meta.text)}>
+              {meta.label}
+            </span>
             {flag && (
               <span className="rounded-sm bg-red-500/15 px-1 font-mono text-[8px] tracking-wide text-red-400">
                 INCONSISTENCY
@@ -184,8 +232,8 @@ function QuestionRow({
           </div>
           <p
             className={cn(
-              'mt-0.5 leading-snug',
-              compact ? 'text-[12px] text-zinc-500' : 'text-[12px] text-zinc-300'
+              'mt-0.5 text-[12px] leading-snug',
+              compact ? 'text-zinc-500' : 'text-zinc-300'
             )}
           >
             {q.text}
@@ -199,7 +247,7 @@ function QuestionRow({
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                 className="overflow-hidden"
               >
-                <div className="rounded-md border border-amber-400/30 bg-amber-400/[0.08] p-2">
+                <div className="border-l-2 border-amber-400 bg-amber-400/[0.08] px-2 py-1.5">
                   <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-amber-400">
                     ASK NEXT
                   </p>
@@ -217,7 +265,7 @@ function QuestionRow({
                 exit={{ opacity: 0, height: 0, marginTop: 0 }}
                 className="overflow-hidden"
               >
-                <div className="rounded-md border border-red-500/30 bg-red-500/[0.08] p-2">
+                <div className="border-l-2 border-red-500 bg-red-500/[0.08] px-2 py-1.5">
                   <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-red-400">
                     CONTRADICTS THE {flag.vs.toUpperCase()}
                   </p>
@@ -250,29 +298,26 @@ function PillarCard({
   return (
     <div
       className={cn(
-        'rounded-xl border transition-colors',
+        'overflow-hidden rounded-md border bg-[#0d0e14]',
         group.allDone
-          ? 'border-emerald-400/25 bg-emerald-400/[0.04]'
+          ? 'border-emerald-400/25'
           : group.anyThin
-            ? 'border-amber-400/30 bg-amber-400/[0.04]'
-            : 'border-white/[0.06] bg-white/[0.02]',
+            ? 'border-amber-400/30'
+            : 'border-white/10',
         active && 'ring-1 ring-emerald-400/40'
       )}
     >
-      <div className="flex items-center gap-2.5 px-3 pt-2.5 pb-1.5">
-        <span className="font-mono text-[10px] font-semibold text-zinc-600">{group.id}</span>
+      <div className="flex items-center gap-2 border-b border-white/[0.07] bg-white/[0.02] px-2.5 py-2">
+        <span className="rounded-[3px] bg-white/[0.07] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-zinc-400">
+          {group.id}
+        </span>
         <p className="min-w-0 flex-1 text-[12px] leading-snug font-medium text-zinc-100">
           {group.label}
         </p>
         <div className="flex items-center gap-1">
           {group.questions.map((q) => {
             const s = coverage[q.id] ?? 'unanswered';
-            return (
-              <span
-                key={q.id}
-                className={cn('size-1.5 rounded-full', STATE[s].dot, STATE[s].glow)}
-              />
-            );
+            return <span key={q.id} className={cn('size-1.5 rounded-full', STATE[s].dot)} />;
           })}
         </div>
         <span
@@ -286,10 +331,12 @@ function PillarCard({
       </div>
 
       {group.claim && (
-        <p className="px-3 pb-2 text-[11px] leading-snug text-zinc-500">{group.claim}</p>
+        <p className="border-b border-white/[0.05] px-2.5 py-1.5 text-[11px] leading-snug text-zinc-500">
+          {group.claim}
+        </p>
       )}
 
-      <div className="space-y-1.5 px-2 pb-2">
+      <div className="space-y-1.5 p-2">
         {group.questions.map((q) => (
           <QuestionRow
             key={q.id}
@@ -324,24 +371,22 @@ function CoverageBoard({
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
 
   return (
-    <div className="flex min-h-0 flex-col">
-      <div className="mb-2 flex items-center gap-2">
-        <Label>Thesis coverage</Label>
-        <span className="font-mono text-[10px] text-zinc-600">{groups.length} pillars</span>
-      </div>
-      <div className="min-h-0 flex-1 space-y-2 overflow-y-auto pr-1">
-        {groups.map((g) => (
-          <PillarCard
-            key={g.id}
-            group={g}
-            active={g.id === activePillarId}
-            coverage={coverage}
-            fuByQ={fuByQ}
-            flagByQ={flagByQ}
-          />
-        ))}
-      </div>
-    </div>
+    <Panel
+      title="Thesis coverage"
+      sub={`${groups.length} pillars`}
+      bodyClassName="space-y-2 overflow-y-auto p-2.5"
+    >
+      {groups.map((g) => (
+        <PillarCard
+          key={g.id}
+          group={g}
+          active={g.id === activePillarId}
+          coverage={coverage}
+          fuByQ={fuByQ}
+          flagByQ={flagByQ}
+        />
+      ))}
+    </Panel>
   );
 }
 
@@ -385,24 +430,23 @@ function NextStep({
 
   const accent =
     kind === 'ask'
-      ? 'border-amber-400/40 bg-amber-400/[0.06]'
+      ? 'border-amber-400 bg-amber-400/[0.07]'
       : kind === 'done'
-        ? 'border-emerald-400/40 bg-emerald-400/[0.06]'
-        : 'border-white/10 bg-white/[0.03]';
+        ? 'border-emerald-400 bg-emerald-400/[0.07]'
+        : 'border-white/20 bg-white/[0.03]';
   const eyebrowColor =
     kind === 'ask' ? 'text-amber-400' : kind === 'done' ? 'text-emerald-400' : 'text-zinc-400';
 
   return (
-    <div>
-      <Label>Next step</Label>
+    <Panel title="Next step" className="shrink-0">
       <AnimatePresence mode="wait">
         <motion.div
           key={`${kind}-${body}`}
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.25 }}
-          className={cn('mt-2 rounded-2xl border p-5', accent)}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.22 }}
+          className={cn('m-3 border-l-[3px] p-4', accent)}
         >
           <div className="flex items-center gap-2">
             {kind === 'done' ? (
@@ -419,11 +463,123 @@ function NextStep({
               {eyebrow}
             </span>
           </div>
-          <p className="mt-3 text-[20px] leading-snug font-medium text-white">{body}</p>
+          <p className="mt-2.5 text-[19px] leading-snug font-medium text-white">{body}</p>
           {sub && <p className="mt-2 font-mono text-[11px] tracking-wide text-zinc-500">{sub}</p>}
         </motion.div>
       </AnimatePresence>
-    </div>
+    </Panel>
+  );
+}
+
+// ---- Context panel: what the analyst's note / corpus says about the live answer ----
+
+function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
+  return (
+    <Panel
+      title="Context"
+      sub="on what they just said"
+      right={
+        evidence?.questionId ? (
+          <span className="rounded-[3px] bg-white/[0.07] px-1.5 py-0.5 font-mono text-[9px] text-zinc-400">
+            {evidence.questionId}
+          </span>
+        ) : undefined
+      }
+      className="min-h-0 flex-1"
+      bodyClassName="overflow-y-auto"
+    >
+      <AnimatePresence mode="wait">
+        {evidence ? (
+          <motion.div
+            key={String(evidence.turn)}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="space-y-3 p-3"
+          >
+            {/* What the researcher actually said */}
+            <div className="border-l-2 border-white/15 bg-white/[0.02] px-2.5 py-2">
+              <div className="flex items-center gap-1.5">
+                <QuotesIcon weight="fill" className="size-3 text-zinc-500" />
+                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                  THEY SAID
+                </span>
+              </div>
+              <p className="mt-1 text-[12px] leading-snug text-zinc-300">{evidence.claim}</p>
+            </div>
+
+            {/* Contradiction with the analyst's model, when present */}
+            {evidence.contradiction && (
+              <div className="border-l-2 border-red-500 bg-red-500/[0.08] px-2.5 py-2">
+                <div className="flex items-center gap-1.5">
+                  <WarningIcon weight="fill" className="size-3 text-red-400" />
+                  <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-red-400">
+                    CONTRADICTS YOUR {evidence.contradiction.vs.toUpperCase()}
+                  </span>
+                </div>
+                <p className="mt-1 text-[12px] leading-snug text-red-100/90">
+                  {evidence.contradiction.detail}
+                </p>
+              </div>
+            )}
+
+            {/* Grounded note / corpus snippets */}
+            {evidence.sources.length > 0 && (
+              <div>
+                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                  YOUR NOTE / FILINGS
+                </span>
+                <div className="mt-1.5 space-y-1.5">
+                  {evidence.sources.map((s, i) => (
+                    <div
+                      key={i}
+                      className="border border-white/[0.07] bg-white/[0.015] px-2.5 py-2"
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="font-mono text-[9px] tracking-wide text-emerald-400/80">
+                          {s.label}
+                        </span>
+                        {typeof s.score === 'number' && (
+                          <span className="font-mono text-[9px] text-zinc-600 tabular-nums">
+                            {s.score.toFixed(2)}
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 text-[12px] leading-snug text-zinc-400">{s.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Facts the engine pulled out of the turn */}
+            {evidence.facts.length > 0 && (
+              <div>
+                <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
+                  EXTRACTED
+                </span>
+                <ul className="mt-1.5 space-y-1">
+                  {evidence.facts.map((f, i) => (
+                    <li key={i} className="flex gap-1.5 text-[12px] leading-snug text-zinc-400">
+                      <span className="mt-1.5 size-1 shrink-0 rounded-full bg-zinc-600" />
+                      <span>{f}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </motion.div>
+        ) : (
+          <div className="flex h-full items-center justify-center p-6 text-center">
+            <p className="max-w-[18rem] text-[12px] leading-relaxed text-zinc-600">
+              As the researcher answers, this surfaces what your note and the filings say about it —
+              and flags anything that contradicts your model.
+            </p>
+          </div>
+        )}
+      </AnimatePresence>
+    </Panel>
   );
 }
 
@@ -443,25 +599,22 @@ function LiveCall({
   const latest = transcript[transcript.length - 1];
   const isSubject = latest && latest.speaker === 'researcher';
   return (
-    <div className="flex min-h-0 flex-col">
-      <button
-        onClick={onToggle}
-        className="flex items-center gap-2.5 py-1 text-left"
-        aria-expanded={open}
-      >
-        <CaretRightIcon
-          weight="bold"
-          className={cn('size-3 text-zinc-500 transition-transform', open && 'rotate-90')}
-        />
-        <Label>Live call</Label>
-        <span className="font-mono text-[10px] text-zinc-600">
-          {latest ? (isSubject ? 'researcher speaking' : 'you asking') : 'standing by'}
-        </span>
-        <span className="ml-1">
-          <Waveform active={playing && Boolean(latest)} />
-        </span>
-      </button>
-
+    <Panel
+      title={
+        <button onClick={onToggle} className="flex items-center gap-2" aria-expanded={open}>
+          <CaretRightIcon
+            weight="bold"
+            className={cn('size-3 text-zinc-500 transition-transform', open && 'rotate-90')}
+          />
+          <span className="font-mono text-[10px] font-semibold tracking-[0.18em] text-zinc-400 uppercase">
+            Live call
+          </span>
+        </button>
+      }
+      sub={latest ? (isSubject ? 'researcher speaking' : 'you asking') : 'standing by'}
+      right={<Waveform active={playing && Boolean(latest)} />}
+      className="shrink-0"
+    >
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
@@ -470,13 +623,13 @@ function LiveCall({
             exit={{ opacity: 0, height: 0 }}
             className="min-h-0 overflow-hidden"
           >
-            <div className="mt-2 flex min-h-0 flex-col gap-2">
-              <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3">
-                <p className="text-[15px] leading-relaxed text-zinc-100">
+            <div className="flex min-h-0 flex-col gap-2 p-3">
+              <div className="border-l-2 border-emerald-400/50 bg-white/[0.02] px-3 py-2">
+                <p className="text-[14px] leading-relaxed text-zinc-100">
                   {latest ? latest.text : 'Waiting for the call to start.'}
                 </p>
               </div>
-              <div className="max-h-[34vh] space-y-2 overflow-y-auto pr-1">
+              <div className="max-h-[24vh] space-y-2 overflow-y-auto pr-1">
                 {transcript
                   .slice(0, -1)
                   .reverse()
@@ -500,10 +653,10 @@ function LiveCall({
                         </div>
                         <div
                           className={cn(
-                            'max-w-[88%] rounded-2xl px-3 py-1.5 text-[12px] leading-snug',
+                            'max-w-[88%] px-3 py-1.5 text-[12px] leading-snug',
                             self
-                              ? 'rounded-br-sm bg-emerald-400/10 text-emerald-50/90'
-                              : 'rounded-bl-sm bg-white/[0.04] text-zinc-400'
+                              ? 'border-r-2 border-emerald-400/50 bg-emerald-400/10 text-emerald-50/90'
+                              : 'border-l-2 border-white/15 bg-white/[0.04] text-zinc-400'
                           )}
                         >
                           {t.text}
@@ -516,7 +669,7 @@ function LiveCall({
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </Panel>
   );
 }
 
@@ -534,7 +687,7 @@ export interface TransportControls {
 
 function Transport({ t }: { t: TransportControls }) {
   return (
-    <footer className="flex items-center justify-center gap-4 border-t border-white/[0.06] px-5 py-2.5">
+    <footer className="flex items-center justify-center gap-4 border-t border-white/10 bg-[#0c0d12] px-5 py-2.5">
       <button
         onClick={t.back}
         disabled={t.cursor === 0}
@@ -546,7 +699,7 @@ function Transport({ t }: { t: TransportControls }) {
       {t.done ? (
         <button
           onClick={t.restart}
-          className="flex size-9 items-center justify-center rounded-full bg-emerald-400 text-black"
+          className="flex size-9 items-center justify-center rounded-sm bg-emerald-400 text-black"
           aria-label="Restart"
         >
           <ArrowCounterClockwiseIcon weight="bold" className="size-4" />
@@ -554,7 +707,7 @@ function Transport({ t }: { t: TransportControls }) {
       ) : (
         <button
           onClick={t.toggle}
-          className="flex size-9 items-center justify-center rounded-full bg-white text-black hover:bg-zinc-200"
+          className="flex size-9 items-center justify-center rounded-sm bg-white text-black hover:bg-zinc-200"
           aria-label={t.playing ? 'Pause' : 'Play'}
         >
           {t.playing ? (
@@ -595,18 +748,19 @@ export function MissionConsoleView({
   const activePillar = activePillarIdOf(model, groups);
   const followup = model.activeFollowups[0];
   const next = nextMissedOf(model);
+  const latestEvidence = model.evidence[model.evidence.length - 1];
 
   return (
     <div className="relative flex h-svh flex-col overflow-hidden bg-[#0a0b0f] text-zinc-200">
+      {/* Faint solid grid — no blur glow, no gradients. */}
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.18]"
+        className="pointer-events-none absolute inset-0 opacity-[0.08]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)',
-          backgroundSize: '44px 44px',
+            'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
+          backgroundSize: '48px 48px',
         }}
       />
-      <div className="pointer-events-none absolute -top-40 left-1/2 h-80 w-[40rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[100px]" />
 
       <div className="relative flex min-h-0 flex-1 flex-col">
         <CommandBar
@@ -619,7 +773,7 @@ export function MissionConsoleView({
           live={model.live}
         />
 
-        <main className="grid min-h-0 flex-1 grid-cols-1 gap-5 p-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
+        <main className="grid min-h-0 flex-1 grid-cols-1 gap-4 p-4 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]">
           <CoverageBoard
             groups={groups}
             activePillarId={activePillar}
@@ -635,6 +789,7 @@ export function MissionConsoleView({
               pillar={next ? pillar[next.id] : undefined}
               allCovered={allCovered}
             />
+            <ContextPanel evidence={latestEvidence} />
             <LiveCall
               transcript={model.transcript}
               playing={model.playing}
@@ -650,7 +805,7 @@ export function MissionConsoleView({
   );
 }
 
-// ---- Fixture container: the scripted CAVA/CMG replay (the /console demo) ----
+// ---- Fixture container: the scripted AAPL replay (the /console demo) ----
 
 export function MissionConsole() {
   const state = useDiligenceDemo(questionsFixture, callFixture);

@@ -35,7 +35,7 @@ DEMO_DIR = AGENT_ROOT / "demo"
 # The live question list (CallState format, with inline pillars) so the replayed
 # coverage_update cards carry pillars just like the live agent's.
 DEFAULT_QUESTIONS = AGENT_ROOT / "questions.json"
-DEFAULT_CALL = DEMO_DIR / "cmg_call.json"
+DEFAULT_CALL = DEMO_DIR / "apple_call.json"
 DEFAULT_SPEED_S = 2.6
 
 

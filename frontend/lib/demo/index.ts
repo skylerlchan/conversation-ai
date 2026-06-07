@@ -1,11 +1,10 @@
-// Typed loaders for the Chipotle (CMG) demo fixtures.
+// Typed loaders for the Apple (AAPL) demo fixtures.
 //
 // The JSON files here are copies of `agent-py/demo/*.json` (the source of
 // truth). Kept in-repo so the frontend demo runs with no backend, no Moss,
 // and no LiveKit. The live agent emits the same shapes as data packets.
-// (cava-*.json is kept for reference; CMG is the current demo name.)
-import callJson from './cmg-call.json';
-import questionsJson from './cmg-questions.json';
+import callJson from './apple-call.json';
+import questionsJson from './apple-questions.json';
 import type { CallFixture, QuestionsFixture } from './types';
 
 export const questionsFixture = questionsJson as unknown as QuestionsFixture;

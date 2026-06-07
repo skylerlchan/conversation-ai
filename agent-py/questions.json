@@ -1,94 +1,55 @@
 {
-  "company": "Chipotle Mexican Grill, Inc.",
-  "ticker": "CMG",
-  "source": "Buy-side diligence question list (demo). Modeled assumptions reflect a fund's pre-call note.",
-  "thesis": "CMG is a high-return unit-growth compounder: Chipotlanes and throughput push new-unit economics toward a ~7,000-restaurant North American runway, restaurant-level margins hold in the mid-to-high 20s through food and labor inflation, and digital plus loyalty deepen the moat.",
+  "company": "Apple Inc.",
+  "ticker": "AAPL",
+  "source": "Buy-side diligence question list (demo). Pillars and questions grounded in the topics raised on Apple's Q2 FY26 earnings call (Apr 30, 2026).",
+  "thesis": "AAPL enters the print mid-supercycle: the iPhone 17 family is driving 20%+ revenue growth — the strongest cycle in company history — while Mac demand (MacBook Neo, plus mini/Studio as local-AI machines) runs ahead of supply. Growth is gated by supply, not demand: the binding constraint is advanced-node SOC availability (iPhone in the March quarter, shifting to Mac into June). The central risk is the memory-cost overhang, modest now but building into a growing gross-margin headwind beyond June. Services keeps compounding at high margin with advertising (App Store, now Maps) as a fresh lever; capital allocation is shifting as Apple drops the net-cash-neutral target and lifts buyback authorization by $100B; AI strategy pairs a Google partnership with in-house foundational models on accelerating R&D; and management hands the CEO role to John Ternus in September.",
   "questions": [
     {
       "id": "q1",
-      "pillar": "Unit-growth runway: the ~7,000 NA restaurant target is real and new-unit returns are holding",
-      "question": "You've guided to ~7,000 North American restaurants long term — what's the current new-unit pace, and are Chipotlanes still the majority of openings with better returns?",
+      "pillar": "Supply-gated hardware supercycle: iPhone and Mac demand is outrunning supply, with broad geographic strength",
+      "question": "How strong and durable is the hardware cycle (iPhone 17 family, MacBook Neo, Mac mini / Studio), how binding are the supply constraints, and how broad is demand across Greater China and India?",
       "complete_when": [
-        "States the current new-unit pace or growth rate",
-        "Confirms the long-term North American unit target",
-        "Addresses Chipotlane mix and whether new-unit returns are holding"
+        "Addresses iPhone growth, its drivers, and durability",
+        "Addresses the Mac / MacBook Neo cycle and new-to-Mac customers",
+        "Addresses where supply constraints bind (advanced-node SOCs; iPhone in the March quarter, Mac into June) and the path to balance",
+        "Addresses geographic breadth (Greater China and India)"
       ],
       "expected": {
-        "note_models": "8-10% net new units per year toward a ~7,000 NA target",
-        "our_view": "Runway intact as long as new-unit cash-on-cash returns hold",
-        "watch": "New-unit cash-on-cash returns and Chipotlane share of openings"
+        "note_models": "iPhone +~22% (strongest cycle ever) led by the 17 family; MacBook Neo off the charts with a record for customers new to Mac; constraints are advanced-node SOC availability (iPhone in the March quarter, Mac into June); Greater China first half +33% (quarterly revenue record), India a long runway at still-modest share",
+        "our_view": "Demand is genuinely outrunning supply across iPhone and Mac, with China re-accelerating and India the structural multi-year story",
+        "watch": "Whether iPhone is called constrained into June, the upgrader-versus-switcher mix, and the Mac mini / Studio rebalancing timeline"
       },
       "state": "unanswered"
     },
     {
       "id": "q2",
-      "pillar": "Transaction-led comps: comp growth is traffic-driven, not mostly price",
-      "question": "How much of recent comp growth is transactions versus the menu pricing you've carried over the past year?",
+      "pillar": "Margin and capital: the memory-cost overhang on gross margin against a shift in the capital-return framework",
+      "question": "Where does gross margin trend given the building memory-cost headwind (net of tariffs, mix, FX), and what does dropping the net-cash-neutral target mean for capital return?",
       "complete_when": [
-        "Splits the comp into transactions versus price",
-        "Quantifies the pricing contribution"
+        "States company gross margin and the sequential bridge (mix, tariffs, memory, leverage, FX)",
+        "Characterizes the memory-cost trajectory beyond June and the offsets / range of options",
+        "Explains the move off net-cash-neutral and the buyback / investment posture"
       ],
       "expected": {
-        "note_models": "~3-4 points of comp from menu pricing taken over the trailing year",
-        "our_view": "Traffic-led, but carried pricing is a real chunk of the comp",
-        "bear": "If the comp is mostly price, it is far less durable than it looks"
+        "note_models": "Company GM ~49%; sequential bridge helped by favorable mix and lower tariffs, hurt by seasonal deleverage and memory, FX roughly neutral; memory a building headwind beyond June; net-cash-neutral retired as a formal target (cash and debt evaluated independently); +$100B buyback authorization; over $1T returned to date",
+        "our_view": "Mix and tariff relief are masking a memory bill that grows through FY26; the capital-allocation change is added flexibility, not a buyback retreat",
+        "bear": "An escalating memory cost that pricing can't fully pass through compresses product gross margin even as buybacks continue"
       },
       "state": "unanswered"
     },
     {
       "id": "q3",
-      "pillar": "Throughput: initiatives are lifting peak-hour transactions",
-      "question": "What throughput initiatives are live, and are they actually lifting peak-hour transactions?",
+      "pillar": "The forward call: high-margin Services and advertising, an in-house-plus-Google AI strategy, and the CEO handoff to John Ternus",
+      "question": "How durable are Services and the emerging advertising lever, what is Apple's AI / foundational-model strategy and the investment behind it, and how clean is the CEO transition to John Ternus?",
       "complete_when": [
-        "Names the throughput initiatives",
-        "Gives evidence of peak-hour transaction gains"
+        "Addresses Services growth / margin and advertising (App Store search ads, upcoming Maps ads)",
+        "Addresses the AI strategy (in-house versus Google) and the R&D / investment behind it",
+        "Addresses the CEO transition timing and continuity of strategy and capital discipline"
       ],
       "expected": {
-        "our_view": "Throughput is the underrated comp lever",
-        "watch": "Peak-hour entrees per 15 minutes"
-      },
-      "state": "unanswered"
-    },
-    {
-      "id": "q4",
-      "pillar": "Margin durability: restaurant-level margins hold in the mid-to-high 20s through inflation",
-      "question": "Where are restaurant-level margins running, and can they hold against beef and wage inflation?",
-      "complete_when": [
-        "States the restaurant-level margin",
-        "Addresses how beef and labor inflation are offset"
-      ],
-      "expected": {
-        "note_models": "Restaurant-level margin in the mid-to-high 20s%",
-        "our_view": "Margins durable if pricing plus throughput offset input inflation",
-        "risk": "Beef inflation outruns pricing and compresses restaurant margin"
-      },
-      "state": "unanswered"
-    },
-    {
-      "id": "q5",
-      "pillar": "Digital and loyalty: the digital mix is durable and loyalty is being monetized",
-      "question": "How durable is the digital mix, and how are you monetizing the loyalty base?",
-      "complete_when": [
-        "States the digital mix of sales",
-        "Addresses loyalty scale and monetization"
-      ],
-      "expected": {
-        "fact": "Digital ~35% of sales; 40M+ loyalty members",
-        "thesis": "Digital and loyalty deepen the moat and lift frequency"
-      },
-      "state": "unanswered"
-    },
-    {
-      "id": "q6",
-      "pillar": "Bounded downside: value perception protects traffic in a consumer slowdown",
-      "question": "What's the single biggest risk — if the consumer pulls back, does value perception hold your traffic?",
-      "complete_when": [
-        "Names the single biggest risk",
-        "Addresses value perception and traffic resilience in a slowdown"
-      ],
-      "expected": {
-        "bear_case": "A consumer pullback hits traffic and the premium price point",
-        "base_fact": "Value perception has historically kept traffic resilient versus peers"
+        "note_models": "Services compounding at high margin (services GM +~20bps sequentially on mix); advertising up YoY with new App Store inventory and Apple Maps ads launching in US / Canada this summer; two-pronged AI (Google collaboration plus in-house foundational models) on accelerating R&D; John Ternus becomes CEO in September with messaging stressing continuity",
+        "our_view": "Services and ads are the high-margin compounder while AI is a deliberate, privacy-led investment; the succession is orderly and telegraphed",
+        "watch": "Whether ad inventory moves the needle, whether Google dependence deepens or AI yields a new form factor, and any posture change under the new CEO"
       },
       "state": "unanswered"
     }

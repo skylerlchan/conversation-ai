@@ -110,6 +110,31 @@ async def test_grade_turn_includes_grounding_when_provided() -> None:
     assert "note models 12% contribution margin" in rendered
 
 
+async def test_grade_turn_isolates_cacheable_prefix() -> None:
+    """Cache-friendliness: the static prefix (rules + question definitions) is the
+    system message, and per-turn volatile content (coverage state + the live turn)
+    is the user message. This split is what lets the gateway prefix-cache the
+    system message across turns — re-mixing them would silently break the cache.
+    """
+    fake = _FakeLLM({"updates": []})
+    await grade_turn(fake, _call(), "Margins are fine, trust me.")
+
+    items = fake.calls[0]["chat_ctx"].items
+    system = next(i for i in items if getattr(i, "role", None) == "system")
+    user = next(i for i in items if getattr(i, "role", None) == "user")
+    sys_text = system.text_content or ""
+    user_text = user.text_content or ""
+
+    # Static definitions live in the cacheable system prefix...
+    assert "What is Connect's contribution margin at scale?" in sys_text
+    assert "ex-capitalized software" in sys_text
+    # ...and the volatile turn does NOT (it would change the prefix every turn).
+    assert "Margins are fine, trust me." not in sys_text
+    # The volatile tail carries the live turn and the current coverage state.
+    assert "Margins are fine, trust me." in user_text
+    assert "q1: unanswered" in user_text
+
+
 @pytest.fixture
 def stub_moss(monkeypatch):
     class _FakeMoss:

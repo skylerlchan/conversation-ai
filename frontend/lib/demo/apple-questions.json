@@ -1,0 +1,64 @@
+{
+  "_note": "SYNTHETIC DEMO FIXTURE — not investment advice. Pre-call structured input for the Diligence-Call Copilot demo, grounded in the topics Apple raised on its Q2 FY2026 earnings call (Apr 30 2026): the fund's question list + thesis + modeled assumptions the copilot grounds follow-ups and contradiction flags against.",
+  "company": {
+    "name": "Apple Inc.",
+    "ticker": "AAPL",
+    "exchange": "NASDAQ",
+    "sector": "Technology / consumer hardware + services"
+  },
+  "counterpart": {
+    "side": "sell-side",
+    "firm": "(fictional)",
+    "analyst": "covering analyst, Hardware & Megacap Tech",
+    "note": "Overweight (fictional)"
+  },
+  "thesis": "AAPL enters the print mid-supercycle: the iPhone 17 family is driving 20%+ revenue growth — the strongest cycle in company history — while Mac (MacBook Neo, plus mini/Studio as local-AI machines) runs ahead of supply. Growth is gated by supply, not demand: the binding constraint is advanced-node SOC availability (iPhone in the March quarter, shifting to Mac into June). The central risk is the memory-cost overhang on gross margin, modest now but building beyond June. Services keeps compounding at high margin with advertising (App Store, now Maps) a fresh lever; capital allocation is shifting as Apple drops the net-cash-neutral target and lifts buyback authorization by $100B; AI pairs a Google partnership with in-house foundational models on accelerating R&D.",
+  "thesis_memo": "We are long AAPL into a genuine, supply-gated hardware supercycle. Two load-bearing checks for this call: (1) is the growth real demand outrunning supply, with the constraint correctly diagnosed (advanced-node SOC availability, iPhone->Mac into June) rather than a demand pull-forward; and (2) does the gross-margin story survive the memory-cost overhang building beyond June, alongside the capital-allocation shift (dropping net-cash-neutral, +$100B buyback). If management glosses the memory trajectory or the bridge, the margin leg is weaker than the headline suggests.",
+  "modeled_assumptions": {
+    "iphone_cycle": "iPhone revenue +~22%, strongest cycle in company history; iPhone 17 family; March-quarter upgrader record",
+    "supply_constraint": "supply-gated, not demand-gated; iPhone binding in March quarter, shifting to Mac (mini, Studio, MacBook Neo) into June; root cause advanced-node SOC availability",
+    "gross_margin": "company GM ~49%; memory minimal-to-modest now, building headwind beyond June; mix + lower tariffs help, seasonal deleverage hurts, FX ~neutral",
+    "capital_allocation": "net-cash-neutral target dropped; cash and debt evaluated independently; buyback authorization +$100B",
+    "services_ads_ai": "Services compounding at high margin (services GM +~20bps QoQ on mix); App Store search ads + Apple Maps ads launching US/Canada this summer; AI = Google partnership + in-house foundational models, R&D accelerating faster than opex"
+  },
+  "pillars": [
+    {
+      "id": "P1",
+      "thesis": "Supply-gated hardware supercycle: iPhone and Mac demand is outrunning supply on advanced-node SOC availability",
+      "questions": ["q1"]
+    },
+    {
+      "id": "P2",
+      "thesis": "Margin & capital: the memory-cost overhang on gross margin, against a shift in the capital-allocation posture",
+      "questions": ["q2"]
+    },
+    {
+      "id": "P3",
+      "thesis": "The forward call: high-margin Services and advertising, plus an in-house-plus-Google AI strategy",
+      "questions": ["q3"]
+    }
+  ],
+  "questions": [
+    {
+      "id": "q1",
+      "text": "iPhone 17 looks like the strongest lineup you've ever had — where are you supply-constrained right now, iPhone versus Mac, and what's the root cause?",
+      "why": "The cycle is the spine of the thesis. We need the growth confirmed as supply-gated demand (not a pull-forward) and the constraint correctly diagnosed (advanced-node SOC, iPhone->Mac into June).",
+      "demo_role": "clean tick — answered early and cleanly",
+      "expected_outcome": "answered"
+    },
+    {
+      "id": "q2",
+      "text": "Where is gross margin running, and how should I think about it from here given the memory-cost trajectory and the change in capital allocation?",
+      "why": "Margin durability is the load-bearing check. The note models a memory-cost headwind building beyond June and a capital-allocation shift; if management glosses the bridge, the margin leg is weaker than the headline.",
+      "demo_role": "HERO — researcher over-claims 'margins are great, nothing to flag' -> partial/amber + contradiction vs note -> copilot fires grounded follow-up -> closes green with the real bridge + capital shift",
+      "expected_outcome": "answered (via follow-up)"
+    },
+    {
+      "id": "q3",
+      "text": "On the forward call — how durable are Services and the advertising lever, and what's the AI strategy and what's it costing you?",
+      "why": "Services and advertising are the high-margin compounder; the AI strategy (in-house vs Google) and its R&D cost frame the multiple.",
+      "demo_role": "clean tick",
+      "expected_outcome": "answered"
+    }
+  ]
+}

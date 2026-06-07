@@ -1,9 +1,10 @@
 """Replay-driver tests for the fake-live driver.
 
-build_packets() folds the scripted CMG call's `expected` verdicts through the SAME
-coverage state machine (apply_verdict) the live agent uses, then emits the packet
-stream the console consumes. These assert the demo arc emerges from the machinery —
-not from hand-authored snapshots — which is the Phase 2.1 check from the build plan.
+build_packets() folds the scripted Apple call's `expected` verdicts through the
+SAME coverage state machine (apply_verdict) the live agent uses, then emits the
+packet stream the console consumes. These assert the demo arc emerges from the
+machinery — not from hand-authored snapshots — which is the Phase 2.1 check from
+the build plan.
 """
 
 import json
@@ -13,7 +14,9 @@ from fake_live import build_packets
 
 ROOT = Path(__file__).resolve().parent.parent
 QUESTIONS = json.loads((ROOT / "questions.json").read_text(encoding="utf-8"))
-CALL = json.loads((ROOT / "demo" / "cmg_call.json").read_text(encoding="utf-8"))
+CALL = json.loads((ROOT / "demo" / "apple_call.json").read_text(encoding="utf-8"))
+
+N_QUESTIONS = len(QUESTIONS["questions"])
 
 
 def _coverage_packets(packets):
@@ -27,7 +30,11 @@ def _cards(snapshot):
 def test_opens_all_unanswered():
     packets = build_packets(QUESTIONS, CALL)
     assert packets[0]["type"] == "coverage_update"
-    assert packets[0]["data"]["counts"] == {"unanswered": 6, "partial": 0, "answered": 0}
+    assert packets[0]["data"]["counts"] == {
+        "unanswered": N_QUESTIONS,
+        "partial": 0,
+        "answered": 0,
+    }
 
 
 def test_transcript_packet_per_turn():
@@ -62,5 +69,11 @@ def test_q2_arc_partial_then_answered_with_contradiction():
 def test_hangs_up_all_green():
     snapshots = _coverage_packets(build_packets(QUESTIONS, CALL))
     final = snapshots[-1]
-    assert final["counts"] == {"unanswered": 0, "partial": 0, "answered": 6}
-    assert CALL["final_coverage"] == {f"q{i}": "answered" for i in range(1, 7)}
+    assert final["counts"] == {
+        "unanswered": 0,
+        "partial": 0,
+        "answered": N_QUESTIONS,
+    }
+    assert CALL["final_coverage"] == {
+        f"q{i}": "answered" for i in range(1, N_QUESTIONS + 1)
+    }

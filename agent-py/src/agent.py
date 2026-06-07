@@ -45,6 +45,40 @@ DEFAULT_USER_ID = "user_1"
 QUESTIONS_PATH = Path(__file__).resolve().parent.parent / "questions.json"
 
 
+class SpeakerRoles:
+    """Map diarization speaker ids to diligence-call roles.
+
+    Speaker diarization (enabled on the STT) tags each turn with an opaque speaker
+    id ("0", "1", ...); it does NOT know which voice is the analyst. On a diligence
+    call the analyst opens and drives the Q&A, so the heuristic here binds the
+    FIRST distinct speaker to ``"analyst"`` and every later speaker to
+    ``"researcher"`` (the management / C-suite being grilled). The mapping is
+    sticky, so a speaker keeps its role for the rest of the call.
+
+    A missing id — no diarization, or a turn the STT couldn't attribute — maps to
+    ``"researcher"``. That preserves the pre-diarization default of treating every
+    turn as a researcher answer, which is the safe fallback for coverage (the
+    grading engine only advances a question on a satisfying answer, so a
+    mislabeled analyst turn can't false-advance it).
+
+    This is a single-mic heuristic. When the analyst and researcher join as
+    separate LiveKit participants, prefer labeling by participant identity (no
+    diarization needed) — see docs.
+    """
+
+    def __init__(self) -> None:
+        self._roles: dict[str, str] = {}
+
+    def role_for(self, speaker_id: str | None) -> str:
+        if speaker_id is None:
+            return "researcher"
+        role = self._roles.get(speaker_id)
+        if role is None:
+            role = "analyst" if not self._roles else "researcher"
+            self._roles[speaker_id] = role
+        return role
+
+
 class DiligenceListener(Agent):
     """A silent listener on a diligence call — it transcribes, it never speaks.
 
@@ -86,6 +120,11 @@ class DiligenceListener(Agent):
         )
         # Finalized researcher turns, in order.
         self._turns: list[str] = []
+        # Speaker diarization: map opaque STT speaker ids to call roles, and hold
+        # the speaker id of the in-progress turn (set from user_input_transcribed,
+        # consumed when the turn finalizes). See SpeakerRoles + on_enter.
+        self._speaker_roles = SpeakerRoles()
+        self._current_turn_speaker_id: str | None = None
         # The coverage engine's dedicated LLM (out-of-band; never speaks). When
         # None — e.g. unit tests that only check silence — per-turn scoring is
         # skipped. `_tasks` retains in-flight scoring tasks so they aren't GC'd.
@@ -97,6 +136,13 @@ class DiligenceListener(Agent):
             "Diligence call started: %d questions to cover",
             len(self._call.questions),
         )
+        # Track who is speaking. Diarization tags each transcription with a
+        # speaker id; we hold the latest so the finalized turn can be labeled
+        # analyst vs researcher. Guarded so a missing session never breaks entry.
+        try:
+            self.session.on("user_input_transcribed", self._on_user_input_transcribed)
+        except Exception:
+            logger.exception("Could not subscribe to transcription events")
         # Preload both Moss indexes so the first retrieval is fast. Guarded: log
         # and continue on failure so retrieval can still retry the load on use.
         if not self._indexes_loaded:
@@ -110,29 +156,43 @@ class DiligenceListener(Agent):
             except Exception:
                 logger.exception("Failed to preload Moss indexes; will retry on use")
 
+    def _on_user_input_transcribed(self, ev) -> None:
+        """Remember the diarized speaker of the in-progress turn.
+
+        The final transcript's speaker id wins (a turn is usually one speaker);
+        it is consumed and cleared when the turn finalizes in
+        ``on_user_turn_completed``. No-op when diarization is off (speaker_id is
+        None), leaving the safe "researcher" default in place.
+        """
+        speaker_id = getattr(ev, "speaker_id", None)
+        if getattr(ev, "is_final", False) and speaker_id is not None:
+            self._current_turn_speaker_id = speaker_id
+
     async def on_user_turn_completed(self, turn_ctx, new_message) -> None:
         """Consume each finalized turn — and never reply.
 
-        Records the turn, publishes it to the console transcript, scores coverage
-        in the background, then raises `StopResponse` so the agent produces no
-        spoken reply. This node runs before reply generation, so raising here
-        keeps the copilot silent even if an LLM is ever attached to the session.
+        Records the turn, labels the speaker (analyst vs researcher) from
+        diarization, publishes it to the console transcript, scores coverage in
+        the background, then raises `StopResponse` so the agent produces no spoken
+        reply. This node runs before reply generation, so raising here keeps the
+        copilot silent even if an LLM is ever attached to the session.
 
-        Same-room note: the analyst and researcher share one room, and the STT
-        pipeline does not do per-turn speaker diarization, so every finalized turn
-        is treated as a researcher answer. This is safe for coverage because the
-        grading engine only advances a question when the turn satisfies its
-        `complete_when` criteria — an analyst *re-asking* a question never
-        false-advances it. Turns are labeled "researcher" on the transcript;
-        precise speaker labels arrive via the scripted driver (or, later,
-        diarization — see docs/diligence-copilot-build-plan.md Phase 6).
+        Speaker labeling: the STT runs with diarization on, so each turn carries a
+        speaker id we map to a role via `SpeakerRoles` (first speaker = analyst,
+        the rest = researcher; unknown = researcher). The label drives the
+        transcript display only — coverage is still scored on every turn, so a
+        mislabel never drops a real researcher answer. The grading engine only
+        advances a question on a satisfying answer, so an analyst re-asking can't
+        false-advance it either.
         """
         text = (new_message.text_content or "").strip()
         if text:
             self._turns.append(text)
-            logger.info("turn (%d): %s", len(self._turns), text)
+            speaker = self._speaker_roles.role_for(self._current_turn_speaker_id)
+            self._current_turn_speaker_id = None
+            logger.info("turn (%d, %s): %s", len(self._turns), speaker, text)
             # Surface the turn to the console immediately, before scoring.
-            await self.publish_transcript(len(self._turns), "researcher", text)
+            await self.publish_transcript(len(self._turns), speaker, text)
             # Score coverage in the background so the turn pipeline stays fast
             # (no one waits on the AI — it never speaks).
             if self._verdict_llm is not None:
@@ -274,7 +334,13 @@ async def my_agent(ctx: JobContext):
     # speaks on the call. STT transcripts still flow to `on_user_turn_completed`.
     session = AgentSession(
         # STT is the copilot's ears: the live transcript the coverage engine reads.
-        stt=inference.STT(model="deepgram/nova-3", language="en"),
+        # Diarization tags each turn with a speaker id so the console can separate
+        # the analyst's questions from the researcher's / C-suite's answers
+        # (mapped to roles by SpeakerRoles). Single-mic heuristic; for separate
+        # participants, label by participant identity instead.
+        stt=inference.STT(
+            model="deepgram/nova-3", language="en", extra_kwargs={"diarize": True}
+        ),
         # Turn detection marks the end of each researcher turn — the trigger the
         # whole copilot rides on. See https://docs.livekit.io/agents/build/turns
         turn_detection=MultilingualModel(),
@@ -282,8 +348,10 @@ async def my_agent(ctx: JobContext):
     )
 
     # The coverage engine's dedicated LLM: out-of-band structured scoring, off the
-    # room's audio path, so it can never speak on the call.
-    verdict_llm = inference.LLM(model="openai/gpt-5.2-chat-latest")
+    # room's audio path, so it can never speak on the call. gpt-4.1-mini grades a
+    # turn in ~2s (vs ~5.5s for gpt-5.2-chat-latest) at the same verdict, and its
+    # static prompt prefix prefix-caches on the gateway. See engine.grade_turn.
+    verdict_llm = inference.LLM(model="openai/gpt-4.1-mini")
 
     listener = DiligenceListener(
         room=ctx.room, user_id=user_id, verdict_llm=verdict_llm

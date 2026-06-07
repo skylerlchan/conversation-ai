@@ -3,7 +3,7 @@
 // (useLiveDiligence) — so the console UI is written once against ConsoleModel and
 // driven by either. See components/console/mission-console.tsx (MissionConsoleView).
 import type { CoverageState, QuestionsFixture } from '@/lib/demo/types';
-import type { CoveragePacket, Speaker, TranscriptPacket } from '@/lib/live/types';
+import type { CoveragePacket, GroundingPacket, Speaker, TranscriptPacket } from '@/lib/live/types';
 
 export interface ConsoleQuestion {
   id: string;
@@ -22,6 +22,35 @@ export interface ConsoleFlag {
   detail: string;
 }
 
+/** One grounded snippet behind a turn — what the analyst's note / corpus says. */
+export interface ConsoleEvidenceSource {
+  /** Where the snippet came from, e.g. "Your note · modeled" or "Filing (corpus)". */
+  label: string;
+  text: string;
+  score?: number;
+}
+
+/**
+ * The "context on what they just said" for one researcher turn: the live claim,
+ * the grounded note/corpus snippets it was checked against, the facts the engine
+ * pulled out, and any contradiction with the analyst's model. Drives the console
+ * Context panel.
+ */
+export interface ConsoleEvidence {
+  /** Transcript turn this context belongs to. */
+  turn: number | string;
+  /** The question it primarily addresses, when known. */
+  questionId?: string;
+  /** What the researcher actually said (the turn text). */
+  claim: string;
+  /** Facts the engine extracted from the turn. */
+  facts: string[];
+  /** Grounded note/corpus snippets the claim was checked against. */
+  sources: ConsoleEvidenceSource[];
+  /** Set when the claim contradicts the analyst's model. */
+  contradiction?: { vs: string; detail: string };
+}
+
 export interface ConsoleTurn {
   t: number | string;
   speaker: Speaker;
@@ -37,6 +66,8 @@ export interface ConsoleModel {
   activeFollowups: ConsoleFollowup[];
   flags: ConsoleFlag[];
   transcript: ConsoleTurn[];
+  /** Per-researcher-turn grounded context, oldest first. The Context panel shows the latest. */
+  evidence: ConsoleEvidence[];
   tally: { answered: number; partial: number; unanswered: number; total: number };
   /** Call is ongoing (LIVE) vs finished (ENDED). */
   live: boolean;
@@ -135,6 +166,8 @@ export function nextMissed(model: ConsoleModel): ConsoleQuestion | undefined {
 export function liveModel(args: {
   coverage: CoveragePacket | null;
   transcript: TranscriptPacket[];
+  /** Moss retrieval feed (one per scored researcher turn), oldest first. */
+  groundings?: GroundingPacket[];
   live: boolean;
   callKind?: string;
 }): ConsoleModel {
@@ -158,6 +191,20 @@ export function liveModel(args: {
   const counts = coverage?.counts ?? { unanswered: 0, partial: 0, answered: 0 };
   const total = cards.length;
 
+  // Context-panel evidence: each grounding packet is the Moss retrieval for one
+  // researcher turn (its `query` is what they said). Newest grounding -> newest
+  // context. Contradictions live on the coverage cards (the board flags them).
+  const evidence: ConsoleEvidence[] = (args.groundings ?? []).map((g, i) => ({
+    turn: `g${i}`,
+    claim: g.query,
+    facts: [],
+    sources: g.matches.map((m) => ({
+      label: 'Your research · Moss',
+      text: m.text,
+      score: m.score,
+    })),
+  }));
+
   return {
     company: {
       ticker: coverage?.ticker ?? '',
@@ -175,6 +222,7 @@ export function liveModel(args: {
       text: t.text,
       prompted_by_copilot: t.prompted_by_copilot,
     })),
+    evidence,
     tally: {
       answered: counts.answered,
       partial: counts.partial,
@@ -199,6 +247,7 @@ interface FixtureState {
   }[];
   activeFollowups: { questionId: string; text: string }[];
   flags: { questionId: string; vs: string; detail: string }[];
+  evidence: ConsoleEvidence[];
   tally: { answered: number; partial: number; unanswered: number; total: number };
   playing: boolean;
   done: boolean;
@@ -220,6 +269,7 @@ export function fixtureModel(state: FixtureState, fixture: QuestionsFixture): Co
     coverage: state.coverage,
     activeFollowups: state.activeFollowups.map((f) => ({ questionId: f.questionId, text: f.text })),
     flags: state.flags.map((f) => ({ questionId: f.questionId, vs: f.vs, detail: f.detail })),
+    evidence: state.evidence,
     transcript: state.transcript.map((t) => ({
       t: t.t,
       speaker: t.speaker,

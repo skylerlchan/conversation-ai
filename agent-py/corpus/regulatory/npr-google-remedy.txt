@@ -1,0 +1,317 @@
+A judge lets Google keep Chrome but levies other penalties : NPR 
+
+ Accessibility links 
+ Skip to main content 
+ Keyboard shortcuts for audio player 
+
+ Open Navigation Menu
+
+ -->
+
+ Newsletters 
+
+ NPR Shop 
+
+ Close Navigation Menu 
+
+ Home 
+
+ News 
+ Expand/collapse submenu for News 
+
+ National 
+ World 
+ Politics 
+ Business 
+ Health 
+ Science 
+ Climate 
+ Race 
+
+ Culture 
+ Expand/collapse submenu for Culture 
+
+ Books 
+ Movies 
+ Television 
+ Pop Culture 
+ Food 
+ Art & Design 
+ Performing Arts 
+ Life Kit 
+ Gaming 
+
+ Music 
+ Expand/collapse submenu for Music 
+
+ Tiny Desk
+
+ New Music Friday
+
+ All Songs Considered
+
+ Music Features
+
+ Live Sessions
+
+ Podcasts & Shows 
+ Expand/collapse submenu for Podcasts & Shows 
+
+ Daily 
+
+ Morning Edition
+
+ Weekend Edition Saturday
+
+ Weekend Edition Sunday
+
+ All Things Considered
+
+ Up First
+
+ Here & Now
+
+ NPR Politics Podcast
+
+ Featured 
+
+ Wait Wait...Don't Tell Me!
+
+ Fresh Air
+
+ Wild Card with Rachel Martin
+
+ It's Been a Minute
+
+ Planet Money
+
+ Get NPR+
+
+ More Podcasts & Shows 
+
+ Search 
+
+ Newsletters 
+
+ NPR Shop 
+
+ Tiny Desk
+
+ New Music Friday
+
+ All Songs Considered
+
+ Music Features
+
+ Live Sessions
+
+ About NPR 
+ Diversity 
+ Support 
+ Careers 
+ Press 
+ Ethics 
+
+ A judge lets Google keep Chrome but levies other penalties A federal judge ruled against breaking up Google, but is barring it from making exclusive deals to make its search engine the default on phones and other devices. 
+
+ Business 
+
+ In a major antitrust ruling, a judge lets Google keep Chrome but levies other penalties
+
+ Updated September 2, 2025 9:34 PM ET 
+
+ Originally published September 2, 2025 5:15 PM ET 
+
+ Heard on All Things Considered 
+
+ Jaclyn Diaz
+
+ In a major antitrust ruling, a judge lets Google keep Chrome but levies other penalties
+
+ Listen
+
+ · 
+ 3:17 
+
+ 3:17 
+
+ Transcript 
+
+ Toggle more options 
+
+ Download 
+
+ Embed 
+
+ Embed 
+ ">
+
+ < iframe src="https://www.npr.org/player/embed/nx-s1-5478625/nx-s1-9436489" width="100%" height="290" frameborder="0" scrolling="no" title="NPR embedded audio player"> 
+
+ Transcript 
+
+ A man walks past a Google logo at the Google Campus in Warsaw on Feb. 13, 2025.
+
+ Sergi Gapon/AFP via Getty Images
+
+ hide caption 
+
+ toggle caption 
+
+ Sergi Gapon/AFP via Getty Images
+
+ In a ruling aimed at restoring competition in the search engine market, U.S. District Judge Amit Mehta refrained from ordering Google to sell off Chrome, the world's most popular browser, but ordered the tech company to end exclusive deals that make Google the default search engine on phones and other devices. 
+ The company will not, however, be barred from paying device makers to preload its products, including its search engine and its Gemini AI chatbot.
+ Mehta called on the $2 trillion company to share some of its search data (specifically certain search index and user interaction data, though not advertising data) with third parties and called for the establishment of a technological oversight committee to monitor the company's compliance with the ordered measures for six years.  
+
+ Sponsor Message 
+
+ Technology 
+
+ Google Abuses Its Monopoly Power Over Search, Justice Department Says In Lawsuit 
+
+ Business 
+
+ The Justice Department and Google battle over how to fix a search engine monopoly 
+
+ The Department of Justice filed an antitrust suit against Google in 2020, arguing that it had used exclusive agreements with device makers like Apple and Samsung to give Google's search engine a prime position on phones or computers — unfairly boxing out its competitors. In return, companies like Apple received billions in payments from Google. 
+ In 2024, Mehta ruled in the DOJ's favor, finding that Google had maintained an illegal monopoly. 
+ The "remedies" phase of the trial began this April, with both sides facing off at the E. Barrett Prettyman Federal Courthouse in Washington, D.C. over what price Google should pay for its monopoly.
+ The DOJ urged the spinoff of Chrome and the sharing of Google's search data, saying in court documents that these remedies would limit Google's ability to monopolize the search market and prevent it from gaining an unfair advantage in other markets, notably artificial intelligence .
+ Google agreed to roll back its exclusive search engine contracts, but objected to nearly every other proposed remedy from the DOJ, especially the sale of Chrome and its open source Chromium project and the prospect of sharing its search data. The company maintained that it shouldn't have to divest part of its business to improve competition. On the contrary, Google's lawyers said, this would hurt the market, dampen innovation and give the company's competitors an unfair handout.
+
+ Google and Alphabet CEO Sundar Pichai departs federal court on Oct. 30, 2023 in Washington, DC. Pichai testified to defend his company in the largest antitrust case since the 1990s.
+
+ Drew Angerer/Getty Images/Getty Images North America
+
+ hide caption 
+
+ toggle caption 
+
+ Drew Angerer/Getty Images/Getty Images North America
+
+ Google CEO Sundar Pichai testified , saying the DOJ's proposals were "so far-reaching, so extraordinary" that it was akin to the government asking for a sell-off of the company's core intellectual property.
+
+ Sponsor Message 
+
+ Business 
+
+ In court, CEO Sundar Pichai defends Google against the DOJ's 'extraordinary' proposals 
+
+ Mehta's orders fall far short of the U.S. Justice Department's most aggressive proposals, including the spinoff of Chrome. It's a key search access point for Google, with nearly 40% of Google's search volume in the U.S. generated through Chrome, according to the Knight-Georgetown Institute . It's also a major part of the company's advertising business, as Chrome provides important user data that lets Google to help target ads more effectively.
+ Explaining why he declined to order a divestiture of Chrome, Mehta wrote, "The court's task is to discern between conduct that maintains a monopoly through anticompetitive acts as distinct from 'growth or development as a consequence of a superior product, business acumen, or historic accident.'" 
+ He continued, "After two complete trials, this court cannot find that Google's market dominance is sufficiently attributable to its illegal conduct to justify divestiture."
+ He also said such a divestiture would be "incredibly messy and highly risky."
+ He also allowed Google to continue to pay device makers to preload its products — as long as those deals aren't exclusive.
+ In a blog post on the company's website, Lee-Anne Mulholland, Google's vice president of regulatory affairs, rejoiced that the judge did not order a sell-off of Chrome, writing that it "would have gone beyond the case's focus on search distribution, and would have harmed consumers and our partners."
+ Still, she wrote, the tech giant is reviewing the order closely, and has concerns that being required to share search data with rivals "will impact our users and their privacy." 
+ In a statement, Assistant Attorney General Abigail Slater of the DOJ's Antitrust Division wrote that Mehta's ruling restores competition to the search engine market. "We will continue to review the opinion to consider the Department's options and next steps regarding seeking additional relief," she wrote.
+
+ Technology 
+
+ Should a court break up Google? The tech giant made its final stand today 
+
+ Mehta's decision is likely a huge disappointment for Google's competitors, who have been itching for a chance to buy Chrome. Weeks before Mehta issued his decision, one of Google's AI competitors, Perplexity, announced it was interested in buying Chrome for $34.5 billion.
+ Christian Kroll, the founder and CEO of Berlin-based Ecosia , a company that produces renewable energy to power search, wrote in Fortune that Chrome shouldn't go to the highest bidder, but rather into stewardship, with its profits to be used for climate action.
+
+ Sponsor Message 
+
+ Gabriel Weinberg, the founder and CEO of rival search engine DuckDuckGo, was called by the DOJ to testify during the initial trial and the remedy phases of this case. In a statement, he wrote that the remedies ordered by the judge don't go far enough. 
+ "Google will still be allowed to continue to use its monopoly to hold back competitors, including in AI search. As a result, consumers will continue to suffer," Weinberg wrote. "We believe Congress should now step in to swiftly make Google do the thing it fears the most: compete on a level playing field."
+ How AI fits into this case
+ One of the biggest changes the DOJ asked for was an order that Google must share its search data with third parties. 
+ Google's search index is basically a giant database of the pages and information on the internet. When you type a query into Google's search engine, it scans this database to return links to webpages.
+
+ Business 
+
+ Why Google's search engine trial is about AI 
+
+ Requiring Google to license this valuable data, which includes things like user click data and search queries, could help smaller competitors build their own search engines to compete with Google.
+ AI developers could also use this information to help train large language models, like chatbots, so that they can generate human-like responses and engage in conversations.
+ The DOJ argued throughout the remedies phase of the trial that Google could use its artificial intelligence products, like its Gemini chatbot, to strengthen its monopoly in online search and to use the search index data to become dominant in the emerging AI space.
+ David Dahlquist, the acting deputy director of the DOJ's antitrust civil litigation division, argued for a remedy that could nip a potential Google AI monopoly in the bud and that would address all ways users access Google search. He said any penalties approved by the court that didn't include Gemini (or other Google AI products now or in the future) would undermine the DOJ's broader efforts.
+
+ Sponsor Message 
+
+ Google aggressively argued against this idea, saying competition in the AI race is healthy, featuring a host of companies like OpenAI with ChatGPT, Meta with Meta AI and Perplexity with its Perplexity AI chatbot.
+ In his ruling, Mehta ordered the sharing of some kinds of search index and user interaction data, but not all of it. Notably, the company will not have to share advertising data.
+ In his opinion, he wrote that he chose caution, saying competition is plentiful in the AI space and that generative AI technologies pose "a threat to the primacy of traditional internet search."
+ "The money flowing into this space, and how quickly it has arrived, is astonishing," he wrote. "These companies already are in a better position, both financially and technologically, to compete with Google than any traditional search company has been in decades (except perhaps Microsoft)."
+ "These new realities give the court hope that Google will not simply outbid competitors for distribution if superior products emerge," he continued.
+ Neil Chilson, head of AI policy at the Abundance Institute and former chief technologist for the Federal Trade Commission, said it's unclear how helpful these AI-specific remedies will be for the competitors.
+ "I think that for the biggest of the companies that Google is competing with in the AI space, these remedies won't be a big value add," Chilson said. But access to this data could be helpful for smaller players in AI, he said. 
+ The biggest antitrust case in decades
+ Today's antitrust ruling is the biggest since U.S. v. Microsoft , filed in 1998. The federal government accused the company of monopolistic practices for forcing PC manufacturers to license Microsoft's Internet Explorer web browser and Windows together — pushing out other companies.
+
+ Technology 
+
+ Decades later, the Microsoft antitrust case casts a shadow over the Google trial 
+
+ Ultimately, U.S. District Judge Thomas Penfield Jackson ordered Microsoft to be split in two. But his decision was partially overturned on appeal in 2001. Rather than continue with the case, the government and Microsoft agreed that the company wouldn't have to break up and would, instead, establish an internal antitrust technical committee and compliance program.
+ The case established precedent for how the government could pursue tech companies — including Google in this search engine case. The DOJ modeled its complaint against Google, as well as the proposed remedies, after the Microsoft case. In court filings, the government pointed to Microsoft as a roadmap for how penalties should be levied against Google.
+
+ Sponsor Message 
+
+ And while the judge has now laid out his penalties, the Google case is far from over. The tech giant has long maintained it would file an appeal for both the remedies and Mehta's previous finding that the tech company violated federal antitrust laws with its search engine dominance.
+ Google is a financial supporter of NPR. 
+
+ Correction Sept. 3, 2025 
+
+ A previous version of this story misstated that the federal government’s 1998 antitrust case against Microsoft centered on the packaging of the company’s operating system with Windows. In fact, Windows is its operating system. The antitrust case actually focused on the packaging of Windows with Microsoft's web browser, Internet Explorer.
+
+ Google 
+ Google Chrome 
+ web search 
+ antitrust 
+ Justice Department 
+
+ Facebook 
+ Flipboard 
+ Email 
+
+ Read & Listen
+
+ Home 
+ News 
+ Culture 
+ Music 
+ Podcasts & Shows 
+
+ Connect
+
+ Newsletters 
+ Facebook 
+ Instagram 
+ Press 
+ Public Editor 
+ Corrections 
+ Transcripts 
+ Contact & Help 
+
+ About NPR
+
+ Overview 
+ Diversity 
+ NPR Network 
+ Accessibility 
+ Ethics 
+ Finances 
+
+ Get Involved
+
+ Support Public Radio 
+ Sponsor NPR 
+ NPR Careers 
+ NPR Shop 
+ NPR Extra 
+
+ Terms of Use 
+ Privacy 
+ Your Privacy Choices 
+ Text Only 
+
+ Sponsor Message 
+
+ Sponsor Message
+
+ Become an NPR sponsor

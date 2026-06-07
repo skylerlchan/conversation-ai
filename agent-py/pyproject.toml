@@ -14,6 +14,7 @@ dependencies = [
     "python-dotenv",
     "moss>=1.4",
     "torch>=2.12.0",
+    "anthropic>=0.107.0",
 ]
 
 [dependency-groups]

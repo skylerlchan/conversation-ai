@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { ConsoleEvidence } from '@/lib/console-model';
 import {
   type CallFixture,
   type CoverageState,
@@ -34,6 +35,8 @@ export interface DiligenceState {
   activeFollowups: FollowupCard[];
   /** All inconsistency flags fired so far. */
   flags: FlagCard[];
+  /** Per-researcher-turn grounded context (newest last). Drives the Context panel. */
+  evidence: ConsoleEvidence[];
   /** Thesis-delta cards accumulated so far. */
   thesisDeltas: ThesisDeltaCard[];
   /** Chronological copilot activity feed (newest last). */
@@ -64,7 +67,7 @@ function initialCoverage(questions: QuestionsFixture): Record<string, CoverageSt
 }
 
 /**
- * Drives the scripted CAVA diligence call through the coverage state machine.
+ * Drives the scripted AAPL diligence call through the coverage state machine.
  * Each researcher turn's `expected` block is applied exactly as the live
  * coverage engine would, so the console renders the same cards either way.
  */
@@ -125,6 +128,7 @@ export function useDiligenceDemo(
     const flags: FlagCard[] = [];
     const thesisDeltas: ThesisDeltaCard[] = [];
     const copilotEvents: CopilotEvent[] = [];
+    const evidence: ConsoleEvidence[] = [];
     const followupByQid = new Map<string, FollowupCard>();
 
     const played = turns.slice(0, cursor);
@@ -182,6 +186,24 @@ export function useDiligenceDemo(
         });
       }
 
+      // Context-panel evidence for this researcher turn: what they said, the
+      // grounded note/corpus snippets it was checked against, the extracted
+      // facts, and any contradiction with the analyst's model.
+      evidence.push({
+        turn: turn.t,
+        questionId: primaryQid,
+        claim: turn.text,
+        facts: exp.extracted_facts ?? [],
+        sources: (turn.grounding ?? []).map((g) => ({
+          label: g.label,
+          text: g.text,
+          score: g.score,
+        })),
+        contradiction: exp.contradiction
+          ? { vs: exp.contradiction.vs, detail: exp.contradiction.detail }
+          : undefined,
+      });
+
       // Copilot activity classification (one event per researcher turn).
       const type: CopilotEventType = exp.contradiction
         ? 'flag'
@@ -223,6 +245,7 @@ export function useDiligenceDemo(
       flags,
       thesisDeltas,
       copilotEvents,
+      evidence,
       tally: { answered, partial, unanswered, total: questions.questions.length },
     };
   }, [cursor, questions, turns]);

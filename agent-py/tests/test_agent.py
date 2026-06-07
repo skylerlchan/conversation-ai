@@ -15,7 +15,7 @@ import pytest
 from livekit.agents import StopResponse, llm
 
 import agent as agent_module
-from agent import DiligenceListener
+from agent import DiligenceListener, SpeakerRoles
 from coverage import CallState
 
 
@@ -134,6 +134,64 @@ async def test_turn_publishes_transcript_packet(stub_moss) -> None:
     assert data["speaker"] == "researcher"
     assert data["text"] == "Connect take-rate held at 18% this quarter."
     assert isinstance(data["timestamp"], (int, float))
+
+
+def test_speaker_roles_first_is_analyst_rest_researcher() -> None:
+    """The first diarized speaker is the analyst; everyone after is a researcher."""
+    roles = SpeakerRoles()
+    assert roles.role_for("0") == "analyst"
+    assert roles.role_for("1") == "researcher"
+    assert roles.role_for("2") == "researcher"
+    # Mapping is sticky: a speaker keeps its role for the rest of the call.
+    assert roles.role_for("0") == "analyst"
+    assert roles.role_for("1") == "researcher"
+
+
+def test_speaker_roles_unknown_defaults_to_researcher() -> None:
+    """No diarization (speaker_id None) -> researcher, the safe coverage default.
+
+    A None id must not consume the analyst slot, so the first *real* speaker seen
+    afterward is still bound to analyst.
+    """
+    roles = SpeakerRoles()
+    assert roles.role_for(None) == "researcher"
+    assert roles.role_for(None) == "researcher"
+    assert roles.role_for("7") == "analyst"
+
+
+def _transcribed(speaker_id, is_final=True):
+    """A minimal stand-in for UserInputTranscribedEvent (only fields we read)."""
+    return type("Ev", (), {"speaker_id": speaker_id, "is_final": is_final})()
+
+
+async def test_turns_labeled_by_diarized_speaker(stub_moss) -> None:
+    """Diarization labels the transcript: first speaker analyst, next researcher."""
+    room = _FakeRoom()
+    listener = DiligenceListener(room=room, user_id="fund_1", call_state=_sample_call())
+
+    # Analyst opens (speaker "0"), then the researcher answers (speaker "1").
+    listener._on_user_input_transcribed(_transcribed("0"))
+    with pytest.raises(StopResponse):
+        await listener.on_user_turn_completed(*_user_turn("Let's start with margins."))
+
+    listener._on_user_input_transcribed(_transcribed("1"))
+    with pytest.raises(StopResponse):
+        await listener.on_user_turn_completed(
+            *_user_turn("Margins were up year on year.")
+        )
+
+    speakers = [
+        json.loads(p[0].decode("utf-8"))["data"]["speaker"]
+        for p in room.local_participant.published
+    ]
+    assert speakers == ["analyst", "researcher"]
+
+
+async def test_interim_transcription_does_not_set_speaker(stub_moss) -> None:
+    """Only finalized transcriptions set the turn speaker; interims are ignored."""
+    listener = DiligenceListener(user_id="fund_1", call_state=_sample_call())
+    listener._on_user_input_transcribed(_transcribed("0", is_final=False))
+    assert listener._current_turn_speaker_id is None
 
 
 async def test_publish_coverage_emits_snapshot_packet(stub_moss) -> None:
