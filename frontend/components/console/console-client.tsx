@@ -4,9 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { WarningIcon } from '@phosphor-icons/react/dist/ssr';
+import bakedCmg from '@/lib/demo/baked-cmg.json';
 import { demoSession } from '@/lib/demo/demo-session';
 import type { Session } from '@/lib/session';
 import { MissionConsole } from './mission-console';
+
+// Pre-baked, real sessions that render instantly (no live call needed on stage).
+// CAVA = curated diligence script; CMG = a real Chipotle earnings-call analysis.
+const BAKED: Record<string, Session> = {
+  CAVA: demoSession,
+  CMG: bakedCmg as unknown as Session,
+};
 
 const STEPS = [
   'Pulling the latest earnings transcript…',
@@ -72,16 +80,16 @@ function ErrorView({ symbol, message }: { symbol: string; message: string }) {
 
 export function ConsoleClient() {
   const params = useSearchParams();
-  const symbol = (params.get('symbol') || 'CAVA').toUpperCase();
-  const isDemo = symbol === 'CAVA';
+  const symbol = (params.get('symbol') || 'CMG').toUpperCase();
+  const baked = BAKED[symbol];
 
-  const [session, setSession] = useState<Session | null>(isDemo ? demoSession : null);
+  const [session, setSession] = useState<Session | null>(baked ?? null);
   const [error, setError] = useState<string | null>(null);
   const reqId = useRef(0);
 
   useEffect(() => {
-    if (isDemo) {
-      setSession(demoSession);
+    if (baked) {
+      setSession(baked);
       setError(null);
       return;
     }
@@ -108,7 +116,7 @@ export function ConsoleClient() {
         if (id === reqId.current) setError((e as Error).message);
       }
     })();
-  }, [symbol, isDemo]);
+  }, [symbol, baked]);
 
   if (error) return <ErrorView symbol={symbol} message={error} />;
   if (!session) return <Loading symbol={symbol} />;

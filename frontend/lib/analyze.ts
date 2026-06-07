@@ -78,7 +78,8 @@ HARD RULES:
 - 10 to 12 turns, chronological. Cover prepared remarks AND key Q&A.
 - Every "coverage" value and every "final_coverage" value MUST be EXACTLY one of: "unanswered", "partial", "answered". Never any other word.
 - "contradiction" is null OR { "vs": "consensus"|"guidance"|"note", "detail": "<specific, with numbers>" }.
-- Provide a "followup" string whenever coverage is "partial". At least one partial+followup. Flag a real divergence vs consensus if one exists; do not invent one.
+- EXACTLY ONE question ends "partial" — the single weakest/most-dodged answer — and it carries a grounded "followup" string. Drive every other question to "answered"; leave a question "unanswered" ONLY if the call genuinely never addressed it. Do NOT mark multiple questions partial.
+- At most ONE "contradiction" flag, and only if a real divergence vs consensus/guidance exists; otherwise none. Do not invent one.
 - All free text (thesis, details, net, summary) must be normal English sentences with spaces — never snake_case or underscores.
 - Output ONLY the JSON object.`;
 }

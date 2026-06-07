@@ -12,7 +12,7 @@ interface Hit {
   exchange: string;
 }
 
-const SUGGESTED = ['CAVA', 'NVDA', 'CMG', 'COST', 'SBUX'];
+const SUGGESTED = ['CMG', 'CAVA', 'NVDA', 'COST', 'SBUX'];
 
 export function Launcher() {
   const router = useRouter();
@@ -139,18 +139,18 @@ export function Launcher() {
 
         {/* Primary CTA */}
         <button
-          onClick={() => launch('CAVA')}
+          onClick={() => launch('CMG')}
           className={cn(
             'mt-8 flex items-center gap-2 rounded-xl bg-white px-5 py-3 text-[15px] font-semibold text-black',
             'transition-transform hover:scale-[1.01] hover:bg-zinc-100'
           )}
         >
-          Launch the diligence call
+          Launch the Chipotle call
           <ArrowRightIcon weight="bold" className="size-4" />
         </button>
 
         <p className="mt-5 font-mono text-[10px] tracking-wide text-zinc-600">
-          Demo replays a recorded CAVA diligence call · live data connects at the event
+          CMG &amp; CAVA load instantly · search any ticker for live analysis of its real call
         </p>
       </motion.div>
     </div>
