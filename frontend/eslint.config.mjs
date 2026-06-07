@@ -17,6 +17,15 @@ const eslintConfig = [
     'prettier',
     'plugin:prettier/recommended'
   ),
+  {
+    // `server-only` / `client-only` are Next.js boundary markers that ship an
+    // `exports`-only package layout. TypeScript and webpack resolve them, but
+    // eslint-plugin-import's resolver doesn't follow `exports` here — treat them
+    // as core modules so `import/no-unresolved` doesn't false-positive.
+    settings: {
+      'import/core-modules': ['server-only', 'client-only'],
+    },
+  },
 ];
 
 export default eslintConfig;

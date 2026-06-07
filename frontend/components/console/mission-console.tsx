@@ -12,6 +12,7 @@ import {
   PauseIcon,
   PlayIcon,
 } from '@phosphor-icons/react/dist/ssr';
+import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
 import {
   type ConsoleFlag,
   type ConsoleFollowup,
@@ -24,7 +25,6 @@ import {
 } from '@/lib/console-model';
 import { callFixture, questionsFixture } from '@/lib/demo';
 import type { CoverageState } from '@/lib/demo/types';
-import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
 import { cn } from '@/lib/shadcn/utils';
 
 const STATE: Record<CoverageState, { label: string; dot: string; glow: string; text: string }> = {
@@ -554,7 +554,8 @@ export function MissionConsoleView({
 }) {
   const [callOpen, setCallOpen] = useState(true);
 
-  const allCovered = model.done && model.tally.answered === model.tally.total && model.tally.total > 0;
+  const allCovered =
+    model.done && model.tally.answered === model.tally.total && model.tally.total > 0;
   const pillar = pillarOfModel(model);
   const followup = model.activeFollowups[0];
   const next = nextMissedOf(model);

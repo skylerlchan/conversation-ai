@@ -124,7 +124,12 @@ export function liveModel(args: {
 
 interface FixtureState {
   coverage: Record<string, CoverageState>;
-  transcript: { t: number; speaker: Speaker; text: string; prompted_by_copilot?: boolean | string }[];
+  transcript: {
+    t: number;
+    speaker: Speaker;
+    text: string;
+    prompted_by_copilot?: boolean | string;
+  }[];
   activeFollowups: { questionId: string; text: string }[];
   flags: { questionId: string; vs: string; detail: string }[];
   tally: { answered: number; partial: number; unanswered: number; total: number };

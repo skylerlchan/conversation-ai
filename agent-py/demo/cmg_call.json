@@ -1,0 +1,207 @@
+{
+  "_note": "SYNTHETIC DEMO FIXTURE — not investment advice, not real Chipotle disclosures. Numbers are illustrative. Scripted diligence call for the Diligence-Call Copilot demo: the buy-side analyst grills a sell-side researcher. Each researcher turn carries an `expected` block = the golden coverage verdict the engine should produce. This file is both the stage script and the test/driver fixture.",
+  "company": "CMG",
+  "summary": "Go in with 6 questions. q1 (units) ticks green cleanly. q2 (traffic vs price) goes amber on an over-claimed 'all traffic' answer that contradicts the note's modeled price contribution -> the copilot fires a grounded follow-up -> closes green with the real split (~3 pts price), confirming the traffic-led thesis. q3/q4/q5 tick green. q6 (downside) sits grey until the copilot nudges with time running out -> closes green. Hang up all-green.",
+  "coverage_states": ["unanswered", "partial", "answered"],
+  "turns": [
+    {
+      "t": 1,
+      "speaker": "analyst",
+      "asks": ["q1"],
+      "text": "Thanks for the time. Let's start with the build. You've talked about a roughly seven-thousand North American restaurant runway. What's the current new-unit pace, and are Chipotlanes still the majority of openings with better returns?"
+    },
+    {
+      "t": 2,
+      "speaker": "researcher",
+      "text": "Yeah, the runway's intact. They're running eight to ten percent net new units a year toward that seven-thousand target, and north of eighty percent of new openings now have a Chipotlane. The Chipotlane units open with higher digital mix and better cash-on-cash returns, so the new-unit economics are actually improving as they scale.",
+      "expected": {
+        "addresses": ["q1"],
+        "coverage": { "q1": "answered" },
+        "extracted_facts": [
+          "8-10% net new units per year toward ~7,000 NA target",
+          ">80% of new openings have a Chipotlane",
+          "Chipotlane units: higher digital mix and better cash-on-cash returns"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q1 -> GREEN. Grounding: note unit-growth assumption (8-10% toward ~7,000 NA)."
+    },
+    {
+      "t": 3,
+      "speaker": "analyst",
+      "asks": ["q2"],
+      "text": "Good. On the comp, how much of recent same-store sales is transactions versus the menu pricing you've carried over the past year?"
+    },
+    {
+      "t": 4,
+      "speaker": "researcher",
+      "text": "Honestly it's really all traffic. Customers love the brand, the value's there, transactions are doing the work. Pricing's been pretty negligible as a driver.",
+      "expected": {
+        "addresses": ["q2"],
+        "coverage": { "q2": "partial" },
+        "extracted_facts": [
+          "management characterizes the comp as essentially all traffic-driven",
+          "claims pricing is a negligible driver (no split given)"
+        ],
+        "contradiction": {
+          "vs": "note",
+          "detail": "Your note models ~3-4 points of comp from menu pricing carried over the trailing year. 'All traffic, pricing negligible' contradicts the modeled price contribution — either the note is wrong or the answer is glossing the carried pricing."
+        },
+        "followup": "They dodged the split. Ask them to break the comp into points: how many points were transaction growth versus the menu pricing carried over the last year?",
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q2 -> AMBER (partial). Contradicts note's ~3-4 pt price assumption. Follow-up card fires. Hero moment."
+    },
+    {
+      "t": 5,
+      "speaker": "analyst",
+      "asks": ["q2"],
+      "is_followup_for": "q2",
+      "prompted_by_copilot": "Ask them to split the comp: transaction growth vs trailing menu pricing, in points.",
+      "text": "Let me pin that down. Can you split the comp into points — how much was transaction growth, and how much was the menu pricing you carried over the last year?"
+    },
+    {
+      "t": 6,
+      "speaker": "researcher",
+      "text": "Fair. Breaking it down, transactions were up mid-single digits, and about three points came from the pricing we carried over. So it's traffic-led, but pricing did contribute a few points, you're right to separate them.",
+      "expected": {
+        "addresses": ["q2"],
+        "coverage": { "q2": "answered" },
+        "extracted_facts": [
+          "transactions up mid-single digits",
+          "~3 points of comp from carried menu pricing",
+          "comp is traffic-led with a real ~3 pt price contribution"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": "Comp split confirmed roughly in line with the note (~3 pts price, rest transactions). Traffic-led thesis intact; the initial 'all traffic' over-claim was corrected."
+      },
+      "copilot_surfaced": "q2 -> GREEN. Split confirms the note (~3 pts price). Thesis-delta card: traffic-led intact."
+    },
+    {
+      "t": 7,
+      "speaker": "analyst",
+      "asks": ["q3"],
+      "text": "On throughput — what initiatives are actually live, and are they lifting peak-hour transactions?"
+    },
+    {
+      "t": 8,
+      "speaker": "researcher",
+      "text": "Throughput is a top priority. Project Square One is back to the fundamentals on the line, plus they're rolling new equipment like the dual-sided plancha and produce slicers. The result is measurable peak-hour entree gains — the bottleneck hours are where the throughput work shows up most.",
+      "expected": {
+        "addresses": ["q3"],
+        "coverage": { "q3": "answered" },
+        "extracted_facts": [
+          "Project Square One: back-to-fundamentals on the line",
+          "new equipment (dual-sided plancha, produce slicers)",
+          "measurable peak-hour entree gains"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q3 -> GREEN. Grounding: throughput is the underrated comp lever (peak entrees/15 min)."
+    },
+    {
+      "t": 9,
+      "speaker": "analyst",
+      "asks": ["q4"],
+      "text": "Where are restaurant-level margins running, and can they hold against beef and wage inflation?"
+    },
+    {
+      "t": 10,
+      "speaker": "researcher",
+      "text": "Restaurant-level margin's been running in the mid-to-high twenties, call it around twenty-six, twenty-seven percent. Beef and wage inflation are real, but carried pricing plus the throughput leverage have more than offset it, and they expect margins to hold in that band.",
+      "expected": {
+        "addresses": ["q4"],
+        "coverage": { "q4": "answered" },
+        "extracted_facts": [
+          "restaurant-level margin ~26-27%",
+          "beef and wage inflation offset by pricing + throughput leverage",
+          "management expects margins to hold in the mid-to-high 20s"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q4 -> GREEN. Grounding: note margin assumption (mid-to-high 20s, inflation offset)."
+    },
+    {
+      "t": 11,
+      "speaker": "analyst",
+      "asks": ["q5"],
+      "text": "On digital and frequency — how durable is the digital mix, and how are you monetizing the loyalty base?"
+    },
+    {
+      "t": 12,
+      "speaker": "researcher",
+      "text": "Digital's holding around thirty-five percent of sales, and it's sticky, it's a higher-margin channel for them. Loyalty's over forty million members now, and they're getting smarter with personalized offers to drive frequency rather than blanket discounts.",
+      "expected": {
+        "addresses": ["q5"],
+        "coverage": { "q5": "answered" },
+        "extracted_facts": [
+          "digital ~35% of sales, sticky and higher-margin",
+          "40M+ loyalty members",
+          "personalized offers to drive frequency (not blanket discounting)"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q5 -> GREEN. Grounding: digital ~35%, 40M+ loyalty."
+    },
+    {
+      "t": 13,
+      "speaker": "analyst",
+      "asks": ["q6"],
+      "prompted_by_copilot": "Copilot nudge: q6 (downside / value perception) still uncovered — ~60s left.",
+      "text": "Before we run out of time, the one I haven't hit: the biggest risk. If the consumer pulls back, does value perception hold your traffic?"
+    },
+    {
+      "t": 14,
+      "speaker": "researcher",
+      "text": "The honest biggest risk is a broad consumer pullback hitting the discretionary spend. But the offset is value perception — the portion size and quality at the price point are seen as strong, and in past slowdowns Chipotle's traffic held up better than most of the peer set. That's the cushion.",
+      "expected": {
+        "addresses": ["q6"],
+        "coverage": { "q6": "answered" },
+        "extracted_facts": [
+          "biggest risk: broad consumer pullback on discretionary spend",
+          "offset: strong value perception (portion/quality at the price point)",
+          "traffic historically resilient vs peers in past slowdowns"
+        ],
+        "contradiction": null,
+        "followup": null,
+        "thesis_delta": null
+      },
+      "copilot_surfaced": "q6 -> GREEN. ALL 6 QUESTIONS GREEN. Zero holes."
+    },
+    {
+      "t": 15,
+      "speaker": "analyst",
+      "asks": [],
+      "text": "That's my whole list. Appreciate you splitting out the price-versus-traffic, that was the one I most needed to nail down."
+    }
+  ],
+  "final_coverage": {
+    "q1": "answered",
+    "q2": "answered",
+    "q3": "answered",
+    "q4": "answered",
+    "q5": "answered",
+    "q6": "answered"
+  },
+  "thesis_delta": {
+    "summary": "Thesis intact and confirmed on the call. The one live wobble — management's 'all traffic' over-claim on the comp — was corrected under follow-up to roughly the modeled split (~3 pts price, transactions up mid-single digits), so the traffic-led quality thesis holds. Units, throughput, margins, and digital all confirmed in line with the note.",
+    "changes": [
+      {
+        "field": "comp_split",
+        "from": "modeled ~3-4 pts price, traffic-led",
+        "to": "confirmed ~3 pts price, transactions +mid-single digits",
+        "source_turn": 6
+      }
+    ],
+    "net": "Hold / add. No assumption moved against the thesis; the comp-quality and unit-growth pillars were the load-bearing checks and both held."
+  }
+}
