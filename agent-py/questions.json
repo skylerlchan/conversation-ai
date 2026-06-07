@@ -1,0 +1,91 @@
+{
+  "company": "Cirrus Logistics, Inc.",
+  "ticker": "CRLG",
+  "source": "meridian-cirrus-logistics-memo.pdf",
+  "thesis": "Cirrus Connect (asset-light digital brokerage) is structurally taking share, and its gross-margin expansion from automation is underappreciated by the sell side. The variant view: Connect take-rate and attach are durable, not promotional.",
+  "questions": [
+    {
+      "id": "q1",
+      "pillar": "Connect's contribution margin is structurally higher than the sell side models (the core variant view).",
+      "question": "What is Cirrus Connect's true contribution margin at current scale, excluding capitalized software?",
+      "complete_when": [
+        "a contribution-margin figure or tight range for Connect at current scale",
+        "explicitly ex-capitalized software, not a blended or GAAP segment margin"
+      ],
+      "expected": {
+        "note_models": "12%",
+        "our_view": "18-20% at scale",
+        "watch": "Risk #5 - capitalized software can mask true Connect contribution margin"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q2",
+      "pillar": "Connect take-rate is durable, not promotional - the thesis depends on it.",
+      "question": "Is the Connect take-rate promotional? What is the like-for-like take-rate trend over the last 8 quarters?",
+      "complete_when": [
+        "a like-for-like (same-customer) take-rate trend across roughly 8 quarters",
+        "a stated reason the level is durable versus introductory or promotional pricing"
+      ],
+      "expected": {
+        "our_view": "durable",
+        "bear": "promotional, normalizes lower (Risk #2)"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q3",
+      "pillar": "Connect growth is broad-based and sticky, not dependent on a few large shippers.",
+      "question": "How concentrated is Connect revenue among the top 10 shippers, and what is net revenue retention?",
+      "complete_when": [
+        "top-10 shipper concentration for Connect specifically, not total company",
+        "a net revenue retention figure"
+      ],
+      "expected": {
+        "company_total": "top 10 shippers are ~34% of total company revenue (Risk #3)",
+        "gap": "memo gives company-wide concentration, not Connect-specific"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q4",
+      "pillar": "Gross-margin expansion to 18.1% is structural (mix/automation), not pricing that can reverse.",
+      "question": "What underpins the FY27E gross-margin bridge to 18.1% - mix, automation, or pricing?",
+      "complete_when": [
+        "a decomposition of the gross-margin gain into mix versus automation versus pricing",
+        "enough detail to tell whether the gain is structural or price-driven"
+      ],
+      "expected": {
+        "fact": "Gross margin 15.0% FY25A -> 16.4% FY26E -> 18.1% FY27E",
+        "thesis": "automation-driven, i.e. structural"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q5",
+      "pillar": "Switching costs protect the platform from carrier disintermediation (the moat).",
+      "question": "What contractual switching costs prevent a large carrier from disintermediating the platform?",
+      "complete_when": [
+        "specific switching-cost mechanisms such as contracts, integrations, or data lock-in",
+        "addresses the large-carrier disintermediation path specifically"
+      ],
+      "expected": {
+        "risk": "Risk #4 - a large carrier could disintermediate the platform"
+      },
+      "state": "unanswered"
+    },
+    {
+      "id": "q6",
+      "pillar": "Downside is bounded - even with take-rate compression, EBITDA holds up.",
+      "question": "How sensitive is FY27E EBITDA to a 150bps take-rate compression?",
+      "complete_when": [
+        "a quantified FY27E EBITDA impact from roughly 150bps of take-rate compression"
+      ],
+      "expected": {
+        "bear_case": "take-rate compresses 150bps -> ~$11 stock vs ~$28 base",
+        "base_fact": "FY27E Adj. EBITDA = 201"
+      },
+      "state": "unanswered"
+    }
+  ]
+}
