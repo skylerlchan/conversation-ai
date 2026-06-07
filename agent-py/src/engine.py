@@ -29,10 +29,11 @@ call. You never speak to anyone. Given ONE thing the researcher just said, decid
 which of the analyst's pre-loaded questions it addresses, and how well.
 
 For each question the turn actually touches, return an update:
-- coverage: "answered" ONLY if the answer is specific and satisfies ALL of that
-  question's complete_when criteria; "partial" if the topic was raised but the
-  answer is vague, hedged, dodged, or misses any complete_when criterion.
-  If the turn does not touch a question at all, do NOT include it.
+- coverage: "answered" when the researcher gives a real, on-point answer to the
+  question — it need NOT tick every complete_when criterion verbatim, as long as it
+  substantively responds. Use "partial" only when the answer is clearly thin:
+  dodged, refused, openly evasive, or silent on a complete_when criterion that
+  plainly matters. If the turn does not touch a question at all, do NOT include it.
 - extracted_facts: the concrete facts the researcher stated, as short standalone
   strings. Use [] when none.
 - contradiction: if the answer contradicts that question's `expected` view or a
@@ -45,8 +46,9 @@ Rules:
 - A turn may address multiple questions, or none. Only include questions this
   turn actually addresses.
 - Stay anchored to the analyst's question list. Never invent new questions.
-- When unsure between "partial" and "answered", choose "partial". Coverage gaps
-  are the product; never let a thin answer pass as answered.
+- When genuinely unsure between "partial" and "answered", choose "answered": give
+  a fair answer the benefit of the doubt rather than holding it open. Still flag a
+  real dodge or contradiction — but don't keep a substantive answer from going green.
 - Never output a generic followup like "can you elaborate?" — name the specific
   missing piece.
 - When RESEARCH CONTEXT (the analyst's own notes / filings) is provided, check
@@ -117,3 +119,88 @@ async def grade_turn(
     stream = verdict_llm.chat(chat_ctx=chat_ctx, response_format=TurnVerdict)
     response = await stream.collect()
     return TurnVerdict.model_validate_json(response.text)
+
+
+# Analyst-facing digest of the research context. The grader consumes raw note/
+# filing snippets every turn (so contradictions surface live); this turns the
+# snippets seen across a window of turns into a short brief for the analyst's
+# screen — surfaced periodically, not every turn (see DiligenceListener).
+_SUMMARY_RULES = """\
+You brief a buy-side analyst on a live diligence call. Below are excerpts from the
+analyst's own research notes, filings, and call transcripts — each tagged with its
+source in [brackets]. Pull only the load-bearing facts: the specific numbers and
+claims worth holding the researcher to.
+
+Output 2-4 short bullets, most material first, one fact per bullet. Format each as:
+- <specific figure or claim> — <source>
+Cite the bracketed source, shortened (e.g. "AAPL 10-Q p.5", "Vantage note",
+"Q2 FY26 call"). No preamble, no headers, no prose paragraphs. Drop any excerpt
+with no concrete figure or claim. Never invent a number or a source."""
+
+
+async def summarize_grounding(verdict_llm: inference.LLM, snippets: list[str]) -> str:
+    """Summarize retrieved notes/filings snippets into an analyst-facing digest.
+
+    Runs out-of-band on the same dedicated LLM as the grader (never on the audio
+    path). Returns "" when there is nothing to summarize.
+    """
+    excerpts = "\n\n".join(s.strip() for s in snippets if s.strip())
+    if not excerpts:
+        return ""
+    chat_ctx = ChatContext.empty()
+    chat_ctx.add_message(role="system", content=_SUMMARY_RULES)
+    chat_ctx.add_message(
+        role="user", content=f"SOURCED EXCERPTS (each tagged [source]):\n{excerpts}"
+    )
+    stream = verdict_llm.chat(chat_ctx=chat_ctx)
+    response = await stream.collect()
+    return (response.text or "").strip()
+
+
+# Per-question notes: when the analyst clicks a question on the console, they see
+# the few load-bearing facts the corpus holds *for that question*. Built once at
+# call start from the question's own Moss retrieval (see _precompute_notes).
+_QUESTION_NOTES_RULES = """\
+You prep a buy-side analyst on one diligence question. Below is that question,
+then excerpts from the analyst's research notes, filings, and call transcripts —
+each tagged with its source in [brackets]. Pull only the facts that bear directly
+on THIS question: the specific numbers and claims worth raising or holding the
+researcher to.
+
+Output 2-4 short bullets, most material first, one fact each. Format each as:
+- <specific figure or claim> — <source>
+Cite the bracketed source, shortened (e.g. "AAPL 10-Q p.5", "Vantage note",
+"Q2 FY26 call"). No preamble, no headers, no prose. Drop any excerpt that doesn't
+bear on the question or has no concrete figure. Never invent a number or source."""
+
+
+def _parse_bullets(text: str) -> list[str]:
+    """Split an LLM bullet block into clean note lines (leading marker stripped)."""
+    notes: list[str] = []
+    for line in (text or "").splitlines():
+        line = line.strip().lstrip("-•* ").strip()
+        if line:
+            notes.append(line)
+    return notes
+
+
+async def summarize_question_notes(
+    verdict_llm: inference.LLM, question: str, snippets: list[str]
+) -> list[str]:
+    """Distill a question's retrieved corpus snippets into concise sourced notes.
+
+    Returns a list of short "fact — source" lines (newest/most material first),
+    or [] when there is nothing usable. Runs out-of-band on the grader's LLM.
+    """
+    excerpts = "\n\n".join(s.strip() for s in snippets if s.strip())
+    if not excerpts or not question.strip():
+        return []
+    chat_ctx = ChatContext.empty()
+    chat_ctx.add_message(role="system", content=_QUESTION_NOTES_RULES)
+    chat_ctx.add_message(
+        role="user",
+        content=f"QUESTION:\n{question.strip()}\n\nSOURCED EXCERPTS (each tagged [source]):\n{excerpts}",
+    )
+    stream = verdict_llm.chat(chat_ctx=chat_ctx)
+    response = await stream.collect()
+    return _parse_bullets(response.text or "")

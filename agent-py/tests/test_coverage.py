@@ -105,7 +105,25 @@ def test_snapshot_shape_is_console_ready() -> None:
         "facts",
         "contradictions",
         "followup",
+        "notes",
     }
+    assert card["notes"] == []
+
+
+def test_loads_optional_authored_notes() -> None:
+    data = _data(1)
+    data["questions"][0]["notes"] = [
+        "iPhone +22% YoY — Q2 FY26 call",
+        "  ",
+        "Company GM 49.3% — AAPL 10-Q",
+    ]
+    call = CallState.from_dict(data)
+    # Blank notes are dropped; the rest carry through to the card verbatim.
+    assert call.questions[0].notes == [
+        "iPhone +22% YoY — Q2 FY26 call",
+        "Company GM 49.3% — AAPL 10-Q",
+    ]
+    assert call.snapshot()["questions"][0]["notes"] == call.questions[0].notes
 
 
 def test_from_file_round_trip(tmp_path) -> None:

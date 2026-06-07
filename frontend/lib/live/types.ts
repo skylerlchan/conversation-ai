@@ -22,6 +22,9 @@ export interface CoverageCard {
   contradictions: string[];
   /** The gap-closing follow-up to ask while the question is thin; null once answered. */
   followup: string | null;
+  /** Concise source-tagged notes from the Moss corpus, shown when the question is
+   * clicked. Each a short "fact — source" line. May be absent on older packets. */
+  notes?: string[];
 }
 
 /** `coverage_update.data` — the whole call state. Mirrors CallState.snapshot(). */
@@ -34,15 +37,15 @@ export interface CoveragePacket {
   timestamp: number;
 }
 
-export interface GroundingMatch {
-  text: string;
-  score?: number;
-}
-
-/** `grounding.data` — the Moss top-k retrieval for the turn in `query`. */
+/**
+ * `grounding.data` — a summarized digest of the analyst's own notes/filings,
+ * surfaced periodically (every SUMMARY_EVERY turns in the agent), not per turn.
+ * The grader still checks notes every turn for live contradictions; this is the
+ * calm, analyst-readable context feed. `through_turn` is the latest turn covered.
+ */
 export interface GroundingPacket {
-  query: string;
-  matches: GroundingMatch[];
+  summary: string;
+  through_turn?: number;
   timestamp: number;
 }
 

@@ -1,5 +1,4 @@
 import asyncio
-import contextlib
 import json
 import logging
 import os
@@ -23,7 +22,7 @@ from livekit.plugins.turn_detector.multilingual import MultilingualModel
 from moss import MossClient, QueryOptions
 
 from coverage import CallState, apply_verdict
-from engine import grade_turn
+from engine import grade_turn, summarize_grounding, summarize_question_notes
 
 logger = logging.getLogger("agent")
 
@@ -44,6 +43,31 @@ DEFAULT_USER_ID = "user_1"
 # This is the spec for the whole call (see docs/diligence-call-copilot-plan.md).
 QUESTIONS_PATH = Path(__file__).resolve().parent.parent / "questions.json"
 
+# How often to surface a summarized notes/filings digest to the analyst. The
+# grader still consumes retrieved context every turn (so contradictions surface
+# live); only the analyst-facing digest is throttled to once per this many turns.
+SUMMARY_EVERY = 8
+
+
+def _source_label(meta: dict) -> str:
+    """Compact, human source cite for a Moss knowledge snippet.
+
+    Filings collapse to "<ticker> <doc_type> p.<pages>" (e.g. "AAPL 10-Q p.5");
+    narrative sources (calls, analyst notes, regulatory news) use their human
+    `source` string as-is. Returns "" when metadata carries nothing usable, so the
+    snippet falls back to bare text and the digest can still cite something.
+    """
+    if not isinstance(meta, dict):
+        return ""
+    doc_type = (meta.get("doc_type") or "").strip()
+    ticker = (meta.get("ticker") or "").strip()
+    pages = (meta.get("pages") or "").strip()
+    source = (meta.get("source") or "").strip()
+    if doc_type in ("10-K", "10-Q"):
+        label = " ".join(p for p in (ticker, doc_type) if p)
+        return f"{label} p.{pages}" if pages else label
+    return source or doc_type or ticker
+
 
 class SpeakerRoles:
     """Map diarization speaker ids to diligence-call roles.
@@ -51,15 +75,16 @@ class SpeakerRoles:
     Speaker diarization (enabled on the STT) tags each turn with an opaque speaker
     id ("0", "1", ...); it does NOT know which voice is the analyst. On a diligence
     call the analyst opens and drives the Q&A, so the heuristic here binds the
-    FIRST distinct speaker to ``"analyst"`` and every later speaker to
-    ``"researcher"`` (the management / C-suite being grilled). The mapping is
-    sticky, so a speaker keeps its role for the rest of the call.
+    FIRST TURN of the call to ``"analyst"`` (and that speaker id, if any, stays
+    analyst) and every later speaker to ``"researcher"`` (the management / C-suite
+    being grilled). The mapping is sticky, so a speaker keeps its role for the rest
+    of the call.
 
-    A missing id — no diarization, or a turn the STT couldn't attribute — maps to
-    ``"researcher"``. That preserves the pre-diarization default of treating every
-    turn as a researcher answer, which is the safe fallback for coverage (the
-    grading engine only advances a question on a satisfying answer, so a
-    mislabeled analyst turn can't false-advance it).
+    The opening turn is the analyst even with no id — no diarization, or a turn the
+    STT couldn't attribute — so the console always opens on a "you" turn. Every
+    *later* missing id maps to ``"researcher"``, the safe coverage fallback (the
+    grading engine only advances a question on a satisfying answer, so a mislabeled
+    turn can't false-advance it).
 
     This is a single-mic heuristic. When the analyst and researcher join as
     separate LiveKit participants, prefer labeling by participant identity (no
@@ -68,13 +93,24 @@ class SpeakerRoles:
 
     def __init__(self) -> None:
         self._roles: dict[str, str] = {}
+        self._seen_turn = False
 
     def role_for(self, speaker_id: str | None) -> str:
+        # The first voice on the call is the analyst ("you") — even when diarization
+        # is off and the id is None. Binding the opening turn to "analyst" guarantees
+        # the console opens on a YOU turn instead of defaulting the lead speaker to
+        # the researcher (and back-routed audio, like the in-app earnings video,
+        # always reads its first turn as the analyst).
+        if not self._seen_turn:
+            self._seen_turn = True
+            if speaker_id is not None:
+                self._roles[speaker_id] = "analyst"
+            return "analyst"
         if speaker_id is None:
             return "researcher"
         role = self._roles.get(speaker_id)
         if role is None:
-            role = "analyst" if not self._roles else "researcher"
+            role = "researcher"
             self._roles[speaker_id] = role
         return role
 
@@ -120,6 +156,10 @@ class DiligenceListener(Agent):
         )
         # Finalized researcher turns, in order.
         self._turns: list[str] = []
+        # Notes/filings snippets retrieved since the last analyst digest. Filled
+        # every turn by `_ground`; drained every SUMMARY_EVERY turns into a
+        # summarized `grounding` packet for the console (see `_summarize_grounding`).
+        self._grounding_buffer: list[str] = []
         # Speaker diarization: map opaque STT speaker ids to call roles, and hold
         # the speaker id of the in-progress turn (set from user_input_transcribed,
         # consumed when the turn finalizes). See SpeakerRoles + on_enter.
@@ -155,6 +195,10 @@ class DiligenceListener(Agent):
                 )
             except Exception:
                 logger.exception("Failed to preload Moss indexes; will retry on use")
+        # Pull each question's concise source-tagged notes from the corpus in the
+        # background, so a click on the console shows them without a round-trip.
+        # Off the audio path; republishes coverage when the notes land.
+        self._spawn(self._precompute_notes())
 
     def _on_user_input_transcribed(self, ev) -> None:
         """Remember the diarized speaker of the in-progress turn.
@@ -196,7 +240,7 @@ class DiligenceListener(Agent):
             # Score coverage in the background so the turn pipeline stays fast
             # (no one waits on the AI — it never speaks).
             if self._verdict_llm is not None:
-                self._spawn(self._score_turn(text))
+                self._spawn(self._score_turn(len(self._turns), text))
         raise StopResponse()
 
     def _spawn(self, coro) -> None:
@@ -205,15 +249,17 @@ class DiligenceListener(Agent):
         self._tasks.add(task)
         task.add_done_callback(self._tasks.discard)
 
-    async def _score_turn(self, text: str) -> None:
+    async def _score_turn(self, turn_no: int, text: str) -> None:
         """Score one researcher turn and fold the verdict into the call state.
 
         Runs out-of-band (the copilot never speaks). Degrades gracefully on
-        error so a bad turn never crashes the call.
+        error so a bad turn never crashes the call. ``turn_no`` is the 1-based
+        index of this turn, used to pace the periodic analyst digest.
         """
         # Retrieve the analyst's own research context for what was just said, so
         # the engine can ground contradictions + follow-ups in the note's real
-        # figures. Empty string if retrieval finds nothing or fails.
+        # figures. This runs every turn (contradictions surface live); the
+        # snippets are buffered for the periodic digest below. "" if none/fails.
         grounding = await self._ground(text)
         try:
             verdict = await grade_turn(
@@ -227,12 +273,20 @@ class DiligenceListener(Agent):
             logger.info("coverage updated %s -> %s", changed, self._call.counts())
             await self.publish_coverage()
 
+        # Surface a summarized notes/filings digest to the analyst periodically —
+        # not on every turn. The grader already used this turn's grounding above,
+        # so live contradiction-checking is unaffected.
+        if turn_no % SUMMARY_EVERY == 0:
+            self._spawn(self._summarize_grounding(turn_no))
+
     async def _ground(self, query: str) -> str:
         """Retrieve the most relevant research/memo context for a researcher turn.
 
-        Queries the Moss `knowledge` index and publishes a `grounding` packet for
-        the console's grounding feed. Returns the joined snippet text for the
-        engine to cite. Guarded: returns "" on failure so scoring still proceeds.
+        Queries the Moss `knowledge` index and returns the joined snippet text for
+        the engine to cite this turn, and buffers the snippets for the periodic
+        analyst digest (`_summarize_grounding`). Deliberately does NOT publish a
+        per-turn grounding packet — the console sees a summary every SUMMARY_EVERY
+        turns instead. Guarded: returns "" on failure so scoring still proceeds.
         """
         try:
             result = await self._moss.query(
@@ -243,22 +297,82 @@ class DiligenceListener(Agent):
             return ""
 
         snippets: list[str] = []
-        matches: list[dict] = []
         for doc in getattr(result, "docs", None) or []:
             text = (getattr(doc, "text", "") or "").strip()
             if not text:
                 continue
             snippets.append(text)
-            entry: dict = {"text": text}
-            score = getattr(doc, "score", None)
-            if score is not None:
-                with contextlib.suppress(TypeError, ValueError):
-                    entry["score"] = float(score)
-            matches.append(entry)
-
-        if matches:
-            await self._publish("grounding", {"query": query, "matches": matches})
+            # Buffer a source-tagged copy so the periodic digest can attribute
+            # each fact (the grader still gets bare text via the return value).
+            label = _source_label(getattr(doc, "metadata", None) or {})
+            entry = f"[{label}] {text}" if label else text
+            if entry not in self._grounding_buffer:
+                self._grounding_buffer.append(entry)
         return "\n\n".join(snippets)
+
+    async def _summarize_grounding(self, through_turn: int) -> None:
+        """Publish a summarized notes/filings digest of the recent window.
+
+        Drains the grounding buffer and publishes one `grounding` packet carrying
+        an analyst-readable `summary` (not raw Moss matches). Degrades gracefully
+        so a failed summary never disrupts the call.
+        """
+        # Atomic drain (no await between read and clear).
+        snippets = self._grounding_buffer
+        self._grounding_buffer = []
+        if not snippets or self._verdict_llm is None:
+            return
+        try:
+            summary = await summarize_grounding(self._verdict_llm, snippets)
+        except Exception:
+            logger.exception("grounding summary failed")
+            return
+        if summary:
+            await self._publish(
+                "grounding", {"summary": summary, "through_turn": through_turn}
+            )
+
+    async def _precompute_notes(self) -> None:
+        """Pull concise, source-tagged notes for each question from Moss, once.
+
+        For every question, retrieves the most relevant corpus snippets and
+        distills them into a few "fact — source" lines stored on the question, so
+        the console can show them the instant the analyst clicks. Runs out-of-band
+        at call start; republishes coverage when done. Per-question failures are
+        swallowed (the question just keeps its authored/seed notes).
+        """
+        if self._verdict_llm is None:
+            return
+        updated = False
+        for question in self._call.questions:
+            try:
+                result = await self._moss.query(
+                    KNOWLEDGE_INDEX, question.question, QueryOptions(top_k=5)
+                )
+            except Exception:
+                logger.exception("Moss notes query failed for %s", question.id)
+                continue
+            snippets: list[str] = []
+            for doc in getattr(result, "docs", None) or []:
+                text = (getattr(doc, "text", "") or "").strip()
+                if not text:
+                    continue
+                label = _source_label(getattr(doc, "metadata", None) or {})
+                snippets.append(f"[{label}] {text}" if label else text)
+            if not snippets:
+                continue
+            try:
+                notes = await summarize_question_notes(
+                    self._verdict_llm, question.question, snippets
+                )
+            except Exception:
+                logger.exception("Notes summary failed for %s", question.id)
+                continue
+            if notes:
+                question.notes = notes
+                updated = True
+        if updated:
+            await self.publish_coverage()
 
     async def _publish(self, packet_type: str, data: dict) -> None:
         """Publish a typed data packet to the analyst console.

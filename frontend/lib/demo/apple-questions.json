@@ -44,21 +44,39 @@
       "text": "iPhone 17 looks like the strongest lineup you've ever had — where are you supply-constrained right now, iPhone versus Mac, and what's the root cause?",
       "why": "The cycle is the spine of the thesis. We need the growth confirmed as supply-gated demand (not a pull-forward) and the constraint correctly diagnosed (advanced-node SOC, iPhone->Mac into June).",
       "demo_role": "clean tick — answered early and cleanly",
-      "expected_outcome": "answered"
+      "expected_outcome": "answered",
+      "notes": [
+        "iPhone +22% YoY, strongest cycle in company history — Q2 FY26 call",
+        "Constraint is advanced-node SOC availability, not memory — Q2 FY26 call",
+        "March-Q iPhone-led, shifting to Mac (mini, Studio, Neo) into June — Q2 FY26 call",
+        "Greater China first half +33%; MacBook Neo record for new-to-Mac — Q2 FY26 call"
+      ]
     },
     {
       "id": "q2",
       "text": "Where is gross margin running, and how should I think about it from here given the memory-cost trajectory and the change in capital allocation?",
       "why": "Margin durability is the load-bearing check. The note models a memory-cost headwind building beyond June and a capital-allocation shift; if management glosses the bridge, the margin leg is weaker than the headline.",
       "demo_role": "HERO — researcher over-claims 'margins are great, nothing to flag' -> partial/amber + contradiction vs note -> copilot fires grounded follow-up -> closes green with the real bridge + capital shift",
-      "expected_outcome": "answered (via follow-up)"
+      "expected_outcome": "answered (via follow-up)",
+      "notes": [
+        "March-quarter company gross margin 49.3% — AAPL 10-Q",
+        "Memory minimal in Dec, higher in March, significantly higher in June guide and rising beyond — Q2 FY26 call",
+        "We model a ~150-200bps memory headwind, <half passed through on price — Vantage note",
+        "Net-cash-neutral retired as a formal target; +$100B buyback authorization — Q2 FY26 call"
+      ]
     },
     {
       "id": "q3",
       "text": "On the forward call — how durable are Services and the advertising lever, and what's the AI strategy and what's it costing you?",
       "why": "Services and advertising are the high-margin compounder; the AI strategy (in-house vs Google) and its R&D cost frame the multiple.",
       "demo_role": "clean tick",
-      "expected_outcome": "answered"
+      "expected_outcome": "answered",
+      "notes": [
+        "Services gross margin +20bps sequentially on mix; advertising up YoY — Q2 FY26 call",
+        "Apple Maps ads launching in US and Canada this summer — Q2 FY26 call",
+        "AI two-pronged: Google collaboration + in-house models; R&D accelerating — Q2 FY26 call",
+        "John Ternus becomes CEO in September; continuity stressed — Q2 FY26 call"
+      ]
     }
   ]
 }

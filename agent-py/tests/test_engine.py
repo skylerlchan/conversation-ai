@@ -13,7 +13,7 @@ import pytest
 import agent as agent_module
 from agent import DiligenceListener
 from coverage import CallState, TurnVerdict
-from engine import grade_turn
+from engine import grade_turn, summarize_grounding, summarize_question_notes
 
 
 class _FakeStream:
@@ -135,6 +135,104 @@ async def test_grade_turn_isolates_cacheable_prefix() -> None:
     assert "q1: unanswered" in user_text
 
 
+async def test_grade_turn_rules_err_toward_answered() -> None:
+    """The grader's tie-break leans to 'answered' — a fair answer gets the benefit
+    of the doubt rather than being held open. This coverage bias is a product
+    decision the whole demo rides on, so pin it (the stubbed LLM can't judge, but
+    the rendered rules can be asserted)."""
+    fake = _FakeLLM({"updates": []})
+    await grade_turn(fake, _call(), "Margins are fine, trust me.")
+
+    items = fake.calls[0]["chat_ctx"].items
+    system = next(i for i in items if getattr(i, "role", None) == "system")
+    sys_text = (system.text_content or "").lower()
+    # On the partial/answered boundary, default to answered...
+    assert 'choose "answered"' in sys_text
+    # ...and the old err-toward-partial instruction is gone.
+    assert 'choose "partial"' not in sys_text
+
+
+async def test_summarize_grounding_briefs_the_analyst() -> None:
+    """The digest LLM is fed the snippets and returns plain-text prose (no schema)."""
+
+    class _SummaryLLM:
+        def __init__(self, text: str) -> None:
+            self._text = text
+            self.calls: list[dict] = []
+
+        def chat(self, *, chat_ctx, response_format=None, **kwargs):
+            self.calls.append(
+                {"chat_ctx": chat_ctx, "response_format": response_format}
+            )
+            return _FakeStream(self._text)
+
+    fake = _SummaryLLM("Your note models GM ~44%; hold them to the memory-cost number.")
+    out = await summarize_grounding(fake, ["note: GM ~44%", "filing: DRAM costs up"])
+
+    assert "44%" in out
+    # A summary is free prose — no structured schema is requested.
+    assert fake.calls[0]["response_format"] is None
+    rendered = " ".join(
+        (getattr(i, "text_content", "") or "") for i in fake.calls[0]["chat_ctx"].items
+    )
+    assert "GM ~44%" in rendered and "DRAM costs up" in rendered
+
+
+async def test_summarize_grounding_skips_the_llm_when_empty() -> None:
+    """No snippets -> no LLM call, returns ''."""
+
+    class _Boom:
+        def chat(self, **kwargs):
+            raise AssertionError("must not call the LLM with nothing to summarize")
+
+    assert await summarize_grounding(_Boom(), []) == ""
+    assert await summarize_grounding(_Boom(), ["   ", ""]) == ""
+
+
+async def test_summarize_question_notes_parses_bullets() -> None:
+    """The notes LLM is fed the question + snippets and returns a clean bullet list."""
+
+    class _NotesLLM:
+        def __init__(self, text: str) -> None:
+            self._text = text
+            self.calls: list[dict] = []
+
+        def chat(self, *, chat_ctx, response_format=None, **kwargs):
+            self.calls.append(
+                {"chat_ctx": chat_ctx, "response_format": response_format}
+            )
+            return _FakeStream(self._text)
+
+    fake = _NotesLLM(
+        "- iPhone +22% YoY — Q2 FY26 call\n- Company GM 49.3% — AAPL 10-Q\n"
+    )
+    out = await summarize_question_notes(
+        fake,
+        "How strong is the iPhone cycle?",
+        ["[Q2 FY26 call] iPhone grew 22%", "[AAPL 10-Q p.5] gross margin was 49.3%"],
+    )
+    # Leading bullet markers stripped; one note per line; free prose (no schema).
+    assert out == ["iPhone +22% YoY — Q2 FY26 call", "Company GM 49.3% — AAPL 10-Q"]
+    assert fake.calls[0]["response_format"] is None
+    rendered = " ".join(
+        (getattr(i, "text_content", "") or "") for i in fake.calls[0]["chat_ctx"].items
+    )
+    assert (
+        "How strong is the iPhone cycle?" in rendered and "iPhone grew 22%" in rendered
+    )
+
+
+async def test_summarize_question_notes_skips_when_empty() -> None:
+    """No question or no snippets -> no LLM call, returns []."""
+
+    class _Boom:
+        def chat(self, **kwargs):
+            raise AssertionError("must not call the LLM with nothing to summarize")
+
+    assert await summarize_question_notes(_Boom(), "Q?", []) == []
+    assert await summarize_question_notes(_Boom(), "", ["[src] fact"]) == []
+
+
 @pytest.fixture
 def stub_moss(monkeypatch):
     class _FakeMoss:
@@ -167,7 +265,7 @@ async def test_listener_score_turn_updates_state(stub_moss) -> None:
     )
     listener = DiligenceListener(user_id="fund_1", call_state=_call(), verdict_llm=fake)
 
-    await listener._score_turn("It's mid-teens, blended.")
+    await listener._score_turn(1, "It's mid-teens, blended.")
 
     q1 = listener._call.by_id("q1")
     assert q1.state == "partial"

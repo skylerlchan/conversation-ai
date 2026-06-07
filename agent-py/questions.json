@@ -7,50 +7,187 @@
     {
       "id": "q1",
       "pillar": "Supply-gated hardware supercycle: iPhone and Mac demand is outrunning supply, with broad geographic strength",
-      "question": "How strong and durable is the hardware cycle (iPhone 17 family, MacBook Neo, Mac mini / Studio), how binding are the supply constraints, and how broad is demand across Greater China and India?",
+      "question": "How strong and durable is the iPhone 17 cycle — the growth rate, its drivers, and is it supply-gated demand rather than a pull-forward?",
       "complete_when": [
-        "Addresses iPhone growth, its drivers, and durability",
-        "Addresses the Mac / MacBook Neo cycle and new-to-Mac customers",
-        "Addresses where supply constraints bind (advanced-node SOCs; iPhone in the March quarter, Mac into June) and the path to balance",
-        "Addresses geographic breadth (Greater China and India)"
+        "Gives the iPhone growth rate and what's driving it (the 17 family, upgrader record)",
+        "Speaks to durability — supply-gated demand vs a demand pull-forward",
+        "Addresses breadth of demand across major markets"
       ],
       "expected": {
-        "note_models": "iPhone +~22% (strongest cycle ever) led by the 17 family; MacBook Neo off the charts with a record for customers new to Mac; constraints are advanced-node SOC availability (iPhone in the March quarter, Mac into June); Greater China first half +33% (quarterly revenue record), India a long runway at still-modest share",
-        "our_view": "Demand is genuinely outrunning supply across iPhone and Mac, with China re-accelerating and India the structural multi-year story",
-        "watch": "Whether iPhone is called constrained into June, the upgrader-versus-switcher mix, and the Mac mini / Studio rebalancing timeline"
+        "note_models": "iPhone +~22%, the strongest cycle in company history, led by the 17 family with a March-quarter record for upgraders and ~99% US satisfaction; double-digit growth across most tracked markets",
+        "our_view": "Genuine supply-gated demand, not a pull-forward",
+        "watch": "Upgrader-vs-switcher mix and whether durability holds past the launch quarter"
       },
+      "notes": [
+        "iPhone +22% YoY, strongest cycle in company history — Q2 FY26 call",
+        "Driven by the iPhone 17 family; double-digit growth across most tracked markets — Q2 FY26 call",
+        "New March-quarter record for upgraders; ~99% US satisfaction — Q2 FY26 call",
+        "Base case models iPhone +~22%, ASP/mix-led off the 17 Pro/Air — Vantage note"
+      ],
       "state": "unanswered"
     },
     {
       "id": "q2",
-      "pillar": "Margin and capital: the memory-cost overhang on gross margin against a shift in the capital-return framework",
-      "question": "Where does gross margin trend given the building memory-cost headwind (net of tariffs, mix, FX), and what does dropping the net-cash-neutral target mean for capital return?",
+      "pillar": "Supply-gated hardware supercycle: iPhone and Mac demand is outrunning supply, with broad geographic strength",
+      "question": "Where do the supply constraints bind, what is the root cause, and when do they ease — iPhone versus Mac?",
       "complete_when": [
-        "States company gross margin and the sequential bridge (mix, tariffs, memory, leverage, FX)",
-        "Characterizes the memory-cost trajectory beyond June and the offsets / range of options",
-        "Explains the move off net-cash-neutral and the buyback / investment posture"
+        "Identifies which products are constrained and when (iPhone in the March quarter, Mac into June)",
+        "Names the root cause (advanced-node SOC availability, not memory)",
+        "Gives a path to balance / rebalancing timeline"
       ],
       "expected": {
-        "note_models": "Company GM ~49%; sequential bridge helped by favorable mix and lower tariffs, hurt by seasonal deleverage and memory, FX roughly neutral; memory a building headwind beyond June; net-cash-neutral retired as a formal target (cash and debt evaluated independently); +$100B buyback authorization; over $1T returned to date",
-        "our_view": "Mix and tariff relief are masking a memory bill that grows through FY26; the capital-allocation change is added flexibility, not a buyback retreat",
-        "bear": "An escalating memory cost that pricing can't fully pass through compresses product gross margin even as buybacks continue"
+        "note_models": "Advanced-node SOC availability is the binding constraint; iPhone-led in the March quarter, shifting to Mac (mini, Studio, MacBook Neo) into June; mini/Studio several months to rebalance",
+        "our_view": "The constraint is process nodes, not memory",
+        "watch": "Whether iPhone is still called constrained into June"
       },
+      "notes": [
+        "Binding constraint is advanced-node SOC availability, not memory — Q2 FY26 call",
+        "March quarter constrained primarily on iPhone, less on Mac — Q2 FY26 call",
+        "June-quarter constraint shifts to Mac (mini, Studio, Neo); mini/Studio several months to rebalance — Q2 FY26 call"
+      ],
       "state": "unanswered"
     },
     {
       "id": "q3",
-      "pillar": "The forward call: high-margin Services and advertising, an in-house-plus-Google AI strategy, and the CEO handoff to John Ternus",
-      "question": "How durable are Services and the emerging advertising lever, what is Apple's AI / foundational-model strategy and the investment behind it, and how clean is the CEO transition to John Ternus?",
+      "pillar": "Supply-gated hardware supercycle: iPhone and Mac demand is outrunning supply, with broad geographic strength",
+      "question": "How broad is demand across the Mac line (MacBook Neo, new-to-Mac) and geographically (Greater China, India)?",
       "complete_when": [
-        "Addresses Services growth / margin and advertising (App Store search ads, upcoming Maps ads)",
-        "Addresses the AI strategy (in-house versus Google) and the R&D / investment behind it",
-        "Addresses the CEO transition timing and continuity of strategy and capital discipline"
+        "Addresses the Mac / MacBook Neo cycle and new-to-Mac customers",
+        "Addresses Greater China",
+        "Addresses India"
       ],
       "expected": {
-        "note_models": "Services compounding at high margin (services GM +~20bps sequentially on mix); advertising up YoY with new App Store inventory and Apple Maps ads launching in US / Canada this summer; two-pronged AI (Google collaboration plus in-house foundational models) on accelerating R&D; John Ternus becomes CEO in September with messaging stressing continuity",
-        "our_view": "Services and ads are the high-margin compounder while AI is a deliberate, privacy-led investment; the succession is orderly and telegraphed",
-        "watch": "Whether ad inventory moves the needle, whether Google dependence deepens or AI yields a new form factor, and any posture change under the new CEO"
+        "note_models": "MacBook Neo off the charts and supply-constrained, with a March-quarter record for customers new to Mac; Greater China first half +33% (March-Q +28%, a quarterly record); India the #2 smartphone / #3 PC market at still-modest share with a long runway",
+        "our_view": "China re-accelerating, India the structural multi-year story",
+        "watch": "Whether China strength is durable and India share gains accelerate"
       },
+      "notes": [
+        "MacBook Neo off the charts; March-quarter record for customers new to Mac — Q2 FY26 call",
+        "Greater China first half +33%, March-Q revenue +28% (a quarterly record) — Q2 FY26 call",
+        "India the #2 smartphone / #3 PC market at still-modest share — Q2 FY26 call"
+      ],
+      "state": "unanswered"
+    },
+    {
+      "id": "q4",
+      "pillar": "Margin and capital: the memory-cost overhang on gross margin against a shift in the capital-return framework",
+      "question": "Where is gross margin running and what is the sequential bridge (mix, tariffs, memory, deleverage, FX)?",
+      "complete_when": [
+        "States company and product gross margin",
+        "Walks the sequential bridge — mix, tariffs, memory, seasonal deleverage, FX"
+      ],
+      "expected": {
+        "note_models": "Company GM ~49% (March-Q 49.3%); products GM −~200bps sequentially on seasonal deleverage + memory; overall +~110bps on favorable mix and lower tariffs; FX roughly neutral",
+        "our_view": "Favorable mix and tariff relief are masking the memory bill",
+        "bear": "Strip the mix/tariff help and the underlying product margin is already softening"
+      },
+      "notes": [
+        "March-quarter company gross margin 49.3% — AAPL 10-Q",
+        "Products GM −200bps sequentially on seasonal deleverage + memory — Q2 FY26 call",
+        "Overall GM +110bps sequentially on favorable mix + lower tariffs; FX neutral — Q2 FY26 call",
+        "Tariff relief from IEEPA + Section 122; refunds to be reinvested in US — Q2 FY26 call"
+      ],
+      "state": "unanswered"
+    },
+    {
+      "id": "q5",
+      "pillar": "Margin and capital: the memory-cost overhang on gross margin against a shift in the capital-return framework",
+      "question": "What is the memory-cost trajectory beyond June, how big is the headwind, and can pricing offset it?",
+      "complete_when": [
+        "Characterizes the memory-cost trajectory beyond June (direction and magnitude)",
+        "Addresses the range of options / pricing pass-through"
+      ],
+      "expected": {
+        "note_models": "Memory minimal in December, higher in March (offset by inventory), significantly higher in the June guide and increasing beyond; management will weigh a range of options",
+        "our_view": "A building ~150-200bps gross-margin headwind that compresses company GM toward ~46% in the back half of FY26; we model less than half passed through on price",
+        "bear": "If memory is framed as 'minimal' or fully offset, the headwind is being downplayed"
+      },
+      "notes": [
+        "Memory minimal in Dec Q, higher in March (offset by inventory) — Q2 FY26 call",
+        "Significantly higher in the June guide, with increasing impact beyond — Q2 FY26 call",
+        "Management will weigh a 'range of options' — Q2 FY26 call",
+        "We model a ~150-200bps GM headwind, <half passed through on price — Vantage note"
+      ],
+      "state": "unanswered"
+    },
+    {
+      "id": "q6",
+      "pillar": "Margin and capital: the memory-cost overhang on gross margin against a shift in the capital-return framework",
+      "question": "What does dropping the net-cash-neutral target and the $100B buyback increase signal for capital return?",
+      "complete_when": [
+        "Explains the move off net-cash-neutral (cash and debt evaluated independently)",
+        "States the buyback authorization and overall return posture"
+      ],
+      "expected": {
+        "note_models": "Net-cash-neutral retired as a formal target; cash and debt now evaluated independently; +$100B buyback authorization on top of leftover capacity; over $1T returned to date (>$850B in buybacks)",
+        "our_view": "Added flexibility, not a buyback retreat",
+        "watch": "Whether the framework change presages a leverage step-up"
+      },
+      "notes": [
+        "Net-cash-neutral retired as a formal target; cash and debt evaluated independently — Q2 FY26 call",
+        "+$100B buyback authorization on top of leftover capacity — Q2 FY26 call",
+        "Over $1T returned to date, >$850B via buybacks — Q2 FY26 call"
+      ],
+      "state": "unanswered"
+    },
+    {
+      "id": "q7",
+      "pillar": "The forward call: high-margin Services and advertising, an in-house-plus-Google AI strategy, and the CEO handoff to John Ternus",
+      "question": "How durable are Services and the advertising lever — services margin, App Store ads, and Apple Maps ads?",
+      "complete_when": [
+        "Addresses Services growth / gross margin",
+        "Addresses advertising (App Store search ads and upcoming Apple Maps ads)"
+      ],
+      "expected": {
+        "note_models": "Services gross margin +~20bps sequentially, primarily mix; advertising up YoY with new App Store search-results inventory and Apple Maps ads launching in the US and Canada this summer",
+        "our_view": "Services is the high-margin compounder and advertising the next lever",
+        "watch": "Whether Maps ad inventory moves the needle"
+      },
+      "notes": [
+        "Services gross margin +20bps sequentially, primarily mix — Q2 FY26 call",
+        "Advertising up YoY with new App Store search-results inventory — Q2 FY26 call",
+        "Apple Maps ads launching in US and Canada this summer — Q2 FY26 call"
+      ],
+      "state": "unanswered"
+    },
+    {
+      "id": "q8",
+      "pillar": "The forward call: high-margin Services and advertising, an in-house-plus-Google AI strategy, and the CEO handoff to John Ternus",
+      "question": "What is Apple's AI / foundational-model strategy (Google vs in-house) and the investment behind it?",
+      "complete_when": [
+        "Addresses the AI strategy — Google collaboration vs in-house foundational models",
+        "Addresses the R&D / investment level and how it is framed"
+      ],
+      "expected": {
+        "note_models": "Two-pronged: a Google collaboration going well plus in-house foundational models; 'investing more,' R&D accelerating faster than the company overall; framed as incremental investment on top of the normal roadmap",
+        "our_view": "A near-term margin headwind; the Google dependence signals in-house models aren't yet competitive",
+        "watch": "Whether Google dependence deepens or AI yields a new form factor"
+      },
+      "notes": [
+        "Two-pronged: Google collaboration plus in-house foundational models — Q2 FY26 call",
+        "'Investing more'; R&D accelerating faster than the company overall — Q2 FY26 call",
+        "Google search-default payment sits at antitrust risk under the DOJ remedy — DOJ/Google (NPR)"
+      ],
+      "state": "unanswered"
+    },
+    {
+      "id": "q9",
+      "pillar": "The forward call: high-margin Services and advertising, an in-house-plus-Google AI strategy, and the CEO handoff to John Ternus",
+      "question": "How clean is the CEO transition to John Ternus, and does strategy and capital discipline carry over?",
+      "complete_when": [
+        "Addresses the transition timing",
+        "Addresses continuity of strategy and financial discipline"
+      ],
+      "expected": {
+        "note_models": "John Ternus transitions into the CEO role in September; Tim Cook has about one more earnings call; messaging stresses continuity of strategy and financial discipline",
+        "our_view": "Orderly and telegraphed",
+        "watch": "Any posture change under the new CEO"
+      },
+      "notes": [
+        "John Ternus transitions into the CEO role in September — Q2 FY26 call",
+        "Tim Cook has about one more earnings call — Q2 FY26 call",
+        "Messaging stresses continuity of strategy and financial discipline — Q2 FY26 call"
+      ],
       "state": "unanswered"
     }
   ]

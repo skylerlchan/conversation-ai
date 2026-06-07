@@ -131,7 +131,8 @@ async def test_turn_publishes_transcript_packet(stub_moss) -> None:
     assert payload["type"] == "transcript"
     data = payload["data"]
     assert data["t"] == 1
-    assert data["speaker"] == "researcher"
+    # The opening turn is the analyst ("you"), even with no diarization id.
+    assert data["speaker"] == "analyst"
     assert data["text"] == "Connect take-rate held at 18% this quarter."
     assert isinstance(data["timestamp"], (int, float))
 
@@ -147,16 +148,20 @@ def test_speaker_roles_first_is_analyst_rest_researcher() -> None:
     assert roles.role_for("1") == "researcher"
 
 
-def test_speaker_roles_unknown_defaults_to_researcher() -> None:
-    """No diarization (speaker_id None) -> researcher, the safe coverage default.
-
-    A None id must not consume the analyst slot, so the first *real* speaker seen
-    afterward is still bound to analyst.
+def test_speaker_roles_first_turn_is_analyst_without_diarization() -> None:
+    """The opening turn is the analyst ("you") even with no diarization id, so the
+    console always opens on a YOU turn. Every *later* turn falls back to researcher,
+    the safe coverage default.
     """
     roles = SpeakerRoles()
+    assert roles.role_for(None) == "analyst"
     assert roles.role_for(None) == "researcher"
     assert roles.role_for(None) == "researcher"
-    assert roles.role_for("7") == "analyst"
+    # The opening turn consumes the analyst slot, so a real speaker after it is a
+    # researcher.
+    after_open = SpeakerRoles()
+    assert after_open.role_for(None) == "analyst"
+    assert after_open.role_for("7") == "researcher"
 
 
 def _transcribed(speaker_id, is_final=True):
@@ -257,7 +262,7 @@ async def test_score_turn_publishes_after_change(stub_moss) -> None:
         verdict_llm=_FakeLLM(),
     )
 
-    await listener._score_turn("margins are fine")
+    await listener._score_turn(1, "margins are fine")
 
     # State advanced...
     assert listener._call.by_id("q1").state == "partial"
@@ -268,8 +273,11 @@ async def test_score_turn_publishes_after_change(stub_moss) -> None:
     assert payload["data"]["counts"] == {"unanswered": 0, "partial": 1, "answered": 0}
 
 
-async def test_ground_returns_snippets_and_publishes_grounding(stub_moss) -> None:
-    """_ground joins retrieved snippets and publishes a grounding packet."""
+async def test_ground_returns_and_buffers_snippets_without_publishing(
+    stub_moss,
+) -> None:
+    """_ground returns this turn's snippets and buffers them for the periodic
+    digest — but does NOT publish per turn (the analyst sees a summary instead)."""
     room = _FakeRoom()
     listener = DiligenceListener(room=room, user_id="fund_1", call_state=_sample_call())
 
@@ -297,12 +305,164 @@ async def test_ground_returns_snippets_and_publishes_grounding(stub_moss) -> Non
 
     grounding = await listener._ground("Connect contribution margin?")
 
+    # Returned to the grader this turn (so contradictions are caught live)...
     assert "note models 12%" in grounding
     assert "Cirrus Connect is ~22% of revenue." in grounding
+    # ...and buffered for the periodic analyst digest...
+    assert "The note models 12% contribution margin for Connect." in (
+        listener._grounding_buffer
+    )
+    # ...but nothing is pushed to the console on this turn.
+    assert room.local_participant.published == []
+
+
+async def test_ground_buffers_snippets_with_source_labels(stub_moss) -> None:
+    """When Moss docs carry metadata, buffered entries are tagged with a compact
+    source cite so the periodic digest can attribute each fact to a source."""
+    room = _FakeRoom()
+    listener = DiligenceListener(room=room, user_id="fund_1", call_state=_sample_call())
+
+    class _Doc:
+        def __init__(self, text, metadata):
+            self.text = text
+            self.metadata = metadata
+
+    class _MossWithDocs:
+        async def query(self, *args, **kwargs):
+            return type(
+                "R",
+                (),
+                {
+                    "docs": [
+                        _Doc(
+                            "iPhone revenue rose 22% year over year.",
+                            {"ticker": "AAPL", "doc_type": "10-Q", "pages": "5"},
+                        ),
+                        _Doc(
+                            "We model gross margin compressing on memory costs.",
+                            {
+                                "source": "Vantage Ridge AAPL pre-call thesis note",
+                                "doc_type": "analyst-note",
+                            },
+                        ),
+                    ]
+                },
+            )()
+
+    listener._moss = _MossWithDocs()
+
+    await listener._ground("iPhone revenue?")
+
+    buf = listener._grounding_buffer
+    # Filings collapse to a compact ticker/type/page cite...
+    assert any(e.startswith("[AAPL 10-Q p.5] ") for e in buf)
+    # ...narrative sources keep their human source string.
+    assert any(e.startswith("[Vantage Ridge AAPL pre-call thesis note] ") for e in buf)
+
+
+async def test_summarize_grounding_publishes_digest(stub_moss) -> None:
+    """The periodic digest drains the buffer into one summarized grounding packet."""
+
+    class _FakeStream:
+        def __init__(self, text):
+            self._text = text
+
+        async def collect(self):
+            return type("R", (), {"text": self._text})()
+
+    class _SummaryLLM:
+        def chat(self, *, chat_ctx, response_format=None, **kwargs):
+            return _FakeStream("Your note models 12%; hold them to that number.")
+
+    room = _FakeRoom()
+    listener = DiligenceListener(
+        room=room,
+        user_id="fund_1",
+        call_state=_sample_call(),
+        verdict_llm=_SummaryLLM(),
+    )
+    listener._grounding_buffer = ["note: 12% contribution margin for Connect"]
+
+    await listener._summarize_grounding(through_turn=8)
 
     pubs = room.local_participant.published
     assert len(pubs) == 1
     payload = json.loads(pubs[0][0].decode("utf-8"))
     assert payload["type"] == "grounding"
-    assert payload["data"]["query"] == "Connect contribution margin?"
-    assert payload["data"]["matches"][0]["score"] == 0.94
+    assert payload["data"]["through_turn"] == 8
+    assert "12%" in payload["data"]["summary"]
+    # Buffer drained for the next window.
+    assert listener._grounding_buffer == []
+
+
+async def test_precompute_notes_populates_and_publishes(stub_moss) -> None:
+    """At call start, each question gets concise source-tagged notes from Moss, and
+    one coverage snapshot carrying them is published to the console."""
+
+    class _FakeStream:
+        def __init__(self, text):
+            self._text = text
+
+        async def collect(self):
+            return type("R", (), {"text": self._text})()
+
+    class _NotesLLM:
+        def chat(self, *, chat_ctx, response_format=None, **kwargs):
+            return _FakeStream("- Fact A — Q2 FY26 call\n- Fact B — AAPL 10-Q")
+
+    class _Doc:
+        def __init__(self, text, metadata):
+            self.text = text
+            self.metadata = metadata
+
+    class _MossWithDocs:
+        async def query(self, *args, **kwargs):
+            return type(
+                "R",
+                (),
+                {
+                    "docs": [
+                        _Doc(
+                            "iPhone grew 22% year over year.",
+                            {
+                                "source": "Apple Q2 FY2026 earnings call",
+                                "doc_type": "earnings_call",
+                            },
+                        )
+                    ]
+                },
+            )()
+
+    room = _FakeRoom()
+    listener = DiligenceListener(
+        room=room,
+        user_id="fund_1",
+        call_state=_sample_call(),
+        verdict_llm=_NotesLLM(),
+    )
+    listener._moss = _MossWithDocs()
+
+    await listener._precompute_notes()
+
+    # Every question now carries parsed, source-tagged notes...
+    assert listener._call.questions[0].notes == [
+        "Fact A — Q2 FY26 call",
+        "Fact B — AAPL 10-Q",
+    ]
+    # ...and one coverage snapshot was published carrying them.
+    pubs = room.local_participant.published
+    assert len(pubs) == 1
+    payload = json.loads(pubs[0][0].decode("utf-8"))
+    assert payload["type"] == "coverage_update"
+    assert payload["data"]["questions"][0]["notes"] == [
+        "Fact A — Q2 FY26 call",
+        "Fact B — AAPL 10-Q",
+    ]
+
+
+async def test_precompute_notes_noop_without_llm(stub_moss) -> None:
+    """No grader LLM (e.g. silence-only tests) -> no notes work, nothing published."""
+    room = _FakeRoom()
+    listener = DiligenceListener(room=room, user_id="fund_1", call_state=_sample_call())
+    await listener._precompute_notes()
+    assert room.local_participant.published == []

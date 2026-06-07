@@ -9,6 +9,9 @@ export interface ConsoleQuestion {
   id: string;
   text: string;
   pillar?: string;
+  /** Concise source-tagged notes from the Moss corpus, shown when the question is
+   * clicked. Each a short "fact — source" line. */
+  notes?: string[];
 }
 
 export interface ConsoleFollowup {
@@ -191,18 +194,15 @@ export function liveModel(args: {
   const counts = coverage?.counts ?? { unanswered: 0, partial: 0, answered: 0 };
   const total = cards.length;
 
-  // Context-panel evidence: each grounding packet is the Moss retrieval for one
-  // researcher turn (its `query` is what they said). Newest grounding -> newest
-  // context. Contradictions live on the coverage cards (the board flags them).
+  // Context-panel evidence: each grounding packet is a summarized digest of the
+  // analyst's own notes/filings over a window of turns (surfaced periodically, not
+  // per turn). Newest digest -> newest context. Contradictions live on the
+  // coverage cards (the board flags them).
   const evidence: ConsoleEvidence[] = (args.groundings ?? []).map((g, i) => ({
-    turn: `g${i}`,
-    claim: g.query,
+    turn: g.through_turn ?? `g${i}`,
+    claim: 'Notes & filings — digest',
     facts: [],
-    sources: g.matches.map((m) => ({
-      label: 'Your research · Moss',
-      text: m.text,
-      score: m.score,
-    })),
+    sources: [{ label: 'Your research · Moss (summary)', text: g.summary }],
   }));
 
   return {
@@ -212,7 +212,12 @@ export function liveModel(args: {
       exchange: '',
     },
     callKind: args.callKind ?? 'Diligence call · live',
-    questions: cards.map((c) => ({ id: c.id, text: c.question, pillar: c.pillar })),
+    questions: cards.map((c) => ({
+      id: c.id,
+      text: c.question,
+      pillar: c.pillar,
+      notes: c.notes,
+    })),
     coverage: coverageMap,
     activeFollowups,
     flags,
@@ -265,7 +270,12 @@ export function fixtureModel(state: FixtureState, fixture: QuestionsFixture): Co
       exchange: fixture.company.exchange,
     },
     callKind: 'Diligence call · sell-side',
-    questions: fixture.questions.map((q) => ({ id: q.id, text: q.text, pillar: pillar[q.id] })),
+    questions: fixture.questions.map((q) => ({
+      id: q.id,
+      text: q.text,
+      pillar: pillar[q.id],
+      notes: q.notes,
+    })),
     coverage: state.coverage,
     activeFollowups: state.activeFollowups.map((f) => ({ questionId: f.questionId, text: f.text })),
     flags: state.flags.map((f) => ({ questionId: f.questionId, vs: f.vs, detail: f.detail })),

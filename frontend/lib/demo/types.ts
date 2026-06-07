@@ -28,6 +28,9 @@ export interface Question {
   why: string;
   demo_role: string;
   expected_outcome: string;
+  /** Concise source-tagged notes from the corpus, shown when the question is
+   * clicked on the console. Each a short "fact — source" line. */
+  notes?: string[];
 }
 
 export interface QuestionsFixture {

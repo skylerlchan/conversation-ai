@@ -59,6 +59,11 @@ class QuestionState:
     facts: list[str] = field(default_factory=list)
     contradictions: list[str] = field(default_factory=list)
     followup: str | None = None
+    # Concise, source-tagged notes for this question, pulled from the Moss
+    # knowledge corpus at call start (each a short "fact — source" line). Shown
+    # when the analyst clicks the question on the console. See
+    # DiligenceListener._precompute_notes.
+    notes: list[str] = field(default_factory=list)
 
     def to_card(self) -> dict:
         """Serialise to the shape the analyst console renders."""
@@ -70,6 +75,7 @@ class QuestionState:
             "facts": list(self.facts),
             "contradictions": list(self.contradictions),
             "followup": self.followup,
+            "notes": list(self.notes),
         }
 
 
@@ -106,6 +112,9 @@ class CallState:
                 str(c).strip() for c in raw.get("complete_when", []) if str(c).strip()
             ]
             expected = raw.get("expected")
+            # Optional authored notes (used as-is by the replay driver and as the
+            # seed the live agent refreshes from Moss). Skipped if absent.
+            notes = [str(n).strip() for n in raw.get("notes", []) if str(n).strip()]
             questions.append(
                 QuestionState(
                     id=str(raw.get("id") or f"q{index}"),
@@ -114,6 +123,7 @@ class CallState:
                     complete_when=complete_when,
                     expected=expected if isinstance(expected, dict) else {},
                     state=state,
+                    notes=notes,
                 )
             )
         if not questions:

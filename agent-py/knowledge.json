@@ -6411,5 +6411,68 @@
       "ticker": "GOOGL",
       "doc_type": "regulatory_news"
     }
+  },
+  {
+    "id": "aapl-thesis-iphone-supercycle",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — iPhone 17 supercycle. We model iPhone revenue up ~22% year over year this quarter, the strongest cycle in Apple's history, led by the iPhone 17 Pro and iPhone Air mix with a March-quarter record for upgraders. The cycle is supply-gated, not demand-gated: the binding constraint is availability of the advanced process nodes Apple's SoCs are built on, which pins iPhone in the March quarter and shifts to Mac — mini, Studio, and the MacBook Neo — into the June quarter. MacBook Neo demand is running well ahead of supply. A management answer near +22% with a supply-not-demand constraint confirms our model."
+  },
+  {
+    "id": "aapl-thesis-geographic-breadth",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — geographic breadth. We model Greater China revenue up ~33% year over year, a quarterly record on the strength of the iPhone 17 family, with India a structural multi-year runway at still-modest share. Durability of the hardware cycle rests on this breadth across Greater China and India; broad double-digit growth across major markets is consistent with our view."
+  },
+  {
+    "id": "aapl-thesis-memory-margin",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — the memory-cost overhang (our CENTRAL RISK). We model company gross margin compressing toward ~46% in the back half of FY26 as DRAM and NAND contract pricing resets sharply higher; we size the memory-cost headwind at roughly 150-200 bps and consider it MATERIAL, not modest. Current-quarter gross margin near 49% is flattered by favorable mix and lower tariffs that mask the building memory bill. Treat any management framing of gross margin as 'healthy' or 'nothing to flag', or any characterization of the memory headwind as 'minimal', as DOWNPLAYING a drag that pricing cannot fully pass through beyond June."
+  },
+  {
+    "id": "aapl-thesis-memory-passthrough",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — memory cost pass-through. Our model assumes Apple recovers LESS THAN HALF of the rising DRAM/NAND cost through pricing and mix, so the memory bill flows directly into product gross margin from the June quarter onward. Any claim that memory is a 'minimal-to-modest' or fully-offset headwind conflicts with our sub-50% pass-through assumption and our ~150-200 bps gross-margin drag estimate."
+  },
+  {
+    "id": "aapl-thesis-capital-allocation",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — capital allocation shift. We expect Apple to retire the net-cash-neutral target as a formal goal, evaluating cash and debt independently, and to raise the buyback authorization by ~$100B, having returned over $1T to shareholders to date. We read this as added flexibility, not a buyback retreat. Confirmation of a $100B authorization increase and a dropped net-cash-neutral target matches our view."
+  },
+  {
+    "id": "aapl-thesis-services-advertising",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — Services and advertising. We model Services gross margin expanding ~20 bps sequentially on favorable mix, with Services remaining the high-margin compounder. Advertising is the next high-margin lever: App Store search ads continue to scale and we expect Apple Maps advertising to launch in the US and Canada this summer. A services-GM print near +20 bps with Maps ads launching this summer confirms the thesis."
+  },
+  {
+    "id": "aapl-thesis-ai-investment",
+    "metadata": {
+      "source": "Vantage Ridge AAPL pre-call thesis note",
+      "ticker": "AAPL",
+      "doc_type": "analyst-note"
+    },
+    "text": "Vantage Ridge base case — AI strategy and cost. We expect a two-pronged approach: a partnership with Google alongside Apple's own in-house foundational models, funded by R&D accelerating faster than overall operating expense. We read the Google dependence as a sign in-house models are not yet competitive, and we model AI as a NEAR-TERM MARGIN HEADWIND. We are skeptical of any framing that calls accelerating AI R&D merely 'incremental investment on top of the normal roadmap' — the opex ramp is real and should show in the operating-margin path."
   }
 ]

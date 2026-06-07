@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   ArrowCounterClockwiseIcon,
@@ -14,6 +14,8 @@ import {
   QuotesIcon,
   WarningIcon,
 } from '@phosphor-icons/react/dist/ssr';
+import { DiligenceChat } from '@/components/console/diligence-chat';
+import { EarningsVideoHotkey } from '@/components/console/earnings-video-player';
 import { useDiligenceDemo } from '@/hooks/useDiligenceDemo';
 import {
   type ConsoleEvidence,
@@ -43,8 +45,8 @@ const STATE: Record<
     label: 'COVERED',
     dot: 'bg-emerald-400',
     text: 'text-emerald-400',
-    bar: 'border-emerald-400/60',
-    fill: 'bg-white/[0.02]',
+    bar: 'border-emerald-400/70',
+    fill: 'bg-emerald-500/[0.06]',
   },
   partial: {
     label: 'THIN',
@@ -210,34 +212,145 @@ function QuestionRow({
   compact?: boolean;
 }) {
   const meta = STATE[state];
+  const answered = state === 'answered';
+  const notes = q.notes ?? [];
+  const hasNotes = notes.length > 0;
+  const [open, setOpen] = useState(false);
+
+  // Fire a one-shot celebration only on the *transition* into answered (not on
+  // every re-render, and not for rows that were already covered on mount).
+  const prevState = useRef(state);
+  const [justAnswered, setJustAnswered] = useState(false);
+  useEffect(() => {
+    if (state === 'answered' && prevState.current !== 'answered') {
+      setJustAnswered(true);
+      const id = setTimeout(() => setJustAnswered(false), 1200);
+      prevState.current = state;
+      return () => clearTimeout(id);
+    }
+    prevState.current = state;
+  }, [state]);
+
   return (
-    <div className={cn('border-l-2 py-2 pr-2.5 pl-2.5', meta.bar, meta.fill)}>
-      <div className="flex items-start gap-2.5">
-        {state === 'answered' ? (
-          <CheckIcon weight="bold" className="mt-0.5 size-3.5 shrink-0 text-emerald-400" />
-        ) : (
-          <span className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot)} />
+    <motion.div
+      className={cn(
+        'relative overflow-hidden border-l-2 py-2 pr-2.5 pl-2.5 transition-colors duration-500',
+        meta.bar,
+        meta.fill
+      )}
+      animate={justAnswered ? { scale: [1, 1.012, 1] } : { scale: 1 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+    >
+      {/* One-shot emerald shimmer that sweeps left→right the moment a question is covered. */}
+      <AnimatePresence>
+        {justAnswered && (
+          <motion.span
+            className="pointer-events-none absolute -inset-x-2 inset-y-0"
+            initial={{ x: '-110%' }}
+            animate={{ x: '110%' }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.9, ease: 'easeInOut' }}
+            style={{
+              background:
+                'linear-gradient(100deg, transparent 0%, rgba(52,211,153,0.28) 50%, transparent 100%)',
+            }}
+          />
         )}
+      </AnimatePresence>
+
+      <div className="relative flex items-start gap-2.5">
+        <AnimatePresence mode="wait" initial={false}>
+          {answered ? (
+            <motion.span
+              key="check"
+              initial={{ scale: 0, rotate: -45 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 520, damping: 17 }}
+              className="mt-0.5 shrink-0"
+            >
+              <CheckIcon weight="bold" className="size-3.5 text-emerald-400" />
+            </motion.span>
+          ) : (
+            <motion.span
+              key="dot"
+              exit={{ scale: 0 }}
+              className={cn('mt-1 size-2 shrink-0 rounded-full', meta.dot)}
+            />
+          )}
+        </AnimatePresence>
         <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-[9px] text-zinc-600">{q.id}</span>
-            <span className={cn('font-mono text-[8px] tracking-[0.14em]', meta.text)}>
-              {meta.label}
-            </span>
-            {flag && (
-              <span className="rounded-sm bg-red-500/15 px-1 font-mono text-[8px] tracking-wide text-red-400">
-                INCONSISTENCY
-              </span>
-            )}
-          </div>
-          <p
-            className={cn(
-              'mt-0.5 text-[12px] leading-snug',
-              compact ? 'text-zinc-500' : 'text-zinc-300'
-            )}
+          {/* Header: click to reveal the question's Moss-sourced notes. */}
+          <div
+            className={cn('group/q', hasNotes && 'cursor-pointer')}
+            onClick={hasNotes ? () => setOpen((o) => !o) : undefined}
+            role={hasNotes ? 'button' : undefined}
+            aria-expanded={hasNotes ? open : undefined}
           >
-            {q.text}
-          </p>
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-[9px] text-zinc-600">{q.id}</span>
+              <span className={cn('font-mono text-[8px] tracking-[0.14em]', meta.text)}>
+                {meta.label}
+              </span>
+              {flag && (
+                <span className="rounded-sm bg-red-500/15 px-1 font-mono text-[8px] tracking-wide text-red-400">
+                  INCONSISTENCY
+                </span>
+              )}
+              {hasNotes && (
+                <span className="ml-auto flex shrink-0 items-center gap-1 font-mono text-[8px] tracking-[0.14em] text-cyan-400/80">
+                  NOTES
+                  <CaretRightIcon
+                    weight="bold"
+                    className={cn('size-2.5 transition-transform', open && 'rotate-90')}
+                  />
+                </span>
+              )}
+            </div>
+            <p
+              className={cn(
+                'mt-0.5 text-[12px] leading-snug transition-colors duration-700',
+                answered ? 'text-emerald-300' : compact ? 'text-zinc-500' : 'text-zinc-300',
+                hasNotes && !answered && 'group-hover/q:text-zinc-100'
+              )}
+            >
+              {q.text}
+            </p>
+          </div>
+
+          {/* Moss-sourced notes, revealed on click. */}
+          <AnimatePresence>
+            {hasNotes && open && (
+              <motion.div
+                initial={{ opacity: 0, height: 0, marginTop: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginTop: 8 }}
+                exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="border-l-2 border-cyan-400/60 bg-cyan-400/[0.06] px-2 py-1.5">
+                  <p className="font-mono text-[9px] font-bold tracking-[0.15em] text-cyan-300/90">
+                    NOTES · MOSS
+                  </p>
+                  <ul className="mt-1 space-y-1">
+                    {notes.map((n, i) => {
+                      const dash = n.lastIndexOf(' — ');
+                      const fact = dash > 0 ? n.slice(0, dash) : n;
+                      const src = dash > 0 ? n.slice(dash + 3) : '';
+                      return (
+                        <li key={i} className="flex gap-1.5 text-[12px] leading-snug text-zinc-300">
+                          <span className="mt-1.5 size-1 shrink-0 rounded-full bg-cyan-400/70" />
+                          <span className="min-w-0">
+                            {fact}
+                            {src && <span className="text-zinc-500"> — {src}</span>}
+                          </span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           <AnimatePresence>
             {followup && (
@@ -276,83 +389,64 @@ function QuestionRow({
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
-// ---- A single thesis-pillar card: questions nested under the leg they probe ----
+// ---- One pillar tab in the rail: id, per-question coverage dots, answered tally ----
 
-function PillarCard({
+function PillarTab({
   group,
-  active,
+  selected,
   coverage,
-  fuByQ,
-  flagByQ,
+  onSelect,
 }: {
   group: PillarGroup;
-  active: boolean;
+  selected: boolean;
   coverage: Record<string, CoverageState>;
-  fuByQ: Map<string, ConsoleFollowup>;
-  flagByQ: Map<string, ConsoleFlag>;
+  onSelect: () => void;
 }) {
   return (
-    <div
+    <button
+      type="button"
+      onClick={onSelect}
+      aria-pressed={selected}
       className={cn(
-        'overflow-hidden rounded-md border bg-[#0d0e14]',
-        group.allDone
-          ? 'border-emerald-400/25'
-          : group.anyThin
-            ? 'border-amber-400/30'
-            : 'border-white/10',
-        active && 'ring-1 ring-emerald-400/40'
+        'flex w-full items-center gap-2 border-l-2 px-2.5 py-2.5 text-left transition-colors',
+        selected
+          ? 'border-l-emerald-400 bg-white/[0.05]'
+          : 'border-l-transparent hover:bg-white/[0.025]'
       )}
     >
-      <div className="flex items-center gap-2 border-b border-white/[0.07] bg-white/[0.02] px-2.5 py-2">
-        <span className="rounded-[3px] bg-white/[0.07] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-zinc-400">
-          {group.id}
-        </span>
-        <p className="min-w-0 flex-1 text-[12px] leading-snug font-medium text-zinc-100">
-          {group.label}
-        </p>
-        <div className="flex items-center gap-1">
-          {group.questions.map((q) => {
-            const s = coverage[q.id] ?? 'unanswered';
-            return <span key={q.id} className={cn('size-1.5 rounded-full', STATE[s].dot)} />;
-          })}
-        </div>
-        <span
-          className={cn(
-            'font-mono text-[10px] tabular-nums',
-            group.allDone ? 'text-emerald-400' : 'text-zinc-500'
-          )}
-        >
-          {group.counts.answered}/{group.total}
-        </span>
+      <span
+        className={cn(
+          'rounded-[3px] px-1.5 py-0.5 font-mono text-[10px] font-semibold',
+          selected ? 'bg-white/10 text-zinc-100' : 'bg-white/[0.06] text-zinc-500'
+        )}
+      >
+        {group.id}
+      </span>
+      <div className="flex flex-1 flex-wrap items-center gap-1">
+        {group.questions.map((q) => {
+          const s = coverage[q.id] ?? 'unanswered';
+          return <span key={q.id} className={cn('size-1.5 rounded-full', STATE[s].dot)} />;
+        })}
       </div>
-
-      {group.claim && (
-        <p className="border-b border-white/[0.05] px-2.5 py-1.5 text-[11px] leading-snug text-zinc-500">
-          {group.claim}
-        </p>
-      )}
-
-      <div className="space-y-1.5 p-2">
-        {group.questions.map((q) => (
-          <QuestionRow
-            key={q.id}
-            q={q}
-            state={coverage[q.id] ?? 'unanswered'}
-            followup={fuByQ.get(q.id)}
-            flag={flagByQ.get(q.id)}
-            compact={coverage[q.id] === 'answered'}
-          />
-        ))}
-      </div>
-    </div>
+      <span
+        className={cn(
+          'font-mono text-[10px] tabular-nums',
+          group.allDone ? 'text-emerald-400' : selected ? 'text-zinc-300' : 'text-zinc-600'
+        )}
+      >
+        {group.counts.answered}/{group.total}
+      </span>
+    </button>
   );
 }
 
-// ---- Coverage board: the thesis, one card per pillar ----
+// ---- Coverage board: a thin pillar rail on the left, the selected pillar's
+// questions on the right. The active tab auto-follows the pillar that holds the
+// next actionable question; a click holds until the active pillar moves on. ----
 
 function CoverageBoard({
   groups,
@@ -360,32 +454,92 @@ function CoverageBoard({
   coverage,
   followups,
   flags,
+  model,
 }: {
   groups: PillarGroup[];
   activePillarId?: string;
   coverage: Record<string, CoverageState>;
   followups: ConsoleFollowup[];
   flags: ConsoleFlag[];
+  /** Passed straight to the embedded chat so it can ground answers in the call. */
+  model: ConsoleModel;
 }) {
   const fuByQ = new Map(followups.map((f) => [f.questionId, f]));
   const flagByQ = new Map(flags.map((f) => [f.questionId, f]));
+
+  // Auto-follow: when the next actionable question lands in a new pillar, jump
+  // to it. A manual click sets `picked` and holds until activePillarId changes.
+  const [picked, setPicked] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (activePillarId) setPicked(activePillarId);
+  }, [activePillarId]);
+
+  const selectedId = picked ?? activePillarId ?? groups[0]?.id;
+  const selected = groups.find((g) => g.id === selectedId) ?? groups[0];
 
   return (
     <Panel
       title="Thesis coverage"
       sub={`${groups.length} pillars`}
-      bodyClassName="space-y-2 overflow-y-auto p-2.5"
+      bodyClassName="flex min-h-0 flex-col"
     >
-      {groups.map((g) => (
-        <PillarCard
-          key={g.id}
-          group={g}
-          active={g.id === activePillarId}
-          coverage={coverage}
-          fuByQ={fuByQ}
-          flagByQ={flagByQ}
-        />
-      ))}
+      <div className="flex min-h-0 flex-1">
+        <div className="w-[140px] shrink-0 divide-y divide-white/[0.04] overflow-y-auto border-r border-white/[0.08]">
+          {groups.map((g) => (
+            <PillarTab
+              key={g.id}
+              group={g}
+              selected={g.id === selected?.id}
+              coverage={coverage}
+              onSelect={() => setPicked(g.id)}
+            />
+          ))}
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selected?.id ?? 'empty'}
+              initial={{ opacity: 0, x: 6 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              {selected ? (
+                <>
+                  <div className="border-b border-white/[0.06] bg-white/[0.015] px-3 py-2.5">
+                    <p className="text-[13px] leading-snug font-medium text-zinc-100">
+                      {selected.label}
+                    </p>
+                    {selected.claim && (
+                      <p className="mt-1 text-[11px] leading-snug text-zinc-500">
+                        {selected.claim}
+                      </p>
+                    )}
+                  </div>
+                  <div className="space-y-1.5 p-2.5">
+                    {selected.questions.map((q) => (
+                      <QuestionRow
+                        key={q.id}
+                        q={q}
+                        state={coverage[q.id] ?? 'unanswered'}
+                        followup={fuByQ.get(q.id)}
+                        flag={flagByQ.get(q.id)}
+                        compact={coverage[q.id] === 'answered'}
+                      />
+                    ))}
+                  </div>
+                </>
+              ) : (
+                <div className="flex h-full items-center justify-center p-6 text-center">
+                  <p className="text-[12px] text-zinc-600">Waiting for questions…</p>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+      <DiligenceChat model={model} />
     </Panel>
   );
 }
@@ -473,6 +627,19 @@ function NextStep({
 
 // ---- Context panel: what the analyst's note / corpus says about the live answer ----
 
+/** Split a source's text into clean bullet lines (handles multi-line Moss digests). */
+function toBullets(text: string): string[] {
+  return text
+    .split('\n')
+    .map((l) =>
+      l
+        .trim()
+        .replace(/^[-•*]\s+/, '')
+        .trim()
+    )
+    .filter(Boolean);
+}
+
 function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
   return (
     <Panel
@@ -524,32 +691,34 @@ function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
               </div>
             )}
 
-            {/* Grounded note / corpus snippets */}
+            {/* Grounded note / corpus snippets — a tight bulleted digest with the
+                source dimmed inline (the live feed is a multi-line Moss summary). */}
             {evidence.sources.length > 0 && (
               <div>
                 <span className="font-mono text-[9px] font-bold tracking-[0.15em] text-zinc-500">
                   YOUR NOTE / FILINGS
                 </span>
-                <div className="mt-1.5 space-y-1.5">
-                  {evidence.sources.map((s, i) => (
-                    <div
-                      key={i}
-                      className="border border-white/[0.07] bg-white/[0.015] px-2.5 py-2"
-                    >
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="font-mono text-[9px] tracking-wide text-emerald-400/80">
-                          {s.label}
-                        </span>
-                        {typeof s.score === 'number' && (
-                          <span className="font-mono text-[9px] text-zinc-600 tabular-nums">
-                            {s.score.toFixed(2)}
+                <ul className="mt-1.5 space-y-1">
+                  {evidence.sources.flatMap((s, si) =>
+                    toBullets(s.text).map((line, li) => {
+                      const dash = line.lastIndexOf(' — ');
+                      const fact = dash > 0 ? line.slice(0, dash) : line;
+                      const src = dash > 0 ? line.slice(dash + 3) : s.label;
+                      return (
+                        <li
+                          key={`${si}-${li}`}
+                          className="flex gap-1.5 text-[12px] leading-snug text-zinc-300"
+                        >
+                          <span className="mt-1.5 size-1 shrink-0 rounded-full bg-emerald-400/70" />
+                          <span className="min-w-0">
+                            {fact}
+                            {src && <span className="text-zinc-500"> — {src}</span>}
                           </span>
-                        )}
-                      </div>
-                      <p className="mt-1 text-[12px] leading-snug text-zinc-400">{s.text}</p>
-                    </div>
-                  ))}
-                </div>
+                        </li>
+                      );
+                    })
+                  )}
+                </ul>
               </div>
             )}
 
@@ -573,8 +742,8 @@ function ContextPanel({ evidence }: { evidence?: ConsoleEvidence }) {
         ) : (
           <div className="flex h-full items-center justify-center p-6 text-center">
             <p className="max-w-[18rem] text-[12px] leading-relaxed text-zinc-600">
-              As the researcher answers, this surfaces what your note and the filings say about it —
-              and flags anything that contradicts your model.
+              As the expert answers, this surfaces what your note and the filings say about it — and
+              flags anything that contradicts your model.
             </p>
           </div>
         )}
@@ -611,7 +780,7 @@ function LiveCall({
           </span>
         </button>
       }
-      sub={latest ? (isSubject ? 'researcher speaking' : 'you asking') : 'standing by'}
+      sub={latest ? (isSubject ? 'expert speaking' : 'you asking') : 'standing by'}
       right={<Waveform active={playing && Boolean(latest)} />}
       className="shrink-0"
     >
@@ -624,12 +793,12 @@ function LiveCall({
             className="min-h-0 overflow-hidden"
           >
             <div className="flex min-h-0 flex-col gap-2 p-3">
-              <div className="border-l-2 border-emerald-400/50 bg-white/[0.02] px-3 py-2">
+              <div className="max-h-[8rem] overflow-y-auto border-l-2 border-emerald-400/50 bg-white/[0.02] px-3 py-2">
                 <p className="text-[14px] leading-relaxed text-zinc-100">
                   {latest ? latest.text : 'Waiting for the call to start.'}
                 </p>
               </div>
-              <div className="max-h-[24vh] space-y-2 overflow-y-auto pr-1">
+              <div className="max-h-[9rem] space-y-2 overflow-y-auto pr-1">
                 {transcript
                   .slice(0, -1)
                   .reverse()
@@ -643,7 +812,7 @@ function LiveCall({
                       >
                         <div className="mb-0.5 flex items-center gap-1.5 px-1">
                           <span className="font-mono text-[9px] tracking-[0.12em] text-zinc-600">
-                            {self ? 'YOU' : 'RESEARCHER'}
+                            {self ? 'YOU' : 'EXPERT'}
                           </span>
                           {prompted && (
                             <span className="font-mono text-[9px] tracking-wide text-amber-400">
@@ -780,6 +949,7 @@ export function MissionConsoleView({
             coverage={model.coverage}
             followups={model.activeFollowups}
             flags={model.flags}
+            model={model}
           />
 
           <section className="flex min-h-0 flex-col gap-4">
@@ -789,13 +959,13 @@ export function MissionConsoleView({
               pillar={next ? pillar[next.id] : undefined}
               allCovered={allCovered}
             />
-            <ContextPanel evidence={latestEvidence} />
             <LiveCall
               transcript={model.transcript}
               playing={model.playing}
               open={callOpen}
               onToggle={() => setCallOpen((o) => !o)}
             />
+            <ContextPanel evidence={latestEvidence} />
           </section>
         </main>
 
@@ -822,17 +992,21 @@ export function MissionConsole() {
   }, [state.done, restart]);
 
   return (
-    <MissionConsoleView
-      model={model}
-      transport={{
-        cursor: state.cursor,
-        playing: state.playing,
-        done: state.done,
-        back: state.controls.back,
-        toggle: state.controls.toggle,
-        step: state.controls.step,
-        restart: state.controls.restart,
-      }}
-    />
+    <>
+      <MissionConsoleView
+        model={model}
+        transport={{
+          cursor: state.cursor,
+          playing: state.playing,
+          done: state.done,
+          back: state.controls.back,
+          toggle: state.controls.toggle,
+          step: state.controls.step,
+          restart: state.controls.restart,
+        }}
+      />
+      {/* Baked-in earnings audio on a Spacebar hotkey. Replay = play out loud only. */}
+      <EarningsVideoHotkey />
+    </>
   );
 }
